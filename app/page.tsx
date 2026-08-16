@@ -5,6 +5,24 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { Analytics } from "@vercel/analytics/next";
 import { FileText } from "lucide-react";
+import { Variants } from "framer-motion";
+
+const tabTransition: Variants = {
+  hidden: { opacity: 0, y: 15 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { 
+      duration: 0.4, 
+      ease: [0.16, 1, 0.3, 1] 
+    },
+  },
+  exit: {
+    opacity: 0,
+    y: -15,
+   transition: { duration: 0.4, ease: "easeOut" }
+  },
+};
 import {
   Download,
   ChevronRight,
