@@ -343,7 +343,7 @@ export default function Portfolio() {
                     <motion.button
                       whileHover={{ scale: 1.03 }}
                       whileTap={{ scale: 0.97 }}
-                      onClick={() => setActiveTab("projects")}
+                      onClick={() => setActiveTab("about")}
                       className="w-full sm:w-auto bg-[#41a100] hover:bg-[#4cc000] text-white font-mono text-sm px-6 py-3 rounded-md transition-all shadow-[0_0_25px_rgba(65,161,0,0.35)] flex items-center justify-center space-x-2"
                     >
                       <span>Let&apos;s get started</span>
