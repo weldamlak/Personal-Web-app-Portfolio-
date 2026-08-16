@@ -48,15 +48,37 @@ export default function Portfolio() {
     setIsDarkMode((prev) => !prev);
   };
 
-  const fadeIn = {
-    hidden: { opacity: 0, y: 15 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
-    exit: { opacity: 0, y: -15, transition: { duration: 0.2 } },
+  // Main Tab Transition Variants
+  const tabTransition = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: [0.25, 1, 0.5, 1] } },
+    exit: { opacity: 0, y: -15, transition: { duration: 0.2, ease: "easeIn" } },
+  };
+
+  // Home Page Entrance Stagger Animation Variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.12,
+        delayChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 25 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5, ease: [0.215, 0.61, 0.355, 1.0] },
+    },
   };
 
   return (
     <div
-      className={`min-h-screen font-sans transition-colors duration-300 selection:bg-[#41a100] selection:text-white ${
+      className={`min-h-screen font-sans transition-colors duration-300 selection:bg-[#41a100] selection:text-white relative overflow-hidden ${
         isDarkMode
           ? "bg-[#0d0d0d] text-white"
           : "bg-slate-50 text-slate-900"
@@ -73,7 +95,7 @@ export default function Portfolio() {
               : "bg-white/90 border-slate-200/90 shadow-slate-200/50"
           }`}
         >
-          {/* Logo / Brand Name on Mobile */}
+          {/* Logo / Brand Name */}
           <span className="font-mono text-sm font-bold text-[#41a100] md:hidden">
             Weldamlak.A
           </span>
@@ -99,7 +121,6 @@ export default function Portfolio() {
 
           {/* Controls & Social Icons */}
           <div className="hidden md:flex items-center space-x-4">
-            {/* Theme Toggle Button */}
             <button
               onClick={toggleTheme}
               aria-label="Toggle dark/light mode"
@@ -255,41 +276,56 @@ export default function Portfolio() {
       </header>
 
       {/* Main Content Area */}
-      <main className="max-w-5xl mx-auto px-4 sm:px-6 pt-24 sm:pt-32 pb-16 min-h-[85vh] flex flex-col justify-center">
+      <main className="max-w-5xl mx-auto px-4 sm:px-6 pt-24 sm:pt-32 pb-16 min-h-[85vh] flex flex-col justify-center relative z-10">
         <AnimatePresence mode="wait">
-          {/* HOME TAB */}
+          {/* HOME TAB WITH COOL ANIMATIONS */}
           {activeTab === "home" && (
             <motion.div
               key="home"
               initial="hidden"
               animate="visible"
               exit="exit"
-              variants={fadeIn}
+              variants={tabTransition}
               className="space-y-12 sm:space-y-16"
             >
-              <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
-                {/* Hero Text */}
-                <div className="order-2 md:order-1 md:col-span-7 space-y-5 text-center md:text-left">
-                  <div
-                    className={`inline-flex items-center space-x-2 px-3 py-1.5 rounded-full font-mono text-xs text-[#41a100] border ${
-                      isDarkMode
-                        ? "bg-zinc-900 border-zinc-800"
-                        : "bg-emerald-50 border-emerald-200"
-                    }`}
-                  >
-                    <MapPin className="w-3.5 h-3.5" />
-                    <span>Addis Ababa, Ethiopia</span>
-                  </div>
+              {/* Animated Glow Background Effects */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 0.15, scale: 1 }}
+                transition={{ duration: 1.5, repeat: Infinity, repeatType: "reverse" }}
+                className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] sm:w-[500px] h-[350px] sm:h-[500px] bg-[#41a100] rounded-full blur-[120px] pointer-events-none -z-10"
+              />
 
-                  <h1
+              <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+                {/* Hero Text Staggered Container */}
+                <motion.div
+                  variants={containerVariants}
+                  className="order-2 md:order-1 md:col-span-7 space-y-5 text-center md:text-left"
+                >
+                  <motion.div variants={itemVariants}>
+                    <div
+                      className={`inline-flex items-center space-x-2 px-3 py-1.5 rounded-full font-mono text-xs text-[#41a100] border ${
+                        isDarkMode
+                          ? "bg-zinc-900/80 border-zinc-800"
+                          : "bg-emerald-50 border-emerald-200"
+                      }`}
+                    >
+                      <MapPin className="w-3.5 h-3.5" />
+                      <span>Addis Ababa, Ethiopia</span>
+                    </div>
+                  </motion.div>
+
+                  <motion.h1
+                    variants={itemVariants}
                     className={`text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-tight ${
                       isDarkMode ? "text-white" : "text-slate-900"
                     }`}
                   >
                     Weldamlak.A Endalew
-                  </h1>
+                  </motion.h1>
 
-                  <p
+                  <motion.p
+                    variants={itemVariants}
                     className={`font-mono text-xs sm:text-sm leading-relaxed max-w-xl mx-auto md:mx-0 ${
                       isDarkMode ? "text-zinc-400" : "text-slate-600"
                     }`}
@@ -298,17 +334,25 @@ export default function Portfolio() {
                     AXION Tech & Winger Academy. High school graduate from Saint
                     Joseph School (Addis Ababa). Building modern web applications
                     with Next.js & Tailwind, integrated with Python ML models to solve real-world problems.
-                  </p>
+                  </motion.p>
 
-                  <div className="pt-2 flex flex-col sm:flex-row items-center justify-center md:justify-start gap-3 sm:gap-4">
-                    <button
+                  <motion.div
+                    variants={itemVariants}
+                    className="pt-2 flex flex-col sm:flex-row items-center justify-center md:justify-start gap-3 sm:gap-4"
+                  >
+                    <motion.button
+                      whileHover={{ scale: 1.03 }}
+                      whileTap={{ scale: 0.97 }}
                       onClick={() => setActiveTab("projects")}
-                      className="w-full sm:w-auto bg-[#41a100] hover:bg-[#4cc000] text-white font-mono text-sm px-6 py-3 rounded-md transition-all shadow-[0_0_20px_rgba(65,161,0,0.3)] flex items-center justify-center space-x-2"
+                      className="w-full sm:w-auto bg-[#41a100] hover:bg-[#4cc000] text-white font-mono text-sm px-6 py-3 rounded-md transition-all shadow-[0_0_25px_rgba(65,161,0,0.35)] flex items-center justify-center space-x-2"
                     >
                       <span>Let&apos;s get started</span>
                       <ChevronRight className="w-4 h-4" />
-                    </button>
-                    <button
+                    </motion.button>
+
+                    <motion.button
+                      whileHover={{ scale: 1.03 }}
+                      whileTap={{ scale: 0.97 }}
                       onClick={() => setActiveTab("contact")}
                       className={`w-full sm:w-auto border font-mono text-sm px-6 py-3 rounded-md transition-all ${
                         isDarkMode
@@ -317,16 +361,28 @@ export default function Portfolio() {
                       }`}
                     >
                       Get in touch
-                    </button>
-                  </div>
-                </div>
+                    </motion.button>
+                  </motion.div>
+                </motion.div>
 
-                {/* Profile Avatar */}
-                <div className="order-1 md:order-2 md:col-span-5 flex justify-center md:justify-end">
-                  <div
+                {/* Profile Avatar with Floating Entrance Animation */}
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8, y: 20 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  transition={{ duration: 0.7, ease: [0.25, 1, 0.5, 1] }}
+                  className="order-1 md:order-2 md:col-span-5 flex justify-center md:justify-end"
+                >
+                  <motion.div
+                    animate={{ y: [0, -8, 0] }}
+                    transition={{
+                      duration: 4,
+                      repeat: Infinity,
+                      repeatType: "reverse",
+                      ease: "easeInOut",
+                    }}
                     className={`relative w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-2 shadow-2xl ${
                       isDarkMode
-                        ? "border-zinc-800 bg-zinc-900"
+                        ? "border-zinc-800 bg-zinc-900 shadow-[#41a100]/10"
                         : "border-slate-200 bg-white shadow-slate-200"
                     }`}
                   >
@@ -338,21 +394,24 @@ export default function Portfolio() {
                       sizes="(max-width: 640px) 192px, (max-width: 768px) 256px, 320px"
                       priority
                     />
-                  </div>
-                </div>
+                  </motion.div>
+                </motion.div>
               </div>
 
-              {/* Highlights Summary Grid */}
-              <div
+              {/* Highlights Cards Staggered Animation */}
+              <motion.div
+                variants={containerVariants}
                 className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 border-t pt-10 ${
                   isDarkMode ? "border-zinc-800/80" : "border-slate-200"
                 }`}
               >
-                <div
-                  className={`p-5 rounded-lg border ${
+                <motion.div
+                  variants={itemVariants}
+                  whileHover={{ y: -4 }}
+                  className={`p-5 rounded-lg border transition-all ${
                     isDarkMode
-                      ? "bg-zinc-900/40 border-zinc-800/80"
-                      : "bg-white border-slate-200 shadow-sm"
+                      ? "bg-zinc-900/40 border-zinc-800/80 hover:border-zinc-700"
+                      : "bg-white border-slate-200 shadow-sm hover:border-slate-300"
                   }`}
                 >
                   <Code className="w-6 h-6 text-[#41a100] mb-3" />
@@ -370,13 +429,15 @@ export default function Portfolio() {
                   >
                     Next.js, React, Tailwind CSS, Python, and Machine Learning models.
                   </p>
-                </div>
+                </motion.div>
 
-                <div
-                  className={`p-5 rounded-lg border ${
+                <motion.div
+                  variants={itemVariants}
+                  whileHover={{ y: -4 }}
+                  className={`p-5 rounded-lg border transition-all ${
                     isDarkMode
-                      ? "bg-zinc-900/40 border-zinc-800/80"
-                      : "bg-white border-slate-200 shadow-sm"
+                      ? "bg-zinc-900/40 border-zinc-800/80 hover:border-zinc-700"
+                      : "bg-white border-slate-200 shadow-sm hover:border-slate-300"
                   }`}
                 >
                   <Rocket className="w-6 h-6 text-[#41a100] mb-3" />
@@ -394,13 +455,15 @@ export default function Portfolio() {
                   >
                     Leading AXION Tech and educational impact through Winger Academy.
                   </p>
-                </div>
+                </motion.div>
 
-                <div
-                  className={`p-5 rounded-lg border sm:col-span-2 md:col-span-1 ${
+                <motion.div
+                  variants={itemVariants}
+                  whileHover={{ y: -4 }}
+                  className={`p-5 rounded-lg border sm:col-span-2 md:col-span-1 transition-all ${
                     isDarkMode
-                      ? "bg-zinc-900/40 border-zinc-800/80"
-                      : "bg-white border-slate-200 shadow-sm"
+                      ? "bg-zinc-900/40 border-zinc-800/80 hover:border-zinc-700"
+                      : "bg-white border-slate-200 shadow-sm hover:border-slate-300"
                   }`}
                 >
                   <Award className="w-6 h-6 text-[#41a100] mb-3" />
@@ -418,8 +481,8 @@ export default function Portfolio() {
                   >
                     1st Place City Science Competition & Top 20 National Startup Finalist.
                   </p>
-                </div>
-              </div>
+                </motion.div>
+              </motion.div>
             </motion.div>
           )}
 
@@ -430,7 +493,7 @@ export default function Portfolio() {
               initial="hidden"
               animate="visible"
               exit="exit"
-              variants={fadeIn}
+              variants={tabTransition}
               className="space-y-10 sm:space-y-12"
             >
               <div>
@@ -602,7 +665,7 @@ export default function Portfolio() {
               initial="hidden"
               animate="visible"
               exit="exit"
-              variants={fadeIn}
+              variants={tabTransition}
               className="space-y-10"
             >
               <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-6 flex items-center gap-3">
@@ -798,7 +861,7 @@ export default function Portfolio() {
               initial="hidden"
               animate="visible"
               exit="exit"
-              variants={fadeIn}
+              variants={tabTransition}
               className="space-y-6 sm:space-y-8"
             >
               <div>
@@ -816,7 +879,8 @@ export default function Portfolio() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                 {/* AXION Smart Wheelchair */}
-                <div
+                <motion.div
+                  whileHover={{ y: -4 }}
                   className={`p-5 sm:p-6 rounded-lg space-y-3 flex flex-col justify-between border transition-all ${
                     isDarkMode
                       ? "bg-zinc-900/60 border-zinc-800 hover:border-zinc-700"
@@ -858,10 +922,11 @@ export default function Portfolio() {
                       Embedded Systems
                     </span>
                   </div>
-                </div>
+                </motion.div>
 
                 {/* Focus2018 */}
-                <div
+                <motion.div
+                  whileHover={{ y: -4 }}
                   className={`p-5 sm:p-6 rounded-lg space-y-3 flex flex-col justify-between border transition-all ${
                     isDarkMode
                       ? "bg-zinc-900/60 border-zinc-800 hover:border-zinc-700"
@@ -903,10 +968,11 @@ export default function Portfolio() {
                       Node.js
                     </span>
                   </div>
-                </div>
+                </motion.div>
 
                 {/* PULSE Ethiopia */}
-                <div
+                <motion.div
+                  whileHover={{ y: -4 }}
                   className={`p-5 sm:p-6 rounded-lg space-y-3 flex flex-col justify-between border transition-all ${
                     isDarkMode
                       ? "bg-zinc-900/60 border-zinc-800 hover:border-zinc-700"
@@ -948,10 +1014,11 @@ export default function Portfolio() {
                       Analytics
                     </span>
                   </div>
-                </div>
+                </motion.div>
 
                 {/* FAOSTAT CPI Analyzer */}
-                <div
+                <motion.div
+                  whileHover={{ y: -4 }}
                   className={`p-5 sm:p-6 rounded-lg space-y-3 flex flex-col justify-between border transition-all ${
                     isDarkMode
                       ? "bg-zinc-900/60 border-zinc-800 hover:border-zinc-700"
@@ -993,10 +1060,11 @@ export default function Portfolio() {
                       Next.js
                     </span>
                   </div>
-                </div>
+                </motion.div>
 
                 {/* Productivity App */}
-                <div
+                <motion.div
+                  whileHover={{ y: -4 }}
                   className={`p-5 sm:p-6 rounded-lg space-y-3 flex flex-col justify-between border transition-all md:col-span-2 ${
                     isDarkMode
                       ? "bg-zinc-900/60 border-zinc-800 hover:border-zinc-700"
@@ -1035,7 +1103,7 @@ export default function Portfolio() {
                       TypeScript
                     </span>
                   </div>
-                </div>
+                </motion.div>
               </div>
             </motion.div>
           )}
@@ -1047,7 +1115,7 @@ export default function Portfolio() {
               initial="hidden"
               animate="visible"
               exit="exit"
-              variants={fadeIn}
+              variants={tabTransition}
               className="space-y-8 max-w-xl mx-auto w-full"
             >
               <div className="text-center space-y-2">
@@ -1128,13 +1196,15 @@ export default function Portfolio() {
                   />
                 </div>
 
-                <button
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                   type="submit"
                   className="w-full bg-[#41a100] hover:bg-[#4cc000] text-white font-mono text-sm py-2.5 rounded-md transition-all shadow-[0_0_15px_rgba(65,161,0,0.3)] flex items-center justify-center space-x-2"
                 >
                   <Send className="w-4 h-4" />
                   <span>Send Message</span>
-                </button>
+                </motion.button>
               </form>
             </motion.div>
           )}
