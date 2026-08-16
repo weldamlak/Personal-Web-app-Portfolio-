@@ -1,19 +1,21 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { Analytics } from "@vercel/analytics/next";
+import { FileText } from "lucide-react";
 import {
+  Download,
   ChevronRight,
+  ChevronLeft,
+  MapPin,
   Code,
   Cpu,
   Award,
   Briefcase,
-  Sparkles,
   Globe,
   User,
-  MapPin,
   Send,
   Rocket,
   CheckCircle2,
@@ -22,31 +24,115 @@ import {
   ExternalLink,
   Sun,
   Moon,
+  ArrowRight,
+  Maximize2,
+  Sparkles,
+  BookOpen,
+  HeartHandshake,
 } from "lucide-react";
+import { FaLinkedin, FaGithub, FaXTwitter, FaInstagram, FaDiscord, FaWhatsapp, FaEnvelope } from "react-icons/fa6";
 
-import { FaLinkedin, FaGithub, FaXTwitter } from "react-icons/fa6";
+export default function Portfolio() {
+  const [activeTab, setActiveTab] = useState("home");
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [formSubmitted, setFormSubmitted] = useState(false);
+  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
 
-  export default function Portfolio() {
-    const [activeTab, setActiveTab] = useState("home");
-    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-    const [isDarkMode, setIsDarkMode] = useState(false);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+
+  // Lightbox / Full-screen Image State
+  const [selectedImgIndex, setSelectedImgIndex] = useState<number | null>(null);
+
+  const galleryImages = Array.from({ length: 10 }, (_, i) => `/${i + 1}.jpg`);
 
   const navItems = [
     { id: "home", label: "Home" },
     { id: "about", label: "About" },
     { id: "experience", label: "Experience" },
-    { id: "projects", label: "Recent Work" },
+    { id: "projects", label: "Projects" },
+    { id: "saying-more", label: "Blog" },
     { id: "contact", label: "Get In Touch" },
   ];
 
   const handleTabClick = (id: string) => {
     setActiveTab(id);
     setMobileMenuOpen(false);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const toggleTheme = () => {
     setIsDarkMode((prev) => !prev);
   };
+const [isSubmitting, setIsSubmitting] = useState(false);
+
+const handleFormSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setIsSubmitting(true);
+
+  try {
+    const response = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        access_key: "9c58710a-10a9-429a-9c13-6cbf99ca566f",
+        name: formData.name,
+        email: formData.email,
+        message: formData.message,
+        subject: `New Portfolio Message from ${formData.name}`,
+      }),
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
+      setFormSubmitted(true);
+      setFormData({ name: "", email: "", message: "" });
+      setTimeout(() => setFormSubmitted(false), 5000);
+    } else {
+      alert("Something went wrong while sending the message. Please try again.");
+    }
+  } catch (error) {
+    console.error("Form error:", error);
+    alert("Network error. Please try again.");
+  } finally {
+    setIsSubmitting(false);
+  }
+};
+  // Lightbox Navigation Controls
+  const handlePrevImage = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    if (selectedImgIndex !== null) {
+      setSelectedImgIndex((prev) =>
+        prev === 0 ? galleryImages.length - 1 : (prev as number) - 1
+      );
+    }
+  };
+
+  const handleNextImage = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    if (selectedImgIndex !== null) {
+      setSelectedImgIndex((prev) =>
+        prev === galleryImages.length - 1 ? 0 : (prev as number) + 1
+      );
+    }
+  };
+
+  // Close lightbox on Escape key
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (selectedImgIndex !== null) {
+        if (e.key === "Escape") setSelectedImgIndex(null);
+        if (e.key === "ArrowLeft") handlePrevImage();
+        if (e.key === "ArrowRight") handleNextImage();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [selectedImgIndex]);
 
   // Main Tab Transition Variants
   const tabTransition = {
@@ -55,7 +141,7 @@ import { FaLinkedin, FaGithub, FaXTwitter } from "react-icons/fa6";
     exit: { opacity: 0, y: -15, transition: { duration: 0.2, ease: "easeIn" } },
   };
 
-  // Home Page Entrance Stagger Animation Variants
+  // Entrance Stagger Animation Variants
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -78,22 +164,18 @@ import { FaLinkedin, FaGithub, FaXTwitter } from "react-icons/fa6";
 
   return (
     <div
-      className={`min-h-screen font-sans transition-colors duration-300 selection:bg-[#41a100] selection:text-white relative overflow-hidden ${
-        isDarkMode
-          ? "bg-[#0d0d0d] text-white"
-          : "bg-slate-50 text-slate-900"
-      }`}
+      className={`min-h-screen font-sans transition-colors duration-300 selection:bg-[#41a100] selection:text-white relative overflow-hidden ${isDarkMode ? "bg-[#0d0d0d] text-white" : "bg-slate-50 text-slate-900"
+        }`}
     >
       <Analytics />
 
       {/* Navigation Header */}
       <header className="fixed top-0 left-0 w-full z-50 flex justify-center pt-3 sm:pt-4 px-3 sm:px-4">
         <nav
-          className={`backdrop-blur-md border rounded-xl px-4 sm:px-6 py-3 flex items-center justify-between w-full max-w-5xl shadow-2xl relative transition-colors duration-300 ${
-            isDarkMode
-              ? "bg-[#18181b]/95 border-zinc-800/80"
-              : "bg-white/90 border-slate-200/90 shadow-slate-200/50"
-          }`}
+          className={`backdrop-blur-md border rounded-xl px-4 sm:px-6 py-3 flex items-center justify-between w-full max-w-5xl shadow-2xl relative transition-colors duration-300 ${isDarkMode
+            ? "bg-[#18181b]/95 border-zinc-800/80"
+            : "bg-white/90 border-slate-200/90 shadow-slate-200/50"
+            }`}
         >
           {/* Logo / Brand Name */}
           <span className="font-mono text-sm font-bold text-[#41a100] md:hidden">
@@ -106,13 +188,12 @@ import { FaLinkedin, FaGithub, FaXTwitter } from "react-icons/fa6";
               <button
                 key={item.id}
                 onClick={() => handleTabClick(item.id)}
-                className={`font-mono text-xs md:text-sm transition-colors py-1 ${
-                  activeTab === item.id
-                    ? "text-[#41a100] font-semibold"
-                    : isDarkMode
+                className={`font-mono text-xs md:text-sm transition-colors py-1 ${activeTab === item.id
+                  ? "text-[#41a100] font-semibold"
+                  : isDarkMode
                     ? "text-zinc-400 hover:text-zinc-200"
                     : "text-slate-600 hover:text-slate-900"
-                }`}
+                  }`}
               >
                 {item.label}
               </button>
@@ -124,34 +205,29 @@ import { FaLinkedin, FaGithub, FaXTwitter } from "react-icons/fa6";
             <button
               onClick={toggleTheme}
               aria-label="Toggle dark/light mode"
-              className={`p-1.5 rounded-lg border transition-colors ${
-                isDarkMode
-                  ? "border-zinc-800 text-amber-400 hover:bg-zinc-800"
-                  : "border-slate-200 text-slate-700 hover:bg-slate-100"
-              }`}
+              className={`p-1.5 rounded-lg border transition-colors ${isDarkMode
+                ? "border-zinc-800 text-amber-400 hover:bg-zinc-800"
+                : "border-slate-200 text-slate-700 hover:bg-slate-100"
+                }`}
             >
               {isDarkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
             </button>
 
             <div
-              className={`h-4 w-px ${
-                isDarkMode ? "bg-zinc-800" : "bg-slate-200"
-              }`}
+              className={`h-4 w-px ${isDarkMode ? "bg-zinc-800" : "bg-slate-200"}`}
             />
 
             <div
-              className={`flex items-center space-x-3 ${
-                isDarkMode ? "text-zinc-400" : "text-slate-500"
-              }`}
+              className={`flex items-center space-x-3 ${isDarkMode ? "text-zinc-400" : "text-slate-500"
+                }`}
             >
               <a
                 href="https://www.linkedin.com/in/weldamlak-ayenew"
                 target="_blank"
                 rel="noreferrer"
                 aria-label="LinkedIn Profile"
-                className={`transition-colors p-1 ${
-                  isDarkMode ? "hover:text-white" : "hover:text-slate-900"
-                }`}
+                className={`transition-colors p-1 ${isDarkMode ? "hover:text-white" : "hover:text-slate-900"
+                  }`}
               >
                 <FaLinkedin className="w-4 h-4 md:w-5 md:h-5" />
               </a>
@@ -160,20 +236,18 @@ import { FaLinkedin, FaGithub, FaXTwitter } from "react-icons/fa6";
                 target="_blank"
                 rel="noreferrer"
                 aria-label="GitHub Profile"
-                className={`transition-colors p-1 ${
-                  isDarkMode ? "hover:text-white" : "hover:text-slate-900"
-                }`}
+                className={`transition-colors p-1 ${isDarkMode ? "hover:text-white" : "hover:text-slate-900"
+                  }`}
               >
                 <FaGithub className="w-4 h-4 md:w-5 md:h-5" />
               </a>
               <a
-                href="https://x.com"
+                href="https://x.com/WeldamlakAyenew"
                 target="_blank"
                 rel="noreferrer"
                 aria-label="Twitter/X Profile"
-                className={`transition-colors p-1 ${
-                  isDarkMode ? "hover:text-white" : "hover:text-slate-900"
-                }`}
+                className={`transition-colors p-1 ${isDarkMode ? "hover:text-white" : "hover:text-slate-900"
+                  }`}
               >
                 <FaXTwitter className="w-4 h-4 md:w-5 md:h-5" />
               </a>
@@ -185,11 +259,10 @@ import { FaLinkedin, FaGithub, FaXTwitter } from "react-icons/fa6";
             <button
               onClick={toggleTheme}
               aria-label="Toggle dark/light mode"
-              className={`p-1.5 rounded-lg border transition-colors ${
-                isDarkMode
-                  ? "border-zinc-800 text-amber-400"
-                  : "border-slate-200 text-slate-700"
-              }`}
+              className={`p-1.5 rounded-lg border transition-colors ${isDarkMode
+                ? "border-zinc-800 text-amber-400"
+                : "border-slate-200 text-slate-700"
+                }`}
             >
               {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
             </button>
@@ -197,9 +270,8 @@ import { FaLinkedin, FaGithub, FaXTwitter } from "react-icons/fa6";
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-label="Toggle navigation menu"
-              className={`p-1 focus:outline-none ${
-                isDarkMode ? "text-zinc-300 hover:text-white" : "text-slate-700 hover:text-slate-900"
-              }`}
+              className={`p-1 focus:outline-none ${isDarkMode ? "text-zinc-300 hover:text-white" : "text-slate-700 hover:text-slate-900"
+                }`}
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -212,34 +284,27 @@ import { FaLinkedin, FaGithub, FaXTwitter } from "react-icons/fa6";
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
-                className={`absolute top-full left-0 right-0 mt-2 border rounded-xl p-4 flex flex-col space-y-3 shadow-2xl md:hidden z-50 ${
-                  isDarkMode
-                    ? "bg-[#18181b] border-zinc-800"
-                    : "bg-white border-slate-200"
-                }`}
+                className={`absolute top-full left-0 right-0 mt-2 border rounded-xl p-4 flex flex-col space-y-3 shadow-2xl md:hidden z-50 ${isDarkMode ? "bg-[#18181b] border-zinc-800" : "bg-white border-slate-200"
+                  }`}
               >
                 {navItems.map((item) => (
                   <button
                     key={item.id}
                     onClick={() => handleTabClick(item.id)}
-                    className={`font-mono text-left text-sm py-2 px-3 rounded-lg transition-colors ${
-                      activeTab === item.id
-                        ? "bg-[#41a100]/10 text-[#41a100] font-semibold"
-                        : isDarkMode
+                    className={`font-mono text-left text-sm py-2 px-3 rounded-lg transition-colors ${activeTab === item.id
+                      ? "bg-[#41a100]/10 text-[#41a100] font-semibold"
+                      : isDarkMode
                         ? "text-zinc-300 hover:bg-zinc-800/50"
                         : "text-slate-700 hover:bg-slate-100"
-                    }`}
+                      }`}
                   >
                     {item.label}
                   </button>
                 ))}
 
                 <div
-                  className={`pt-3 border-t flex items-center space-x-6 px-3 ${
-                    isDarkMode
-                      ? "border-zinc-800 text-zinc-400"
-                      : "border-slate-200 text-slate-500"
-                  }`}
+                  className={`pt-3 border-t flex items-center space-x-6 px-3 ${isDarkMode ? "border-zinc-800 text-zinc-400" : "border-slate-200 text-slate-500"
+                    }`}
                 >
                   <a
                     href="https://www.linkedin.com/in/weldamlak-ayenew"
@@ -260,7 +325,7 @@ import { FaLinkedin, FaGithub, FaXTwitter } from "react-icons/fa6";
                     <FaGithub className="w-5 h-5" />
                   </a>
                   <a
-                    href="https://x.com"
+                    href="https://x.com/WeldamlakAyenew"
                     target="_blank"
                     rel="noreferrer"
                     aria-label="Twitter/X Profile"
@@ -278,7 +343,7 @@ import { FaLinkedin, FaGithub, FaXTwitter } from "react-icons/fa6";
       {/* Main Content Area */}
       <main className="max-w-5xl mx-auto px-4 sm:px-6 pt-24 sm:pt-32 pb-16 min-h-[85vh] flex flex-col justify-center relative z-10">
         <AnimatePresence mode="wait">
-          {/* HOME TAB WITH COOL ANIMATIONS */}
+          {/* HOME TAB */}
           {activeTab === "home" && (
             <motion.div
               key="home"
@@ -288,14 +353,6 @@ import { FaLinkedin, FaGithub, FaXTwitter } from "react-icons/fa6";
               variants={tabTransition}
               className="space-y-12 sm:space-y-16"
             >
-              {/* Animated Glow Background Effects */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 0.15, scale: 1 }}
-                transition={{ duration: 1.5, repeat: Infinity, repeatType: "reverse" }}
-                className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] sm:w-[500px] h-[350px] sm:h-[500px] bg-[#41a100] rounded-full blur-[120px] pointer-events-none -z-10"
-              />
-
               <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
                 {/* Hero Text Staggered Container */}
                 <motion.div
@@ -304,11 +361,10 @@ import { FaLinkedin, FaGithub, FaXTwitter } from "react-icons/fa6";
                 >
                   <motion.div variants={itemVariants}>
                     <div
-                      className={`inline-flex items-center space-x-2 px-3 py-1.5 rounded-full font-mono text-xs text-[#41a100] border ${
-                        isDarkMode
-                          ? "bg-zinc-900/80 border-zinc-800"
-                          : "bg-emerald-50 border-emerald-200"
-                      }`}
+                      className={`inline-flex items-center space-x-2 px-3 py-1.5 rounded-full font-mono text-xs text-[#41a100] border ${isDarkMode
+                        ? "bg-zinc-900/80 border-zinc-800"
+                        : "bg-emerald-50 border-emerald-200"
+                        }`}
                     >
                       <MapPin className="w-3.5 h-3.5" />
                       <span>Addis Ababa, Ethiopia</span>
@@ -317,18 +373,16 @@ import { FaLinkedin, FaGithub, FaXTwitter } from "react-icons/fa6";
 
                   <motion.h1
                     variants={itemVariants}
-                    className={`text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-tight ${
-                      isDarkMode ? "text-white" : "text-slate-900"
-                    }`}
+                    className={`text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-tight ${isDarkMode ? "text-white" : "text-slate-900"
+                      }`}
                   >
                     Weldamlak.A Endalew
                   </motion.h1>
 
                   <motion.p
                     variants={itemVariants}
-                    className={`font-mono text-xs sm:text-sm leading-relaxed max-w-xl mx-auto md:mx-0 ${
-                      isDarkMode ? "text-zinc-400" : "text-slate-600"
-                    }`}
+                    className={`font-mono text-xs sm:text-sm leading-relaxed max-w-xl mx-auto md:mx-0 ${isDarkMode ? "text-zinc-400" : "text-slate-600"
+                      }`}
                   >
                     Full-Stack AI Developer & Machine Learning Specialist. Founder of
                     AXION Tech & Winger Academy. High school graduate from Saint
@@ -336,6 +390,7 @@ import { FaLinkedin, FaGithub, FaXTwitter } from "react-icons/fa6";
                     with Next.js & Tailwind, integrated with Python ML models to solve real-world problems.
                   </motion.p>
 
+                  {/* Action Buttons */}
                   <motion.div
                     variants={itemVariants}
                     className="pt-2 flex flex-col sm:flex-row items-center justify-center md:justify-start gap-3 sm:gap-4"
@@ -343,89 +398,94 @@ import { FaLinkedin, FaGithub, FaXTwitter } from "react-icons/fa6";
                     <motion.button
                       whileHover={{ scale: 1.03 }}
                       whileTap={{ scale: 0.97 }}
-                      onClick={() => setActiveTab("about")}
-                      className="w-full sm:w-auto bg-[#41a100] hover:bg-[#4cc000] text-white font-mono text-sm px-6 py-3 rounded-md transition-all shadow-[0_0_25px_rgba(65,161,0,0.35)] flex items-center justify-center space-x-2"
+                      onClick={() => handleTabClick("about")}
+                      className="w-full sm:w-auto bg-[#41a100] hover:bg-[#4cc000] text-white font-mono text-sm px-5 py-3 rounded-md transition-all shadow-[0_0_25px_rgba(65,161,0,0.35)] flex items-center justify-center space-x-2"
                     >
                       <span>Let&apos;s get started</span>
                       <ChevronRight className="w-4 h-4" />
                     </motion.button>
 
+                    <motion.a
+                      whileHover={{ scale: 1.03 }}
+                      whileTap={{ scale: 0.97 }}
+                      href="/weldamlak.pdf"
+                      download="Weldamlak_Ayenew_CV.pdf"
+                      className={`w-full sm:w-auto border font-mono text-sm px-5 py-3 rounded-md transition-all flex items-center justify-center space-x-2 ${isDarkMode
+                        ? "border-zinc-700 bg-zinc-800/80 hover:bg-zinc-700 text-white"
+                        : "border-slate-300 bg-slate-100 hover:bg-slate-200 text-slate-900 shadow-sm"
+                        }`}
+                    >
+                      <Download className="w-4 h-4 text-[#41a100]" />
+                      <span>Download CV</span>
+                    </motion.a>
+
                     <motion.button
                       whileHover={{ scale: 1.03 }}
                       whileTap={{ scale: 0.97 }}
-                      onClick={() => setActiveTab("contact")}
-                      className={`w-full sm:w-auto border font-mono text-sm px-6 py-3 rounded-md transition-all ${
-                        isDarkMode
-                          ? "border-zinc-800 bg-zinc-900/60 hover:bg-zinc-800 text-zinc-300"
-                          : "border-slate-300 bg-white hover:bg-slate-100 text-slate-700 shadow-sm"
-                      }`}
+                      onClick={() => handleTabClick("contact")}
+                      className={`w-full sm:w-auto border font-mono text-sm px-5 py-3 rounded-md transition-all ${isDarkMode
+                        ? "border-zinc-800 bg-zinc-900/60 hover:bg-zinc-800 text-zinc-300"
+                        : "border-slate-300 bg-white hover:bg-slate-100 text-slate-700 shadow-sm"
+                        }`}
                     >
                       Get in touch
                     </motion.button>
                   </motion.div>
                 </motion.div>
 
-                {/* Profile Avatar with Floating Entrance Animation */}
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.8, y: 20 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  transition={{ duration: 0.7, ease: [0.25, 1, 0.5, 1] }}
-                  className="order-1 md:order-2 md:col-span-5 flex justify-center md:justify-end"
-                >
+                {/* Profile Avatar Container */}
+                <div className="order-1 md:order-2 md:col-span-5 flex justify-center md:justify-end">
                   <motion.div
-                    animate={{ y: [0, -8, 0] }}
-                    transition={{
-                      duration: 4,
-                      repeat: Infinity,
-                      repeatType: "reverse",
-                      ease: "easeInOut",
+                    whileHover={{ scale: 1.02 }}
+                    onClick={() => {
+                      // Allow profile photo zoom as well
+                      setSelectedImgIndex(0);
                     }}
-                    className={`relative w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-2 shadow-2xl ${
-                      isDarkMode
-                        ? "border-zinc-800 bg-zinc-900 shadow-[#41a100]/10"
-                        : "border-slate-200 bg-white shadow-slate-200"
-                    }`}
+                    className={`relative w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-2 shadow-2xl cursor-pointer group ${isDarkMode
+                      ? "border-zinc-800 bg-zinc-900"
+                      : "border-slate-200 bg-white shadow-slate-200"
+                      }`}
                   >
                     <Image
                       src="/profile1.jpg"
                       alt="Weldamlak Ayenew"
                       fill
-                      className="object-cover"
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
                       sizes="(max-width: 640px) 192px, (max-width: 768px) 256px, 320px"
                       priority
                     />
+                    <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-xs font-mono gap-1">
+                      <Maximize2 className="w-4 h-4" />
+                      <span>View</span>
+                    </div>
                   </motion.div>
-                </motion.div>
+                </div>
               </div>
 
               {/* Highlights Cards Staggered Animation */}
               <motion.div
                 variants={containerVariants}
-                className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 border-t pt-10 ${
-                  isDarkMode ? "border-zinc-800/80" : "border-slate-200"
-                }`}
+                className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 border-t pt-10 ${isDarkMode ? "border-zinc-800/80" : "border-slate-200"
+                  }`}
               >
                 <motion.div
                   variants={itemVariants}
                   whileHover={{ y: -4 }}
-                  className={`p-5 rounded-lg border transition-all ${
-                    isDarkMode
-                      ? "bg-zinc-900/40 border-zinc-800/80 hover:border-zinc-700"
-                      : "bg-white border-slate-200 shadow-sm hover:border-slate-300"
-                  }`}
+                  className={`p-5 rounded-lg border transition-all ${isDarkMode
+                    ? "bg-zinc-900/40 border-zinc-800/80 hover:border-zinc-700"
+                    : "bg-white border-slate-200 shadow-sm hover:border-slate-300"
+                    }`}
                 >
                   <Code className="w-6 h-6 text-[#41a100] mb-3" />
                   <h3
-                    className={`font-semibold mb-1 ${
-                      isDarkMode ? "text-white" : "text-slate-900"
-                    }`}
+                    className={`font-semibold mb-1 ${isDarkMode ? "text-white" : "text-slate-900"
+                      }`}
                   >
                     Full-Stack AI
                   </h3>
                   <p
-                    className={`text-xs ${
-                      isDarkMode ? "text-zinc-400" : "text-slate-600"
-                    }`}
+                    className={`text-xs ${isDarkMode ? "text-zinc-400" : "text-slate-600"
+                      }`}
                   >
                     Next.js, React, Tailwind CSS, Python, and Machine Learning models.
                   </p>
@@ -434,24 +494,21 @@ import { FaLinkedin, FaGithub, FaXTwitter } from "react-icons/fa6";
                 <motion.div
                   variants={itemVariants}
                   whileHover={{ y: -4 }}
-                  className={`p-5 rounded-lg border transition-all ${
-                    isDarkMode
-                      ? "bg-zinc-900/40 border-zinc-800/80 hover:border-zinc-700"
-                      : "bg-white border-slate-200 shadow-sm hover:border-slate-300"
-                  }`}
+                  className={`p-5 rounded-lg border transition-all ${isDarkMode
+                    ? "bg-zinc-900/40 border-zinc-800/80 hover:border-zinc-700"
+                    : "bg-white border-slate-200 shadow-sm hover:border-slate-300"
+                    }`}
                 >
                   <Rocket className="w-6 h-6 text-[#41a100] mb-3" />
                   <h3
-                    className={`font-semibold mb-1 ${
-                      isDarkMode ? "text-white" : "text-slate-900"
-                    }`}
+                    className={`font-semibold mb-1 ${isDarkMode ? "text-white" : "text-slate-900"
+                      }`}
                   >
-                    Founder & CEO
+                    Founder
                   </h3>
                   <p
-                    className={`text-xs ${
-                      isDarkMode ? "text-zinc-400" : "text-slate-600"
-                    }`}
+                    className={`text-xs ${isDarkMode ? "text-zinc-400" : "text-slate-600"
+                      }`}
                   >
                     Leading AXION Tech and educational impact through Winger Academy.
                   </p>
@@ -460,29 +517,83 @@ import { FaLinkedin, FaGithub, FaXTwitter } from "react-icons/fa6";
                 <motion.div
                   variants={itemVariants}
                   whileHover={{ y: -4 }}
-                  className={`p-5 rounded-lg border sm:col-span-2 md:col-span-1 transition-all ${
-                    isDarkMode
-                      ? "bg-zinc-900/40 border-zinc-800/80 hover:border-zinc-700"
-                      : "bg-white border-slate-200 shadow-sm hover:border-slate-300"
-                  }`}
+                  className={`p-5 rounded-lg border sm:col-span-2 md:col-span-1 transition-all ${isDarkMode
+                    ? "bg-zinc-900/40 border-zinc-800/80 hover:border-zinc-700"
+                    : "bg-white border-slate-200 shadow-sm hover:border-slate-300"
+                    }`}
                 >
                   <Award className="w-6 h-6 text-[#41a100] mb-3" />
                   <h3
-                    className={`font-semibold mb-1 ${
-                      isDarkMode ? "text-white" : "text-slate-900"
-                    }`}
+                    className={`font-semibold mb-1 ${isDarkMode ? "text-white" : "text-slate-900"
+                      }`}
                   >
                     Recognized Innovator
                   </h3>
                   <p
-                    className={`text-xs ${
-                      isDarkMode ? "text-zinc-400" : "text-slate-600"
-                    }`}
+                    className={`text-xs ${isDarkMode ? "text-zinc-400" : "text-slate-600"
+                      }`}
                   >
                     1st Place City Science Competition & Top 20 National Startup Finalist.
                   </p>
                 </motion.div>
               </motion.div>
+
+              {/* Photo Gallery Section */}
+              <motion.div
+                variants={itemVariants}
+                className={`pt-8 border-t ${isDarkMode ? "border-zinc-800/80" : "border-slate-200"
+                  }`}
+              >
+                <div className="flex items-center justify-between mb-4">
+                  <h3
+                    className={`text-sm font-medium uppercase tracking-wider ${isDarkMode ? "text-zinc-400" : "text-slate-500"
+                      }`}
+                  >
+                    Highlights & Activity
+                  </h3>
+                  <span className="text-xs font-mono text-[#41a100]">
+                    {galleryImages.length} Photos
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
+                  {galleryImages.map((imgPath, index) => (
+                    <motion.div
+                      key={index}
+                      whileHover={{ scale: 1.03 }}
+                      whileTap={{ scale: 0.97 }}
+                      onClick={() => setSelectedImgIndex(index)}
+                      className={`relative aspect-square rounded-lg overflow-hidden border cursor-pointer group transition-all ${isDarkMode
+                        ? "border-zinc-800 bg-zinc-900/50 hover:border-[#41a100]"
+                        : "border-slate-200 bg-slate-100 hover:border-[#41a100] shadow-sm"
+                        }`}
+                    >
+                      <Image
+                        src={imgPath}
+                        alt={`Highlight ${index + 1}`}
+                        fill
+                        className="object-cover transition-transform duration-300 group-hover:scale-110"
+                        sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, 20vw"
+                      />
+                      <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white">
+                        <Maximize2 className="w-5 h-5 text-emerald-400" />
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </motion.div>
+
+              {/* Bottom Call to Action: Next Page - Saying More */}
+              <div className="pt-8 flex justify-center">
+                <button
+                  onClick={() => handleTabClick("about")}
+                  className="group relative inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl bg-gradient-to-r from-[#41a100] to-emerald-600 text-white font-mono text-sm font-semibold shadow-lg hover:shadow-emerald-500/25 transition-all duration-300 hover:scale-105"
+                >
+                  <Sparkles className="w-5 h-5" />
+                  <span>Read More About Me </span>
+                  <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+                </button>
+              </div>
             </motion.div>
           )}
 
@@ -501,164 +612,224 @@ import { FaLinkedin, FaGithub, FaXTwitter } from "react-icons/fa6";
                   <User className="text-[#41a100] w-6 h-6 sm:w-7 sm:h-7" /> About Me
                 </h2>
                 <p
-                  className={`leading-relaxed text-sm sm:text-base ${
-                    isDarkMode ? "text-zinc-300" : "text-slate-700"
-                  }`}
+                  className={`leading-relaxed text-sm sm:text-base ${isDarkMode ? "text-zinc-300" : "text-slate-700"
+                    }`}
                 >
-                  I am Weldamlak Ayenew, a high school graduate from Saint Joseph School in Addis Ababa (Class of August 2026). 
-                  I am a Full-Stack AI Developer and Machine Learning Specialist. My technical focus involves building modern 
+                  I am Weldamlak Ayenew, a high school graduate from Saint Joseph School in Addis Ababa.
+                  I am a Full-Stack AI Developer and Machine Learning Specialist. My technical focus involves building modern
                   web applications using Next.js and combining them with Python-driven ML models for smart, real-world functionalities.
                 </p>
                 <p
-                  className={`leading-relaxed text-xs sm:text-sm mt-3 ${
-                    isDarkMode ? "text-zinc-400" : "text-slate-600"
-                  }`}
+                  className={`leading-relaxed text-xs sm:text-sm mt-3 ${isDarkMode ? "text-zinc-400" : "text-slate-600"
+                    }`}
                 >
-                  Beyond software engineering, my core passion is teaching and mentorship. I believe in leveraging education and 
+                  Beyond software engineering, my core passion is teaching and mentorship. I believe in leveraging education and
                   technology to empower underserved students and nurture bright minds in Ethiopia.
                 </p>
               </div>
 
-              {/* Specialized Training */}
+              {/* Honors & Awards */}
+              <div>
+                <h3 className="text-lg sm:text-xl font-semibold mb-6 flex items-center gap-2">
+                  <Award className="text-[#41a100] w-5 h-5" /> Honors & Awards
+                </h3>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                  {[
+                    {
+                      title: "1st Place Champion",
+                      subtitle: "Addis Ababa City-Wide Science & Technology Competition",
+                      images: ["/c1.jpg"],
+                      badge: "Champion",
+                    },
+                    {
+                      title: "1st Place Winner (Two Times)",
+                      subtitle: "Kirkos Subcity Science Fair",
+                      images: ["/c2.jpg", "/c3.jpg"],
+                      badge: "1st Place",
+                    },
+                    {
+                      title: "Top 20 Finalist",
+                      subtitle: "Bruh Federal/National Startup Competition",
+                      images: ["/c4.jpg", "/c5.jpg"],
+                      badge: "National Finalist",
+                    },
+                    {
+                      title: "1st Place Winner",
+                      subtitle: "Digital Literacy & Advocacy Program (ENG Ethiopia & Meta)",
+                      images: ["/c6.jpg"],
+                      badge: "Winner",
+                    },
+                  ].map((award, idx) => (
+                    <div
+                      key={idx}
+                      className={`group p-4 sm:p-5 rounded-xl border transition-all duration-300 hover:border-[#41a100]/50 hover:shadow-lg flex flex-col justify-between space-y-4 ${isDarkMode
+                        ? "bg-zinc-900/50 border-zinc-800/80 hover:bg-zinc-900/80"
+                        : "bg-white border-slate-200 shadow-sm hover:shadow-slate-200"
+                        }`}
+                    >
+                      {/* Top Header & Title */}
+                      <div className="space-y-2">
+                        <div className="flex items-center justify-between gap-2">
+                          <div className="flex items-center gap-2">
+                            <CheckCircle2 className="w-4 h-4 text-[#41a100] shrink-0" />
+                            <span className="text-xs font-mono font-semibold text-[#41a100] uppercase tracking-wider">
+                              {award.title}
+                            </span>
+                          </div>
+                          <span
+                            className={`text-[10px] font-mono px-2 py-0.5 rounded-full border ${isDarkMode
+                              ? "bg-[#41a100]/10 text-[#41a100] border-[#41a100]/30"
+                              : "bg-[#41a100]/10 text-[#2d7000] border-[#41a100]/30"
+                              }`}
+                          >
+                            {award.badge}
+                          </span>
+                        </div>
+
+                        <h4
+                          className={`font-semibold text-sm sm:text-base leading-snug ${isDarkMode ? "text-zinc-100" : "text-slate-900"
+                            }`}
+                        >
+                          {award.subtitle}
+                        </h4>
+                      </div>
+
+                      {/* Dynamic Image Container */}
+                      <div
+                        className={`grid gap-2 rounded-lg p-1.5 border ${isDarkMode
+                          ? "bg-zinc-950/60 border-zinc-800/60"
+                          : "bg-slate-50 border-slate-200/80"
+                          } ${award.images.length > 1 ? "grid-cols-2" : "grid-cols-1"}`}
+                      >
+                        {award.images.map((imgSrc, imgIdx) => (
+                          <div key={imgIdx} className="flex flex-col space-y-1.5">
+                            {/* Clickable Image (Triggers Full View) */}
+                            <button
+                              type="button"
+                              onClick={() => setSelectedImage(imgSrc)}
+                              title="Click to view image"
+                              className="relative h-36 sm:h-40 w-full rounded-md overflow-hidden bg-zinc-950/20 group/img block text-left cursor-pointer"
+                            >
+                              <Image
+                                src={imgSrc}
+                                alt={`${award.subtitle} proof ${imgIdx + 1}`}
+                                fill
+                                className="object-cover transition-transform duration-500 group-hover/img:scale-105"
+                              />
+                              <div className="absolute inset-0 bg-black/30 opacity-0 group-hover/img:opacity-100 transition-opacity duration-200 flex items-center justify-center">
+                                <span className="text-white text-[11px] font-mono bg-black/70 px-2 py-1 rounded border border-white/20">
+                                  View Image
+                                </span>
+                              </div>
+                            </button>
+
+                            {/* Google Translate Image Link */}
+                            <a
+                              href="https://translate.google.com/?sl=auto&tl=en&op=images"
+                              target="_self"
+                              className={`text-[10px] font-mono flex items-center justify-center gap-1 py-1 rounded transition-colors ${isDarkMode
+                                ? "text-zinc-400 hover:text-[#41a100] hover:bg-zinc-800/60"
+                                : "text-slate-500 hover:text-[#41a100] hover:bg-slate-200/60"
+                                }`}
+                            >
+                              <span>Translate with Google Translate</span>
+                              <ExternalLink className="w-2.5 h-2.5 shrink-0" />
+                            </a>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Backdrop Overlay - Clicking outside the image sets selectedImage to null */}
+                {selectedImage && (
+                  <div
+                    onClick={() => setSelectedImage(null)}
+                    className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm cursor-pointer"
+                  >
+                    {/* Stopping propagation on image box so clicking inside image won't close it */}
+                    <div
+                      onClick={(e) => e.stopPropagation()}
+                      className="relative max-w-4xl max-h-[85vh] w-full h-[80vh] cursor-default"
+                    >
+                      <Image
+                        src={selectedImage}
+                        alt="Award Preview"
+                        fill
+                        className="object-contain"
+                      />
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Core Skills Matrix */}
               <div>
                 <h3 className="text-lg sm:text-xl font-semibold mb-4 flex items-center gap-2">
-                  <Cpu className="text-[#41a100] w-5 h-5" /> Key Highlights & Specialized Training
+                  <Code className="text-[#41a100] w-5 h-5" /> Technical Skills Matrix
                 </h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div
-                    className={`p-4 sm:p-5 rounded-lg border space-y-2 ${
-                      isDarkMode
-                        ? "bg-zinc-900/50 border-zinc-800"
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+                  {[
+                    {
+                      category: "Frontend & Web",
+                      skills: ["Next.js", "React", "Tailwind CSS", "TypeScript", "JavaScript"],
+                    },
+                    {
+                      category: "AI & Data Science",
+                      skills: ["Python", "Pandas", "NumPy", "Plotly", "Pygame", "Scikit-Learn"],
+                    },
+                    {
+                      category: "Robotics & Hardware",
+                      skills: ["C++", "Arduino", "Embedded Systems", "Sensors & IoT"],
+                    },
+                    {
+                      category: "Tools & Backend",
+                      skills: ["Supabase", "Git & GitHub", "Vercel", "VS Code", "Linux / Kali"],
+                    },
+                  ].map((group, i) => (
+                    <div
+                      key={i}
+                      className={`p-4 rounded-lg border space-y-3 ${isDarkMode
+                        ? "bg-zinc-900/40 border-zinc-800"
                         : "bg-white border-slate-200 shadow-sm"
-                    }`}
-                  >
-                    <span className="text-xs font-mono text-[#41a100]">2026</span>
-                    <h4
-                      className={`font-medium text-sm sm:text-base ${
-                        isDarkMode ? "text-white" : "text-slate-900"
-                      }`}
+                        }`}
                     >
-                      Ethiopian Artificial Intelligence Institute (EAII) Summer Camp
-                    </h4>
-                    <p
-                      className={`text-xs ${
-                        isDarkMode ? "text-zinc-400" : "text-slate-600"
-                      }`}
-                    >
-                      Selected for the Machine Learning track to advance skills in core AI technologies.
-                    </p>
-                  </div>
-
-                  <div
-                    className={`p-4 sm:p-5 rounded-lg border space-y-2 ${
-                      isDarkMode
-                        ? "bg-zinc-900/50 border-zinc-800"
-                        : "bg-white border-slate-200 shadow-sm"
-                    }`}
-                  >
-                    <span className="text-xs font-mono text-[#41a100]">2025</span>
-                    <h4
-                      className={`font-medium text-sm sm:text-base ${
-                        isDarkMode ? "text-white" : "text-slate-900"
-                      }`}
-                    >
-                      INSA Summer Camp (Embedded Systems)
-                    </h4>
-                    <p
-                      className={`text-xs ${
-                        isDarkMode ? "text-zinc-400" : "text-slate-600"
-                      }`}
-                    >
-                      One of 40 students accepted into Robotics & Electrical Engineering. Selected as 1 of 4 students to present a final project directly to the head of the institute.
-                    </p>
-                  </div>
-
-                  <div
-                    className={`p-4 sm:p-5 rounded-lg border space-y-2 ${
-                      isDarkMode
-                        ? "bg-zinc-900/50 border-zinc-800"
-                        : "bg-white border-slate-200 shadow-sm"
-                    }`}
-                  >
-                    <span className="text-xs font-mono text-[#41a100]">Internship</span>
-                    <h4
-                      className={`font-medium text-sm sm:text-base ${
-                        isDarkMode ? "text-white" : "text-slate-900"
-                      }`}
-                    >
-                      CodeAlpha
-                    </h4>
-                    <p
-                      className={`text-xs ${
-                        isDarkMode ? "text-zinc-400" : "text-slate-600"
-                      }`}
-                    >
-                      Machine Learning Intern building applied AI and Python projects.
-                    </p>
-                  </div>
-
-                  <div
-                    className={`p-4 sm:p-5 rounded-lg border space-y-2 ${
-                      isDarkMode
-                        ? "bg-zinc-900/50 border-zinc-800"
-                        : "bg-white border-slate-200 shadow-sm"
-                    }`}
-                  >
-                    <span className="text-xs font-mono text-[#41a100]">Mentorship</span>
-                    <h4
-                      className={`font-medium text-sm sm:text-base ${
-                        isDarkMode ? "text-white" : "text-slate-900"
-                      }`}
-                    >
-                      Sci-Mi Mentorship
-                    </h4>
-                    <p
-                      className={`text-xs ${
-                        isDarkMode ? "text-zinc-400" : "text-slate-600"
-                      }`}
-                    >
-                      Completed specialized Computer Science studies under the Sci-Mi summer mentorship program.
-                    </p>
-                  </div>
+                      <h4 className="text-xs font-mono font-bold text-[#41a100] uppercase tracking-wider">
+                        {group.category}
+                      </h4>
+                      <div className="flex flex-wrap gap-1.5">
+                        {group.skills.map((skill) => (
+                          <span
+                            key={skill}
+                            className={`text-xs px-2 py-1 rounded font-mono ${isDarkMode
+                              ? "bg-zinc-800 text-zinc-300"
+                              : "bg-slate-100 text-slate-800"
+                              }`}
+                          >
+                            {skill}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
 
-              {/* Honors & Awards */}
-              <div>
-                <h3 className="text-lg sm:text-xl font-semibold mb-4 flex items-center gap-2">
-                  <Award className="text-[#41a100] w-5 h-5" /> Honors & Awards
-                </h3>
-                <ul
-                  className={`grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs sm:text-sm font-mono ${
-                    isDarkMode ? "text-zinc-300" : "text-slate-700"
-                  }`}
+              {/* Bottom Call to Action Button */}
+              <div className="pt-8 flex justify-center">
+                <button
+                  onClick={() => handleTabClick("experience")}
+                  className="group relative inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl bg-[#41a100] hover:bg-[#4cc000] text-white font-mono text-sm font-semibold shadow-lg transition-all duration-300 hover:scale-105"
                 >
-                  {[
-                    "1st Place Champion – Addis Ababa City-Wide Science & Technology Competition (2026)",
-                    "1st Place Winner – Kirkos Subcity Science Fair (2025 & 2026)",
-                    "Top 20 Finalist – Bruh Federal/National Startup Competition (2025)",
-                    "1st Place Winner – Digital Literacy & Advocacy Program (ENG Ethiopia & Meta, 2024)",
-                    "Top 5 Best Research Papers – Saint Joseph School (Grade 11 Research, 2025)",
-                    "Leadership Certification – Youth Ambassadors Advisory Role (ENG Ethiopia, 2025)",
-                  ].map((award, idx) => (
-                    <li
-                      key={idx}
-                      className={`flex items-start gap-2.5 p-3 rounded-md border ${
-                        isDarkMode
-                          ? "bg-zinc-900/30 border-zinc-800/60"
-                          : "bg-white border-slate-200 shadow-sm"
-                      }`}
-                    >
-                      <CheckCircle2 className="w-4 h-4 text-[#41a100] shrink-0 mt-0.5" />
-                      <span>{award}</span>
-                    </li>
-                  ))}
-                </ul>
+                  <Sparkles className="w-5 h-5" />
+                  <span>Next</span>
+                  <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+                </button>
               </div>
             </motion.div>
-          )}
-
-          {/* EXPERIENCE TAB */}
+          )}{/* EXPERIENCE TAB */}
           {activeTab === "experience" && (
             <motion.div
               key="experience"
@@ -666,195 +837,155 @@ import { FaLinkedin, FaGithub, FaXTwitter } from "react-icons/fa6";
               animate="visible"
               exit="exit"
               variants={tabTransition}
-              className="space-y-10"
+              className="space-y-8"
             >
-              <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-6 flex items-center gap-3">
-                <Briefcase className="text-[#41a100] w-6 h-6 sm:w-7 sm:h-7" /> Experience & Leadership
-              </h2>
+              {/* Section Header */}
+              <div>
+                <h2
+                  className={`text-2xl sm:text-3xl font-extrabold tracking-tight mb-2 flex items-center gap-3 ${isDarkMode ? "text-white" : "text-slate-950"
+                    }`}
+                >
+                  <Briefcase className="text-[#41a100] w-6 h-6 sm:w-7 sm:h-7" /> Leadership & Experience
+                </h2>
+                <p className={`text-xs sm:text-sm font-mono ${isDarkMode ? "text-zinc-400" : "text-slate-600"}`}>
+                  Building technology initiatives and driving educational impact.
+                </p>
+              </div>
 
-              <div
-                className={`space-y-8 border-l pl-4 sm:pl-6 ml-2 ${
-                  isDarkMode ? "border-zinc-800" : "border-slate-300"
-                }`}
-              >
-                {/* Section 1 */}
-                <div className="relative space-y-2 sm:space-y-3">
-                  <div className="absolute -left-[21px] sm:-left-[31px] top-1.5 w-3 h-3 rounded-full bg-[#41a100]" />
-                  <span className="text-xs font-mono text-[#41a100]">Jan 2026 – Present</span>
-                  <h3
-                    className={`text-lg sm:text-xl font-semibold ${
-                      isDarkMode ? "text-white" : "text-slate-900"
-                    }`}
-                  >
-                    Startup Founder & Tech Innovator
-                  </h3>
-                  <div
-                    className={`text-xs sm:text-sm space-y-2 ${
-                      isDarkMode ? "text-zinc-300" : "text-slate-700"
-                    }`}
-                  >
-                    <p>
-                      <strong className={isDarkMode ? "text-white" : "text-slate-900"}>
-                        AXION Tech (Founder & CEO):
-                      </strong>{" "}
-                      Founded a technology initiative focused on scalable, high-impact innovations in Ethiopia.
-                    </p>
-                    <p>
-                      <strong className={isDarkMode ? "text-white" : "text-slate-900"}>
-                        Focus2018:
-                      </strong>{" "}
-                      Developed and deployed a national exam preparation ecosystem helping Ethiopian high school students prepare for national examinations.
-                    </p>
-                    <p>
-                      <strong className={isDarkMode ? "text-white" : "text-slate-900"}>
-                        Bruh National Business Competition:
-                      </strong>{" "}
-                      Placed 2nd at City Level (June 2025), awarded 100,000 ETB funding by the Addis Ababa City Administration Labor and Skills Bureau. Selected for intensive business training by EDI and ranked Top 20 nationwide out of 250+ entries.
-                    </p>
-                  </div>
-                </div>
+              {/* Timeline Container */}
+              <div className="space-y-8 relative pl-16 sm:pl-20">
+                {/* Vertical Line connected precisely from center of first circle to center of last circle */}
+                <div className="absolute left-7 sm:left-8 top-7 bottom-69 w-0.5 bg-[#41a100]/50 -translate-x-1/2" />
 
-                {/* Section 2 */}
-                <div className="relative space-y-2 sm:space-y-3">
-                  <div
-                    className={`absolute -left-[21px] sm:-left-[31px] top-1.5 w-3 h-3 rounded-full ${
-                      isDarkMode ? "bg-zinc-700" : "bg-slate-300"
-                    }`}
-                  />
-                  <span className="text-xs font-mono text-[#41a100]">2023 – Present</span>
-                  <h3
-                    className={`text-lg sm:text-xl font-semibold ${
-                      isDarkMode ? "text-white" : "text-slate-900"
-                    }`}
-                  >
-                    Teaching, Volunteer Work & Community Impact
-                  </h3>
-                  <div
-                    className={`text-xs sm:text-sm space-y-2 ${
-                      isDarkMode ? "text-zinc-300" : "text-slate-700"
-                    }`}
-                  >
-                    <p>
-                      <strong className={isDarkMode ? "text-white" : "text-slate-900"}>
-                        Winger Academy Initiative (Founder):
-                      </strong>{" "}
-                      Founded an educational initiative supporting underserved students with tutoring and learning resources.
-                    </p>
-                    <p>
-                      <strong className={isDarkMode ? "text-white" : "text-slate-900"}>
-                        Wegene Foundation (Volunteer Educator):
-                      </strong>{" "}
-                      Teaching Math, English, and Science (Physics, Chemistry, Biology) to Grades 9–12 students.
-                    </p>
-                    <p>
-                      <strong className={isDarkMode ? "text-white" : "text-slate-900"}>
-                        Saint Joseph School Summer Camp (2026):
-                      </strong>{" "}
-                      Instructed Robotics & Programming; managed camp registration portal and recruitment.
-                    </p>
-                    <p>
-                      <strong className={isDarkMode ? "text-white" : "text-slate-900"}>
-                        Private Tutoring (3+ Years):
-                      </strong>{" "}
-                      Hands-on tutoring across Mathematics, Science, and English.
-                    </p>
-                  </div>
-                </div>
+                {[
+                  {
+                    role: "Founder & Lead Developer",
+                    organization: "AXION Tech",
+                    period: "Jan 2026 - Present",
+                    image: "/R1.jpg",
+                    desc: "Engineered the AXION Smart Wheelchair prototype featuring Arduino microcontroller integration, custom mobile app controls, sensor obstacle detection, camera tracking, and solar auxiliary charging.",
+                  },
+                  {
+                    role: "Founder & Director",
+                    organization: "Winger Academy",
+                    period: "Apr 2026 - Present",
+                    image: "/R2.jpg",
+                    desc: "Established an academic outreach platform designed to provide instruction, peer mentorship, and STEM resources to high school students across Ethiopia.",
+                  },
+                  {
+                    role: "Volunteer Teacher & Mentor",
+                    organization: "Wegani Foundation",
+                    period: "July 2026",
+                    image: "/R3.jpg",
+                    desc: "Taught mathematics, science, and English to high school students, mentoring young minds and creating structured learning materials.",
+                  },
+                  {
+                    role: "STEM Leader & Tech Educator",
+                    organization: "Saint Joseph School",
+                    period: "2024 - 2026",
+                    image: "/R4.jpg",
+                    desc: "Served in key student leadership and technology roles at Saint Joseph School, driving STEM initiatives, managing school-wide extracurricular activities, and teaching robotics and web development during the summer internship program.",
+                    highlights: [
+                      { title: "STEM Club President", period: "2025 - 2026" },
+                      { title: "Innovation Club President", period: "2024 - 2025" },
+                      { title: "Web Developer & Summer Camp Robotics Teacher", period: "July 2026" },
+                    ],
+                    link: {
+                      url: "https://stemsjs.netlify.app/",
+                      label: "Visit SJS STEAM Club Website",
+                    },
+                  },
+                ].map((exp, idx) => (
+                  <div key={idx} className="relative group">
+                    {/* Circular Image Node centered over vertical line */}
+                    <div className="absolute left-[-36px] sm:left-[-48px] top-0 w-14 h-14 sm:w-16 sm:h-16 rounded-full border-2 border-[#41a100] overflow-hidden bg-zinc-950 shadow-lg transition-transform duration-300 group-hover:scale-110 z-10 shrink-0">
+                      <Image
+                        src={exp.image}
+                        alt={`${exp.organization} logo`}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
 
-                {/* Section 3 */}
-                <div className="relative space-y-2 sm:space-y-3">
-                  <div
-                    className={`absolute -left-[21px] sm:-left-[31px] top-1.5 w-3 h-3 rounded-full ${
-                      isDarkMode ? "bg-zinc-700" : "bg-slate-300"
-                    }`}
-                  />
-                  <span className="text-xs font-mono text-[#41a100]">2024 – 2025</span>
-                  <h3
-                    className={`text-lg sm:text-xl font-semibold ${
-                      isDarkMode ? "text-white" : "text-slate-900"
-                    }`}
-                  >
-                    Advocacy & Digital Literacy (ENG Ethiopia & Meta)
-                  </h3>
-                  <div
-                    className={`text-xs sm:text-sm space-y-2 ${
-                      isDarkMode ? "text-zinc-300" : "text-slate-700"
-                    }`}
-                  >
-                    <p>
-                      <strong className={isDarkMode ? "text-white" : "text-slate-900"}>
-                        Youth Ambassador (2024):
-                      </strong>{" "}
-                      Placed 1st in Digital Literacy & Advocacy Program sponsored by Meta. Co-organized 1st Ethiopian Digital Literacy Olympiad and authored digital literacy handbook.
-                    </p>
-                    <p>
-                      <strong className={isDarkMode ? "text-white" : "text-slate-900"}>
-                        Youth Ambassadors Advisory Team (2025):
-                      </strong>{" "}
-                      Appointed advisor to mentor new ambassadors for digital literacy campaigns reaching 1M+ individuals.
-                    </p>
-                  </div>
-                </div>
+                    {/* Experience Card */}
+                    <div
+                      className={`p-5 sm:p-6 rounded-xl border transition-all duration-300 group-hover:border-[#41a100]/40 ${isDarkMode
+                        ? "bg-zinc-900/40 border-zinc-800"
+                        : "bg-white border-slate-200 shadow-sm"
+                        }`}
+                    >
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-2 gap-1">
+                        <h3
+                          className={`font-bold text-base sm:text-lg ${isDarkMode ? "text-white" : "text-slate-950"
+                            }`}
+                        >
+                          {exp.role}
+                        </h3>
+                        <span className="text-xs font-mono text-[#41a100] shrink-0 font-semibold">
+                          {exp.period}
+                        </span>
+                      </div>
+                      <p className="text-xs font-mono text-[#41a100] mb-3 font-semibold">
+                        {exp.organization}
+                      </p>
+                      <p className={`text-xs sm:text-sm leading-relaxed mb-4 ${isDarkMode ? "text-zinc-400" : "text-slate-600"}`}>
+                        {exp.desc}
+                      </p>
 
-                {/* Section 4 */}
-                <div className="relative space-y-2 sm:space-y-3">
-                  <div
-                    className={`absolute -left-[21px] sm:-left-[31px] top-1.5 w-3 h-3 rounded-full ${
-                      isDarkMode ? "bg-zinc-700" : "bg-slate-300"
-                    }`}
-                  />
-                  <span className="text-xs font-mono text-[#41a100]">Space Science</span>
-                  <h3
-                    className={`text-lg sm:text-xl font-semibold ${
-                      isDarkMode ? "text-white" : "text-slate-900"
-                    }`}
-                  >
-                    Space Science & Astronomy (ESSS)
-                  </h3>
-                  <div
-                    className={`text-xs sm:text-sm space-y-2 ${
-                      isDarkMode ? "text-zinc-300" : "text-slate-700"
-                    }`}
-                  >
-                    <p>
-                      Active youth member, volunteer, and citizen science researcher with the Ethiopian Space Science Society.
-                    </p>
-                    <p>
-                      Participated in outreach on Satellite Tech and Astrophysics. Delivered keynote speeches on Cosmology and the Big Bang Theory. Participated in international asteroid search campaigns analyzing astronomical datasets.
-                    </p>
-                  </div>
-                </div>
+                      {/* Sub-roles / Highlights */}
+                      {exp.highlights && (
+                        <div className="mb-4 space-y-2">
+                          {exp.highlights.map((item, hIdx) => (
+                            <div
+                              key={hIdx}
+                              className={`flex items-center justify-between px-3 py-2 rounded-lg border text-xs font-mono ${isDarkMode
+                                ? "bg-zinc-950/60 border-zinc-800/80 text-zinc-300"
+                                : "bg-slate-50 border-slate-200 text-slate-700"
+                                }`}
+                            >
+                              <span className="font-medium flex items-center gap-2">
+                                <span className="w-1.5 h-1.5 rounded-full bg-[#41a100]" />
+                                {item.title}
+                              </span>
+                              <span className="text-[#41a100] font-semibold text-[11px]">
+                                {item.period}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                      )}
 
-                {/* Section 5 */}
-                <div className="relative space-y-2 sm:space-y-3">
-                  <div
-                    className={`absolute -left-[21px] sm:-left-[31px] top-1.5 w-3 h-3 rounded-full ${
-                      isDarkMode ? "bg-zinc-700" : "bg-slate-300"
-                    }`}
-                  />
-                  <span className="text-xs font-mono text-[#41a100]">Grades 6–8</span>
-                  <h3
-                    className={`text-lg sm:text-xl font-semibold ${
-                      isDarkMode ? "text-white" : "text-slate-900"
-                    }`}
-                  >
-                    Early Technology Roots
-                  </h3>
-                  <div
-                    className={`text-xs sm:text-sm space-y-2 ${
-                      isDarkMode ? "text-zinc-300" : "text-slate-700"
-                    }`}
-                  >
-                    <p>
-                      Built electrical circuits for exhibitions; won 1st place to become Head of Science & Tech Club in Grade 7 at Dejazimach Wondirad Primary School. Built a mobile-controlled wireless robot in Grade 8, presenting to 1,000+ students.
-                    </p>
+                      {/* External Website Button */}
+                      {exp.link && (
+                        <a
+                          href={exp.link.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 text-xs font-mono font-semibold text-[#41a100] hover:text-[#4cc000] bg-[#41a100]/10 hover:bg-[#41a100]/20 border border-[#41a100]/30 px-3.5 py-2 rounded-lg transition-colors"
+                        >
+                          <Globe className="w-3.5 h-3.5" />
+                          <span>{exp.link.label}</span>
+                          <ExternalLink className="w-3 h-3 ml-0.5 opacity-80" />
+                        </a>
+                      )}
+                    </div>
                   </div>
-                </div>
+                ))}
+              </div>
+
+              {/* CTA Navigation Button */}
+              <div className="pt-8 flex justify-center">
+                <button
+                  onClick={() => handleTabClick("projects")}
+                  className="group relative inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl bg-[#41a100] hover:bg-[#4cc000] text-white font-mono text-sm font-semibold shadow-lg transition-all duration-300 hover:scale-105"
+                >
+                  <Sparkles className="w-5 h-5" />
+                  <span>Next</span>
+                  <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+                </button>
               </div>
             </motion.div>
-          )}
-
-          {/* PROJECTS TAB */}
+          )}{/* RECENT WORK / PROJECTS TAB */}
           {activeTab === "projects" && (
             <motion.div
               key="projects"
@@ -862,354 +993,561 @@ import { FaLinkedin, FaGithub, FaXTwitter } from "react-icons/fa6";
               animate="visible"
               exit="exit"
               variants={tabTransition}
-              className="space-y-6 sm:space-y-8"
+              className="space-y-6"
             >
+              {/* Section Header */}
               <div>
-                <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-2 flex items-center gap-3">
-                  <Code className="text-[#41a100] w-6 h-6 sm:w-7 sm:h-7" /> Featured Projects
+                <h2 className="text-xl sm:text-2xl font-bold tracking-tight mb-1 flex items-center gap-2">
+                  <Rocket className="text-[#41a100] w-5 h-5 sm:w-6 sm:h-6" /> Featured Works
                 </h2>
-                <p
-                  className={`text-xs sm:text-sm ${
-                    isDarkMode ? "text-zinc-400" : "text-slate-600"
-                  }`}
-                >
-                  Selected robotics, full-stack, and machine learning software solutions.
+                <p className={`text-xs sm:text-sm font-mono ${isDarkMode ? "text-zinc-400" : "text-slate-600"}`}>
+                  A showcase of hardware, full-stack web platforms, data models, and interactive software.
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
-                {/* AXION Smart Wheelchair */}
-                <motion.div
-                  whileHover={{ y: -4 }}
-                  className={`p-5 sm:p-6 rounded-lg space-y-3 flex flex-col justify-between border transition-all ${
-                    isDarkMode
-                      ? "bg-zinc-900/60 border-zinc-800 hover:border-zinc-700"
-                      : "bg-white border-slate-200 hover:border-slate-300 shadow-sm"
-                  }`}
-                >
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-mono text-[#41a100]">AI & Assistive Robotics</span>
-                      <Sparkles className="w-4 h-4 text-[#41a100]" />
-                    </div>
-                    <h3
-                      className={`text-base sm:text-lg font-bold ${
-                        isDarkMode ? "text-white" : "text-slate-900"
-                      }`}
-                    >
-                      AXION Smart Wheelchair
-                    </h3>
-                    <p
-                      className={`text-xs leading-relaxed ${
-                        isDarkMode ? "text-zinc-300" : "text-slate-600"
-                      }`}
-                    >
-                      Assistive mobility device featuring a real-time AI camera system (TensorFlow), joystick/app control, automatic navigation, obstacle avoidance, voice feedback, GPS tracking, and health monitoring.
-                    </p>
-                  </div>
+              {/* Compact 2-Column Responsive Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
+                {[
+                  {
+                    title: "AXION Smart Wheelchair",
+                    category: "Robotics & C++",
+                    tech: ["C++", "Arduino", "Next.js", "IoT", "Solar"],
+                    image: "/P1.jpg",
+                    desc: "Intelligent mobility wheelchair featuring obstacle avoidance, solar power management, camera tracking, and a web control interface.",
+                    links: [
+                      { label: "AXION Web", url: "https://axionet.netlify.app/" },
+                      { label: "Details", url: "https://project-axion.vercel.app/" },
+                    ],
+                  },
+                  {
+                    title: "Winger Academy",
+                    category: "Full-Stack Web",
+                    tech: ["Next.js", "React", "Tailwind", "Supabase", "TS"],
+                    image: "/P2.jpg",
+                    desc: "Educational hub empowering Ethiopian students with study guides, coursework tracking, and academic mentor connections.",
+                    links: [
+                      { label: "Platform", url: "https://wingeracademy.netlify.app/" },
+                    ],
+                  },
+                  {
+                    title: "ML Analytics Suite",
+                    category: "Data Science",
+                    tech: ["Python", "Pandas", "NumPy", "Plotly", "Scikit-Learn"],
+                    image: "/P3.jpg",
+                    desc: "Interactive economic and data visualization models designed to analyze structural trends and predict growth metrics.",
+                    links: [
+                      { label: "Data Suite", url: "https://weld-data.vercel.app/" },
+                    ],
+                  },
+                  {
+                    title: "2D Arcade Engine",
+                    category: "Game Dev",
+                    tech: ["Python", "Pygame", "OOP", "Physics"],
+                    image: "/P4.jpg",
+                    desc: "Custom 2D endless runner built with physics mechanics, dynamic obstacle generation, custom sprites, and score tracking.",
+                    links: [
+                      { label: "GitHub Repo", url: "https://github.com/weldamlak/python-game.git" },
+                    ],
+                  },
+                ].map((project, idx) => (
                   <div
-                    className={`pt-3 flex flex-wrap gap-1.5 text-[10px] font-mono ${
-                      isDarkMode ? "text-zinc-400" : "text-slate-600"
-                    }`}
+                    key={idx}
+                    className={`group flex flex-col rounded-xl border overflow-hidden transition-all duration-300 hover:border-[#41a100]/50 ${isDarkMode
+                        ? "bg-zinc-900/40 border-zinc-800 shadow-md"
+                        : "bg-white border-slate-200 shadow-sm"
+                      }`}
                   >
-                    <span className={isDarkMode ? "bg-zinc-800 px-2 py-1 rounded" : "bg-slate-100 px-2 py-1 rounded border border-slate-200"}>
-                      Python
-                    </span>
-                    <span className={isDarkMode ? "bg-zinc-800 px-2 py-1 rounded" : "bg-slate-100 px-2 py-1 rounded border border-slate-200"}>
-                      TensorFlow
-                    </span>
-                    <span className={isDarkMode ? "bg-zinc-800 px-2 py-1 rounded" : "bg-slate-100 px-2 py-1 rounded border border-slate-200"}>
-                      Embedded Systems
-                    </span>
-                  </div>
-                </motion.div>
-
-                {/* Focus2018 */}
-                <motion.div
-                  whileHover={{ y: -4 }}
-                  className={`p-5 sm:p-6 rounded-lg space-y-3 flex flex-col justify-between border transition-all ${
-                    isDarkMode
-                      ? "bg-zinc-900/60 border-zinc-800 hover:border-zinc-700"
-                      : "bg-white border-slate-200 hover:border-slate-300 shadow-sm"
-                  }`}
-                >
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-mono text-[#41a100]">EdTech Platform</span>
-                      <Globe className="w-4 h-4 text-[#41a100]" />
+                    {/* Card Image Banner */}
+                    <div className="relative w-full h-40 sm:h-44 overflow-hidden bg-zinc-950 shrink-0">
+                      <Image
+                        src={project.image}
+                        alt={`${project.title} preview`}
+                        fill
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                      <span className="absolute top-2.5 left-2.5 text-[10px] font-mono font-semibold text-white bg-[#41a100] px-2.5 py-0.5 rounded-full uppercase tracking-wider shadow">
+                        {project.category}
+                      </span>
                     </div>
-                    <h3
-                      className={`text-base sm:text-lg font-bold ${
-                        isDarkMode ? "text-white" : "text-slate-900"
-                      }`}
-                    >
-                      Focus2018 Exam Prep
-                    </h3>
-                    <p
-                      className={`text-xs leading-relaxed ${
-                        isDarkMode ? "text-zinc-300" : "text-slate-600"
-                      }`}
-                    >
-                      National exam preparation ecosystem built to help Ethiopian high school students master national examination subjects through structured practice and performance analytics.
-                    </p>
-                  </div>
-                  <div
-                    className={`pt-3 flex flex-wrap gap-1.5 text-[10px] font-mono ${
-                      isDarkMode ? "text-zinc-400" : "text-slate-600"
-                    }`}
-                  >
-                    <span className={isDarkMode ? "bg-zinc-800 px-2 py-1 rounded" : "bg-slate-100 px-2 py-1 rounded border border-slate-200"}>
-                      Next.js
-                    </span>
-                    <span className={isDarkMode ? "bg-zinc-800 px-2 py-1 rounded" : "bg-slate-100 px-2 py-1 rounded border border-slate-200"}>
-                      Tailwind CSS
-                    </span>
-                    <span className={isDarkMode ? "bg-zinc-800 px-2 py-1 rounded" : "bg-slate-100 px-2 py-1 rounded border border-slate-200"}>
-                      Node.js
-                    </span>
-                  </div>
-                </motion.div>
 
-                {/* PULSE Ethiopia */}
-                <motion.div
-                  whileHover={{ y: -4 }}
-                  className={`p-5 sm:p-6 rounded-lg space-y-3 flex flex-col justify-between border transition-all ${
-                    isDarkMode
-                      ? "bg-zinc-900/60 border-zinc-800 hover:border-zinc-700"
-                      : "bg-white border-slate-200 hover:border-slate-300 shadow-sm"
-                  }`}
-                >
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-mono text-[#41a100]">Data Analytics</span>
-                      <ExternalLink className="w-4 h-4 text-[#41a100]" />
+                    {/* Card Body */}
+                    <div className="p-4 sm:p-5 flex flex-col flex-1 justify-between gap-3">
+                      <div>
+                        <h3 className="text-base sm:text-lg font-bold mb-1">{project.title}</h3>
+                        <p className={`text-xs sm:text-sm leading-relaxed ${isDarkMode ? "text-zinc-400" : "text-slate-600"}`}>
+                          {project.desc}
+                        </p>
+                      </div>
+
+                      <div className="space-y-3 pt-1">
+                        {/* Tech Badges */}
+                        <div className="flex flex-wrap gap-1.5">
+                          {project.tech.map((t) => (
+                            <span
+                              key={t}
+                              className={`text-[10px] sm:text-[11px] font-mono px-2 py-0.5 rounded font-medium ${isDarkMode
+                                  ? "bg-zinc-800 text-zinc-300 border border-zinc-700/50"
+                                  : "bg-slate-100 text-slate-700 border border-slate-200"
+                                }`}
+                            >
+                              {t}
+                            </span>
+                          ))}
+                        </div>
+
+                        {/* Action Links */}
+                        <div className="flex flex-wrap gap-2 pt-2 border-t border-zinc-800/40">
+                          {project.links.map((link, lIdx) => (
+                            <a
+                              key={lIdx}
+                              href={link.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1.5 text-xs font-mono font-semibold text-[#41a100] hover:text-[#4cc000] bg-[#41a100]/10 hover:bg-[#41a100]/20 border border-[#41a100]/30 px-3 py-1.5 rounded-lg transition-all"
+                            >
+                              <Globe className="w-3.5 h-3.5" />
+                              <span>{link.label}</span>
+                              <ExternalLink className="w-3 h-3 opacity-80" />
+                            </a>
+                          ))}
+                        </div>
+                      </div>
                     </div>
-                    <h3
-                      className={`text-base sm:text-lg font-bold ${
-                        isDarkMode ? "text-white" : "text-slate-900"
-                      }`}
-                    >
-                      PULSE Ethiopia
-                    </h3>
-                    <p
-                      className={`text-xs leading-relaxed ${
-                        isDarkMode ? "text-zinc-300" : "text-slate-600"
-                      }`}
-                    >
-                      Centralized educational data analytics platform aggregating and evaluating academic metrics to help institutions identify performance gaps.
-                    </p>
                   </div>
-                  <div
-                    className={`pt-3 flex flex-wrap gap-1.5 text-[10px] font-mono ${
-                      isDarkMode ? "text-zinc-400" : "text-slate-600"
-                    }`}
-                  >
-                    <span className={isDarkMode ? "bg-zinc-800 px-2 py-1 rounded" : "bg-slate-100 px-2 py-1 rounded border border-slate-200"}>
-                      Next.js
-                    </span>
-                    <span className={isDarkMode ? "bg-zinc-800 px-2 py-1 rounded" : "bg-slate-100 px-2 py-1 rounded border border-slate-200"}>
-                      React
-                    </span>
-                    <span className={isDarkMode ? "bg-zinc-800 px-2 py-1 rounded" : "bg-slate-100 px-2 py-1 rounded border border-slate-200"}>
-                      Analytics
-                    </span>
-                  </div>
-                </motion.div>
-
-                {/* FAOSTAT CPI Analyzer */}
-                <motion.div
-                  whileHover={{ y: -4 }}
-                  className={`p-5 sm:p-6 rounded-lg space-y-3 flex flex-col justify-between border transition-all ${
-                    isDarkMode
-                      ? "bg-zinc-900/60 border-zinc-800 hover:border-zinc-700"
-                      : "bg-white border-slate-200 hover:border-slate-300 shadow-sm"
-                  }`}
-                >
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-mono text-[#41a100]">Machine Learning</span>
-                      <Cpu className="w-4 h-4 text-[#41a100]" />
-                    </div>
-                    <h3
-                      className={`text-base sm:text-lg font-bold ${
-                        isDarkMode ? "text-white" : "text-slate-900"
-                      }`}
-                    >
-                      FAOSTAT CPI Data Analyzer
-                    </h3>
-                    <p
-                      className={`text-xs leading-relaxed ${
-                        isDarkMode ? "text-zinc-300" : "text-slate-600"
-                      }`}
-                    >
-                      Data analysis and machine learning pipeline to model and forecast Food Consumer Price Index (CPI) trends.
-                    </p>
-                  </div>
-                  <div
-                    className={`pt-3 flex flex-wrap gap-1.5 text-[10px] font-mono ${
-                      isDarkMode ? "text-zinc-400" : "text-slate-600"
-                    }`}
-                  >
-                    <span className={isDarkMode ? "bg-zinc-800 px-2 py-1 rounded" : "bg-slate-100 px-2 py-1 rounded border border-slate-200"}>
-                      Python
-                    </span>
-                    <span className={isDarkMode ? "bg-zinc-800 px-2 py-1 rounded" : "bg-slate-100 px-2 py-1 rounded border border-slate-200"}>
-                      Scikit-Learn
-                    </span>
-                    <span className={isDarkMode ? "bg-zinc-800 px-2 py-1 rounded" : "bg-slate-100 px-2 py-1 rounded border border-slate-200"}>
-                      Next.js
-                    </span>
-                  </div>
-                </motion.div>
-
-                {/* Productivity App */}
-                <motion.div
-                  whileHover={{ y: -4 }}
-                  className={`p-5 sm:p-6 rounded-lg space-y-3 flex flex-col justify-between border transition-all md:col-span-2 ${
-                    isDarkMode
-                      ? "bg-zinc-900/60 border-zinc-800 hover:border-zinc-700"
-                      : "bg-white border-slate-200 hover:border-slate-300 shadow-sm"
-                  }`}
-                >
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-mono text-[#41a100]">Mobile Development</span>
-                      <ExternalLink className="w-4 h-4 text-[#41a100]" />
-                    </div>
-                    <h3
-                      className={`text-base sm:text-lg font-bold ${
-                        isDarkMode ? "text-white" : "text-slate-900"
-                      }`}
-                    >
-                      Productivity & Screen Time Control App
-                    </h3>
-                    <p
-                      className={`text-xs leading-relaxed ${
-                        isDarkMode ? "text-zinc-300" : "text-slate-600"
-                      }`}
-                    >
-                      Cross-platform mobile application featuring Pomodoro focus timers and usage restriction tools designed to optimize student focus and time management.
-                    </p>
-                  </div>
-                  <div
-                    className={`pt-3 flex flex-wrap gap-1.5 text-[10px] font-mono ${
-                      isDarkMode ? "text-zinc-400" : "text-slate-600"
-                    }`}
-                  >
-                    <span className={isDarkMode ? "bg-zinc-800 px-2 py-1 rounded" : "bg-slate-100 px-2 py-1 rounded border border-slate-200"}>
-                      React Native
-                    </span>
-                    <span className={isDarkMode ? "bg-zinc-800 px-2 py-1 rounded" : "bg-slate-100 px-2 py-1 rounded border border-slate-200"}>
-                      TypeScript
-                    </span>
-                  </div>
-                </motion.div>
-              </div>
-            </motion.div>
-          )}
-
-          {/* CONTACT TAB */}
-          {activeTab === "contact" && (
-            <motion.div
-              key="contact"
-              initial="hidden"
-              animate="visible"
-              exit="exit"
-              variants={tabTransition}
-              className="space-y-8 max-w-xl mx-auto w-full"
-            >
-              <div className="text-center space-y-2">
-                <h2 className="text-2xl sm:text-3xl font-bold tracking-tight flex items-center justify-center gap-2">
-                  <Send className="text-[#41a100] w-6 h-6" /> Get In Touch
-                </h2>
-                <p
-                  className={`text-xs sm:text-sm ${
-                    isDarkMode ? "text-zinc-400" : "text-slate-600"
-                  }`}
-                >
-                  Have a project in mind or want to collaborate? Send me a message!
-                </p>
+                ))}
               </div>
 
-              <form
-                onSubmit={(e) => e.preventDefault()}
-                className={`p-6 rounded-xl border space-y-4 shadow-xl ${
-                  isDarkMode
-                    ? "bg-zinc-900/60 border-zinc-800"
-                    : "bg-white border-slate-200 shadow-slate-200/50"
-                }`}
+              {/* Compact GitHub Callout Banner */}
+              <div
+                className={`w-full p-4 sm:p-5 rounded-xl border flex flex-col sm:flex-row items-center justify-between gap-4 ${isDarkMode ? "bg-zinc-950/80 border-zinc-800" : "bg-slate-900 text-white border-slate-800 shadow-md"
+                  }`}
               >
-                <div>
-                  <label
-                    className={`block text-xs font-mono mb-1 ${
-                      isDarkMode ? "text-zinc-300" : "text-slate-700"
-                    }`}
-                  >
-                    Name
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="Your Name"
-                    className={`w-full text-sm px-3 py-2 rounded-md border focus:outline-none focus:border-[#41a100] transition-colors ${
-                      isDarkMode
-                        ? "bg-zinc-800/60 border-zinc-700 text-white placeholder-zinc-500"
-                        : "bg-slate-50 border-slate-300 text-slate-900 placeholder-slate-400"
-                    }`}
-                  />
+                <div className="flex items-center gap-3">
+                  <div className="p-2.5 rounded-lg bg-[#41a100]/10 text-[#41a100] border border-[#41a100]/20 shrink-0">
+                    <svg className="w-7 h-7 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+                      <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-bold text-white mb-0.5">Explore More on GitHub</h4>
+                    <p className="text-xs text-zinc-400 font-mono">Check out open-source repos and active codebases.</p>
+                  </div>
                 </div>
 
-                <div>
-                  <label
-                    className={`block text-xs font-mono mb-1 ${
-                      isDarkMode ? "text-zinc-300" : "text-slate-700"
-                    }`}
-                  >
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    placeholder="your.email@example.com"
-                    className={`w-full text-sm px-3 py-2 rounded-md border focus:outline-none focus:border-[#41a100] transition-colors ${
-                      isDarkMode
-                        ? "bg-zinc-800/60 border-zinc-700 text-white placeholder-zinc-500"
-                        : "bg-slate-50 border-slate-300 text-slate-900 placeholder-slate-400"
-                    }`}
-                  />
-                </div>
-
-                <div>
-                  <label
-                    className={`block text-xs font-mono mb-1 ${
-                      isDarkMode ? "text-zinc-300" : "text-slate-700"
-                    }`}
-                  >
-                    Message
-                  </label>
-                  <textarea
-                    rows={4}
-                    placeholder="Your message..."
-                    className={`w-full text-sm px-3 py-2 rounded-md border focus:outline-none focus:border-[#41a100] transition-colors ${
-                      isDarkMode
-                        ? "bg-zinc-800/60 border-zinc-700 text-white placeholder-zinc-500"
-                        : "bg-slate-50 border-slate-300 text-slate-900 placeholder-slate-400"
-                    }`}
-                  />
-                </div>
-
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  type="submit"
-                  className="w-full bg-[#41a100] hover:bg-[#4cc000] text-white font-mono text-sm py-2.5 rounded-md transition-all shadow-[0_0_15px_rgba(65,161,0,0.3)] flex items-center justify-center space-x-2"
+                <a
+                  href="https://github.com/weldamlak"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-[#41a100] hover:bg-[#4cc000] text-white font-mono text-xs font-semibold shadow transition-all hover:scale-105 shrink-0"
                 >
-                  <Send className="w-4 h-4" />
-                  <span>Send Message</span>
-                </motion.button>
-              </form>
+                  <span>github.com/weldamlak</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
+              </div>
+
+              {/* CTA Button */}
+              <div className="pt-2 flex justify-center">
+                <button
+                  onClick={() => handleTabClick("saying-more")}
+                  className="group inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-[#41a100] hover:bg-[#4cc000] text-white font-mono text-sm font-semibold shadow-md transition-all hover:scale-105"
+                >
+                  <Sparkles className="w-4 h-4" />
+                  <span>Next</span>
+                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                </button>
+              </div>
             </motion.div>
-          )}
+          )}{/* SAYING MORE TAB / PAGE */}
+{activeTab === "saying-more" && (
+  <motion.div
+    key="saying-more"
+    initial="hidden"
+    animate="visible"
+    exit="exit"
+    variants={tabTransition}
+    className="space-y-10"
+  >
+    <div>
+      <div className="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full font-mono text-xs text-[#41a100] border mb-3 bg-emerald-50/10 border-emerald-500/20">
+        <BookOpen className="w-4 h-4" />
+        <span>Personal Philosophy & Vision</span>
+      </div>
+      <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
+        What I Believe!
+      </h2>
+      <p className={`text-base leading-relaxed ${isDarkMode ? "text-zinc-300" : "text-slate-700"}`}>
+        Technology without purpose is just complexity. My goal isn&apos;t simply to make projects or train AI models. It is to solve human problems and pave paths for future generations in Ethiopia and beyond.
+      </p>
+    </div>
+
+    {/* Deep Dive Grid */}
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div
+        className={`p-6 rounded-xl border space-y-3 ${
+          isDarkMode ? "bg-zinc-900/50 border-zinc-800" : "bg-white border-slate-200 shadow-sm"
+        }`}
+      >
+        <HeartHandshake className="w-8 h-8 text-[#41a100]" />
+        <h3 className="font-bold text-lg">Knowledge</h3>
+        <p className={`text-xs sm:text-sm leading-relaxed ${isDarkMode ? "text-zinc-400" : "text-slate-600"}`}>
+          Through Winger Academy and local mentorship programs, I am dedicated to breaking down barriers to quality education, ensuring aspiring developers get guidance regardless of their background.
+        </p>
+      </div>
+
+      <div
+        className={`p-6 rounded-xl border space-y-3 ${
+          isDarkMode ? "bg-zinc-900/50 border-zinc-800" : "bg-white border-slate-200 shadow-sm"
+        }`}
+      >
+        <Cpu className="w-8 h-8 text-[#41a100]" />
+        <h3 className="font-bold text-lg">Embedded System</h3>
+        <p className={`text-xs sm:text-sm leading-relaxed ${isDarkMode ? "text-zinc-400" : "text-slate-600"}`}>
+          Projects like AXION reflect my core passion: fusing embedded systems (Arduino, C++) with modern web frontends and AI models to build tactile, physical devices that change lives.
+        </p>
+      </div>
+
+      <div
+        className={`p-6 rounded-xl border space-y-3 ${
+          isDarkMode ? "bg-zinc-900/50 border-zinc-800" : "bg-white border-slate-200 shadow-sm"
+        }`}
+      >
+        <Globe className="w-8 h-8 text-[#41a100]" />
+        <h3 className="font-bold text-lg">Global Ambition</h3>
+        <p className={`text-xs sm:text-sm leading-relaxed ${isDarkMode ? "text-zinc-400" : "text-slate-600"}`}>
+          Preparing for top-tier computer science and data science higher education to collaborate with global researchers and push the frontiers of Artificial Intelligence.
+        </p>
+      </div>
+    </div>
+
+    {/* BLOG SECTION */}
+    <div className="space-y-4">
+      <div className="flex items-center gap-2">
+        <FileText className="w-5 h-5 text-[#41a100]" />
+        <h3 className="text-xl font-bold tracking-tight">Recent Quick Read</h3>
+      </div>
+
+      <article
+        className={`p-6 rounded-xl border transition-all ${
+          isDarkMode ? "bg-zinc-900/50 border-zinc-800" : "bg-white border-slate-200 shadow-sm"
+        }`}
+      >
+        <div className="flex items-center justify-between gap-4 mb-3">
+          <span className="inline-flex items-center gap-1.5 text-xs font-mono font-medium px-2.5 py-0.5 rounded-full bg-[#41a100]/10 text-[#41a100] border border-[#41a100]/20">
+            <Sparkles className="w-3 h-3" /> 
+          </span>
+          <span className={`text-xs font-mono ${isDarkMode ? "text-zinc-500" : "text-slate-400"}`}>
+            1 min read
+          </span>
+        </div>
+
+        <h4 className="text-lg font-bold mb-2">Did You Know? Goldfish Can See Ultraviolet Light</h4>
+
+        <p className={`text-sm leading-relaxed ${isDarkMode ? "text-zinc-300" : "text-slate-600"}`}>
+          Unlike human eyes, which rely on three visual pigments to detect light (red, green, and blue), goldfish possess tetrachromatic vision. They have four specialized cone receptors that allow them to perceive Ultraviolet (UV) light in addition to the visible spectrum. This unique evolutionary adaptation enables goldfish to navigate murky waters, detect prey invisible to human sight, and perceive polarized light underwater.
+        </p>
+      </article>
+    </div>
+
+    {/* LET'S BUILD TOGETHER */}
+    <div
+      className={`p-6 sm:p-8 rounded-2xl border ${
+        isDarkMode ? "bg-zinc-900/30 border-zinc-800" : "bg-emerald-50/50 border-emerald-100"
+      }`}
+    >
+      <h3 className="text-xl font-bold mb-3">Let&apos;s Build Together</h3>
+      <p className={`text-sm leading-relaxed mb-6 ${isDarkMode ? "text-zinc-300" : "text-slate-700"}`}>
+        Whether you are an engineer, a researcher, a university admissions director, or an innovator looking to collaborate on high-impact technological solutions, I am always excited to connect.
+      </p>
+      <button
+        onClick={() => handleTabClick("contact")}
+        className="bg-[#41a100] hover:bg-[#4cc000] text-white font-mono text-sm px-6 py-3 rounded-lg font-semibold inline-flex items-center gap-2 transition-all shadow-md"
+      >
+        <Send className="w-4 h-4" />
+        <span>Get In Touch With Me</span>
+      </button>
+    </div>
+  </motion.div>
+)}
+         {/* GET IN TOUCH TAB */}
+        {activeTab === "contact" && (
+          <motion.div
+            key="contact"
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            variants={tabTransition}
+            className="space-y-8"
+          >
+            {/* Section Header */}
+            <div>
+              <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-2 flex items-center gap-3">
+                <Send className="text-[#41a100] w-6 h-6 sm:w-7 sm:h-7" /> Get In Touch
+              </h2>
+              <p className={`text-xs sm:text-sm font-mono ${isDarkMode ? "text-zinc-400" : "text-slate-600"}`}>
+                Have a question, collaboration proposal, or project idea? Send a message below or connect directly.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-6 sm:gap-8">
+              {/* Sidebar Info & Direct Channels */}
+              <div className="md:col-span-5 space-y-4">
+                {/* Location Card */}
+                <div
+                  className={`p-4 sm:p-5 rounded-xl border space-y-2 ${
+                    isDarkMode ? "bg-zinc-900/40 border-zinc-800" : "bg-white border-slate-200 shadow-sm"
+                  }`}
+                >
+                  <div className="flex items-center gap-2 text-[#41a100]">
+                    <MapPin className="w-5 h-5 shrink-0" />
+                    <h3 className="font-semibold text-sm">Location</h3>
+                  </div>
+                  <p className={`text-xs sm:text-sm ${isDarkMode ? "text-zinc-400" : "text-slate-600"}`}>
+                    Addis Ababa, Ethiopia
+                  </p>
+                </div>
+
+                {/* Direct Contact Buttons */}
+                <div
+                  className={`p-4 sm:p-5 rounded-xl border space-y-3 ${
+                    isDarkMode ? "bg-zinc-900/40 border-zinc-800" : "bg-white border-slate-200 shadow-sm"
+                  }`}
+                >
+                  <h3 className="font-semibold text-sm mb-1">Direct Channels</h3>
+                  
+                  <a
+                    href="mailto:weldamlak.a.endalew@gmail.com"
+                    className={`flex items-center justify-between p-2.5 rounded-lg border text-xs font-mono transition-all hover:border-[#41a100]/50 ${
+                      isDarkMode
+                        ? "bg-zinc-800/40 border-zinc-700/60 text-zinc-300 hover:text-white hover:bg-zinc-800"
+                        : "bg-slate-50 border-slate-200 text-slate-700 hover:text-slate-900 hover:bg-slate-100"
+                    }`}
+                  >
+                    <div className="flex items-center gap-2.5 truncate">
+                      <FaEnvelope className="w-4 h-4 text-[#41a100] shrink-0" />
+                      <span className="truncate">weldamlak.a.endalew@gmail.com</span>
+                    </div>
+                    <ExternalLink className="w-3.5 h-3.5 opacity-60 shrink-0 ml-2" />
+                  </a>
+
+                  <a
+                    href="https://wa.me/251964995549"
+                    target="_blank"
+                    rel="noreferrer"
+                    className={`flex items-center justify-between p-2.5 rounded-lg border text-xs font-mono transition-all hover:border-[#41a100]/50 ${
+                      isDarkMode
+                        ? "bg-zinc-800/40 border-zinc-700/60 text-zinc-300 hover:text-white hover:bg-zinc-800"
+                        : "bg-slate-50 border-slate-200 text-slate-700 hover:text-slate-900 hover:bg-slate-100"
+                    }`}
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <FaWhatsapp className="w-4 h-4 text-[#41a100] shrink-0" />
+                      <span>+251 964 995 549</span>
+                    </div>
+                    <ExternalLink className="w-3.5 h-3.5 opacity-60 shrink-0 ml-2" />
+                  </a>
+                </div>
+
+                {/* Social Networks */}
+                <div
+                  className={`p-4 sm:p-5 rounded-xl border space-y-3 ${
+                    isDarkMode ? "bg-zinc-900/40 border-zinc-800" : "bg-white border-slate-200 shadow-sm"
+                  }`}
+                >
+                  <div className="flex items-center gap-2 text-[#41a100]">
+                    <Globe className="w-5 h-5 shrink-0" />
+                    <h3 className="font-semibold text-sm">Social Profiles</h3>
+                  </div>
+
+                  <div className="flex flex-wrap gap-2 pt-1">
+                    {[
+                      {
+                        name: "LinkedIn",
+                        url: "https://www.linkedin.com/in/weldamlak-ayenew",
+                        icon: <FaLinkedin className="w-4 h-4" />,
+                      },
+                      {
+                        name: "GitHub",
+                        url: "https://github.com/weldamlak",
+                        icon: <FaGithub className="w-4 h-4" />,
+                      },
+                      {
+                        name: "Instagram",
+                        url: "https://www.instagram.com/weldamlak.a",
+                        icon: <FaInstagram className="w-4 h-4" />,
+                      },
+                      {
+                        name: "Discord",
+                        url: "https://discord.com/users/1503749867770609845",
+                        icon: <FaDiscord className="w-4 h-4" />,
+                      },
+                      {
+                        name: "X",
+                        url: "https://x.com/WeldamlakAyenew",
+                        icon: <FaXTwitter className="w-4 h-4" />,
+                      },
+                    ].map((social) => (
+                      <a
+                        key={social.name}
+                        href={social.url}
+                        target="_blank"
+                        rel="noreferrer"
+                        title={social.name}
+                        className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-xs font-mono transition-all hover:border-[#41a100] hover:text-[#41a100] ${
+                          isDarkMode
+                            ? "bg-zinc-800/40 border-zinc-700/60 text-zinc-300 hover:bg-zinc-800"
+                            : "bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100"
+                        }`}
+                      >
+                        {social.icon}
+                        <span>{social.name}</span>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Message Form */}
+              <div className="md:col-span-7">
+                <form
+  onSubmit={handleFormSubmit}
+  className={`p-5 sm:p-6 rounded-xl border space-y-4 ${
+    isDarkMode ? "bg-zinc-900/50 border-zinc-800" : "bg-white border-slate-200 shadow-sm"
+  }`}
+>
+  <div>
+    <label className="block text-xs font-mono mb-1.5 font-medium">Name</label>
+    <input
+      type="text"
+      required
+      value={formData.name}
+      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+      className={`w-full text-sm px-3.5 py-2.5 rounded-lg border focus:outline-none focus:ring-2 focus:ring-[#41a100] transition-colors ${
+        isDarkMode
+          ? "bg-zinc-800/60 border-zinc-700 text-white placeholder-zinc-500"
+          : "bg-slate-50 border-slate-300 text-slate-900 placeholder-slate-400"
+      }`}
+      placeholder="Your full name"
+    />
+  </div>
+
+  <div>
+    <label className="block text-xs font-mono mb-1.5 font-medium">Email</label>
+    <input
+      type="email"
+      required
+      value={formData.email}
+      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+      className={`w-full text-sm px-3.5 py-2.5 rounded-lg border focus:outline-none focus:ring-2 focus:ring-[#41a100] transition-colors ${
+        isDarkMode
+          ? "bg-zinc-800/60 border-zinc-700 text-white placeholder-zinc-500"
+          : "bg-slate-50 border-slate-300 text-slate-900 placeholder-slate-400"
+      }`}
+      placeholder="your.email@example.com"
+    />
+  </div>
+
+  <div>
+    <label className="block text-xs font-mono mb-1.5 font-medium">Message</label>
+    <textarea
+      required
+      rows={4}
+      value={formData.message}
+      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+      className={`w-full text-sm px-3.5 py-2.5 rounded-lg border focus:outline-none focus:ring-2 focus:ring-[#41a100] transition-colors ${
+        isDarkMode
+          ? "bg-zinc-800/60 border-zinc-700 text-white placeholder-zinc-500"
+          : "bg-slate-50 border-slate-300 text-slate-900 placeholder-slate-400"
+      }`}
+      placeholder="Type your message here..."
+    />
+  </div>
+
+  <button
+    type="submit"
+    disabled={isSubmitting}
+    className="w-full bg-[#41a100] hover:bg-[#4cc000] text-white font-mono text-sm py-3 rounded-lg font-semibold transition-all flex items-center justify-center space-x-2 shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+  >
+    <span>{isSubmitting ? "Sending..." : "Send Message"}</span>
+    <Send className="w-4 h-4" />
+  </button>
+
+  {formSubmitted && (
+    <p className="text-xs text-emerald-500 font-mono text-center pt-2">
+      Thank you! Your message has been sent directly to my inbox.
+    </p>
+  )}
+</form>
+              </div>
+            </div>
+          </motion.div>
+        )}
         </AnimatePresence>
       </main>
+
+      {/* FULL-SCREEN IMAGE LIGHTBOX MODAL */}
+      <AnimatePresence>
+        {selectedImgIndex !== null && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSelectedImgIndex(null)}
+            className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 sm:p-8 select-none"
+          >
+            {/* Close Button */}
+            <button
+              onClick={() => setSelectedImgIndex(null)}
+              className="absolute top-4 right-4 sm:top-6 sm:right-6 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors z-50"
+              aria-label="Close wide image"
+            >
+              <X className="w-6 h-6" />
+            </button>
+
+            {/* Left Chevron Button */}
+            <button
+              onClick={handlePrevImage}
+              className="absolute left-2 sm:left-6 top-1/2 -translate-y-1/2 p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors z-50"
+              aria-label="Previous image"
+            >
+              <ChevronLeft className="w-6 h-6 sm:w-8 sm:h-8" />
+            </button>
+
+            {/* Main Lightbox Wide Image Container */}
+            <motion.div
+              key={selectedImgIndex}
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative w-full max-w-5xl h-[80vh] rounded-2xl overflow-hidden shadow-2xl border border-white/10"
+            >
+              <Image
+                src={galleryImages[selectedImgIndex]}
+                alt={`Expanded view ${selectedImgIndex + 1}`}
+                fill
+                className="object-contain"
+                priority
+              />
+
+              {/* Caption Overlay */}
+              <div className="absolute bottom-0 inset-x-0 p-4 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex items-center justify-between text-white font-mono text-xs">
+                <span>Highlight {selectedImgIndex + 1} of {galleryImages.length}</span>
+                <span className="text-zinc-400">Use arrow keys to navigate</span>
+              </div>
+            </motion.div>
+
+            {/* Right Chevron Button */}
+            <button
+              onClick={handleNextImage}
+              className="absolute right-2 sm:right-6 top-1/2 -translate-y-1/2 p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors z-50"
+              aria-label="Next image"
+            >
+              <ChevronRight className="w-6 h-6 sm:w-8 sm:h-8" />
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
