@@ -26,10 +26,10 @@ import {
 
 import { FaLinkedin, FaGithub, FaXTwitter } from "react-icons/fa6";
 
-export default function Portfolio() {
-  const [activeTab, setActiveTab] = useState("home");
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  export default function Portfolio() {
+    const [activeTab, setActiveTab] = useState("home");
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const [isDarkMode, setIsDarkMode] = useState(false);
 
   const navItems = [
     { id: "home", label: "Home" },
