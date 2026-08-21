@@ -7,6 +7,7 @@ import { Analytics } from "@vercel/analytics/next";
 import { FileText } from "lucide-react";
 import { Variants } from "framer-motion";
 import Footer from "./components/Footer";
+import PhotoGallery from "./components/PhotoGallery";
 
 const tabTransition: Variants = {
   hidden: { opacity: 0, y: 15 },
@@ -558,49 +559,12 @@ export default function Portfolio() {
               </motion.div>
 
               {/* Photo Gallery Section */}
-              <motion.div
-                variants={itemVariants}
-                className={`pt-8 border-t ${isDarkMode ? "border-zinc-800/80" : "border-slate-200"
-                  }`}
-              >
-                <div className="flex items-center justify-between mb-4">
-                  <h3
-                    className={`text-sm font-medium uppercase tracking-wider ${isDarkMode ? "text-zinc-400" : "text-slate-500"
-                      }`}
-                  >
-                    Highlights & Activity
-                  </h3>
-                  <span className="text-xs font-mono text-[#41a100]">
-                    {galleryImages.length} Photos
-                  </span>
-                </div>
-
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
-                  {galleryImages.map((imgPath, index) => (
-                    <motion.div
-                      key={index}
-                      whileHover={{ scale: 1.03 }}
-                      whileTap={{ scale: 0.97 }}
-                      onClick={() => setSelectedImgIndex(index)}
-                      className={`relative aspect-square rounded-lg overflow-hidden border cursor-pointer group transition-all ${isDarkMode
-                        ? "border-zinc-800 bg-zinc-900/50 hover:border-[#41a100]"
-                        : "border-slate-200 bg-slate-100 hover:border-[#41a100] shadow-sm"
-                        }`}
-                    >
-                      <Image
-                        src={imgPath}
-                        alt={`Highlight ${index + 1}`}
-                        fill
-                        className="object-cover transition-transform duration-300 group-hover:scale-110"
-                        sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, 20vw"
-                      />
-                      <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white">
-                        <Maximize2 className="w-5 h-5 text-emerald-400" />
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
-              </motion.div>
+              <PhotoGallery
+                galleryImages={galleryImages}
+                isDarkMode={isDarkMode}
+                setSelectedImgIndex={setSelectedImgIndex}
+                itemVariants={itemVariants}
+              />
 
               {/* Bottom Call to Action: Next Page - Saying More */}
               <div className="pt-8 flex justify-center">
