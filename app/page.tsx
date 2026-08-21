@@ -430,7 +430,7 @@ export default function Portfolio() {
                     <motion.a
                       whileHover={{ scale: 1.03 }}
                       whileTap={{ scale: 0.97 }}
-                      href="/weldamlak.pdf"
+                      href="/Weldamlak.A.Endalew CV.pdf"
                       download="Weldamlak_Ayenew_CV.pdf"
                       className={`w-full sm:w-auto border font-mono text-sm px-5 py-3 rounded-md transition-all flex items-center justify-center space-x-2 ${isDarkMode
                         ? "border-zinc-700 bg-zinc-800/80 hover:bg-zinc-700 text-white"
