@@ -558,13 +558,16 @@ export default function Portfolio() {
                 </motion.div>
               </motion.div>
 
-              {/* Photo Gallery Section */}
-              <PhotoGallery
-                galleryImages={galleryImages}
-                isDarkMode={isDarkMode}
-                setSelectedImgIndex={setSelectedImgIndex}
-                itemVariants={itemVariants}
-              />
+
+              {/* Render cleanly in page.tsx */}
+              <section className="relative w-full">
+                <PhotoGallery
+                  galleryImages={galleryImages}
+                  isDarkMode={isDarkMode}
+                  setSelectedImgIndex={setSelectedImgIndex}
+                />
+              </section>
+
 
               {/* Bottom Call to Action: Next Page - Saying More */}
               <div className="pt-8 flex justify-center">

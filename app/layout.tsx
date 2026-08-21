@@ -12,23 +12,24 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-// 1. Comprehensive SEO Metadata & Social Cards
 export const metadata: Metadata = {
   title: "Weldamlak Ayenew | Software Developer & STEM Leader",
-  description: "Official portfolio of Weldamlak Ayenew — Software developer, founder of Winger Academy, and space science advocate based in Addis Ababa, Ethiopia.",
+  description:
+    "Official portfolio of Weldamlak Ayenew — Software developer, founder of Winger Academy, and space science advocate based in Addis Ababa, Ethiopia.",
   keywords: [
-    "Weldamlak Ayenew", 
-    "Weldamlak A.", 
-    "Software Developer", 
-    "Ethiopia", 
-    "Web Development", 
+    "Weldamlak Ayenew",
+    "Weldamlak A.",
+    "Software Developer",
+    "Ethiopia",
+    "Web Development",
     "Winger Academy",
-    "AXION Tech"
+    "AXION Tech",
   ],
   authors: [{ name: "Weldamlak Ayenew" }],
   openGraph: {
     title: "Weldamlak Ayenew | Software Developer & STEM Leader",
-    description: "Official portfolio showcasing web development, hardware projects, and educational initiatives.",
+    description:
+      "Official portfolio showcasing web development, hardware projects, and educational initiatives.",
     url: "https://weldamlak.vercel.app",
     siteName: "Weldamlak Ayenew Portfolio",
     locale: "en_US",
@@ -37,10 +38,10 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Weldamlak Ayenew | Software Developer",
-    description: "Software developer, founder of Winger Academy, and space science advocate.",
+    description:
+      "Software developer, founder of Winger Academy, and space science advocate.",
   },
   verification: {
-    // Keeping this as a fallback even though you used the HTML file method
     google: "YseQJRzMUqD_sljbDqRsPiG1IJYaaXiwe5G5huPK194",
   },
 };
@@ -50,8 +51,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  
-  // 2. JSON-LD Schema to build your "Knowledge Graph" on Google
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Person",
@@ -75,16 +74,15 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased overflow-x-clip`}
     >
       <head>
-        {/* Injecting Structured Data */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col overflow-x-clip">{children}</body>
     </html>
   );
 }
