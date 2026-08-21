@@ -60,7 +60,6 @@ export default function Portfolio() {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
-
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   // Lightbox / Full-screen Image State
@@ -782,6 +781,8 @@ export default function Portfolio() {
                   </div>
                 </div>
               </div>
+
+
               {/* Honors & Awards */}
               <div>
                 <h3 className="text-lg sm:text-xl font-semibold mb-6 flex items-center gap-2">
@@ -818,8 +819,8 @@ export default function Portfolio() {
                     <div
                       key={idx}
                       className={`group p-4 sm:p-5 rounded-xl border transition-all duration-300 hover:border-[#41a100]/50 hover:shadow-lg flex flex-col justify-between space-y-4 ${isDarkMode
-                        ? "bg-zinc-900/50 border-zinc-800/80 hover:bg-zinc-900/80"
-                        : "bg-white border-slate-200 shadow-sm hover:shadow-slate-200"
+                          ? "bg-zinc-900/50 border-zinc-800/80 hover:bg-zinc-900/80"
+                          : "bg-white border-slate-200 shadow-sm hover:shadow-slate-200"
                         }`}
                     >
                       {/* Top Header & Title */}
@@ -833,8 +834,8 @@ export default function Portfolio() {
                           </div>
                           <span
                             className={`text-[10px] font-mono px-2 py-0.5 rounded-full border ${isDarkMode
-                              ? "bg-[#41a100]/10 text-[#41a100] border-[#41a100]/30"
-                              : "bg-[#41a100]/10 text-[#2d7000] border-[#41a100]/30"
+                                ? "bg-[#41a100]/10 text-[#41a100] border-[#41a100]/30"
+                                : "bg-[#41a100]/10 text-[#2d7000] border-[#41a100]/30"
                               }`}
                           >
                             {award.badge}
@@ -852,8 +853,8 @@ export default function Portfolio() {
                       {/* Dynamic Image Container */}
                       <div
                         className={`grid gap-2 rounded-lg p-1.5 border ${isDarkMode
-                          ? "bg-zinc-950/60 border-zinc-800/60"
-                          : "bg-slate-50 border-slate-200/80"
+                            ? "bg-zinc-950/60 border-zinc-800/60"
+                            : "bg-slate-50 border-slate-200/80"
                           } ${award.images.length > 1 ? "grid-cols-2" : "grid-cols-1"}`}
                       >
                         {award.images.map((imgSrc, imgIdx) => (
@@ -881,10 +882,11 @@ export default function Portfolio() {
                             {/* Google Translate Image Link */}
                             <a
                               href="https://translate.google.com/?sl=auto&tl=en&op=images"
-                              target="_self"
+                              target="_blank"
+                              rel="noopener noreferrer"
                               className={`text-[10px] font-mono flex items-center justify-center gap-1 py-1 rounded transition-colors ${isDarkMode
-                                ? "text-zinc-400 hover:text-[#41a100] hover:bg-zinc-800/60"
-                                : "text-slate-500 hover:text-[#41a100] hover:bg-slate-200/60"
+                                  ? "text-zinc-400 hover:text-[#41a100] hover:bg-zinc-800/60"
+                                  : "text-slate-500 hover:text-[#41a100] hover:bg-slate-200/60"
                                 }`}
                             >
                               <span>Translate with Google Translate</span>
@@ -897,22 +899,48 @@ export default function Portfolio() {
                   ))}
                 </div>
 
-                {/* Backdrop Overlay - Clicking outside the image sets selectedImage to null */}
+                {/* Enhanced Backdrop & Lightbox Modal */}
                 {selectedImage && (
                   <div
                     onClick={() => setSelectedImage(null)}
-                    className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm cursor-pointer"
+                    className="fixed inset-0 z-50 flex flex-col items-center justify-center p-4 sm:p-6 bg-black/90 backdrop-blur-md cursor-pointer animate-in fade-in duration-200"
                   >
-                    {/* Stopping propagation on image box so clicking inside image won't close it */}
+                    {/* Floating 'Back' Button */}
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setSelectedImage(null);
+                      }}
+                      className="absolute top-4 left-4 sm:top-6 sm:left-6 z-20 flex items-center gap-2 px-4 py-2.5 rounded-full bg-zinc-900/90 text-white text-sm font-medium hover:bg-[#41a100] hover:scale-105 active:scale-95 transition-all duration-200 border border-white/20 shadow-xl cursor-pointer"
+                      aria-label="Go back"
+                    >
+                      <svg
+                        className="w-4 h-4"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        strokeWidth="2.5"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
+                        />
+                      </svg>
+                      <span></span>
+                    </button>
+
+                    {/* Image Container */}
                     <div
                       onClick={(e) => e.stopPropagation()}
-                      className="relative max-w-4xl max-h-[85vh] w-full h-[80vh] cursor-default"
+                      className="relative max-w-4xl max-h-[80vh] w-full h-[75vh] flex items-center justify-center cursor-default mt-12 sm:mt-0"
                     >
                       <Image
                         src={selectedImage}
                         alt="Award Preview"
                         fill
-                        className="object-contain"
+                        className="object-contain transition-transform duration-300"
                       />
                     </div>
                   </div>
