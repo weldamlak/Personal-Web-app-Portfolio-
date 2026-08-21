@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Analytics } from "@vercel/analytics/next";
 import { FileText } from "lucide-react";
 import { Variants } from "framer-motion";
+import Footer from "./components/Footer";
 
 const tabTransition: Variants = {
   hidden: { opacity: 0, y: 15 },
@@ -654,8 +655,8 @@ export default function Portfolio() {
                   {/* EAII Card */}
                   <div
                     className={`p-4 sm:p-5 rounded-lg border flex flex-col justify-between space-y-3 ${isDarkMode
-                        ? "bg-zinc-900/50 border-zinc-800"
-                        : "bg-white border-slate-200 shadow-sm"
+                      ? "bg-zinc-900/50 border-zinc-800"
+                      : "bg-white border-slate-200 shadow-sm"
                       }`}
                   >
                     <div className="space-y-2">
@@ -694,8 +695,8 @@ export default function Portfolio() {
                   {/* INSA Card */}
                   <div
                     className={`p-4 sm:p-5 rounded-lg border flex flex-col justify-between space-y-3 ${isDarkMode
-                        ? "bg-zinc-900/50 border-zinc-800"
-                        : "bg-white border-slate-200 shadow-sm"
+                      ? "bg-zinc-900/50 border-zinc-800"
+                      : "bg-white border-slate-200 shadow-sm"
                       }`}
                   >
                     <div className="space-y-2">
@@ -734,8 +735,8 @@ export default function Portfolio() {
                   {/* CodeAlpha Card */}
                   <div
                     className={`p-4 sm:p-5 rounded-lg border flex flex-col justify-between space-y-3 ${isDarkMode
-                        ? "bg-zinc-900/50 border-zinc-800"
-                        : "bg-white border-slate-200 shadow-sm"
+                      ? "bg-zinc-900/50 border-zinc-800"
+                      : "bg-white border-slate-200 shadow-sm"
                       }`}
                   >
                     <div className="space-y-2">
@@ -774,8 +775,8 @@ export default function Portfolio() {
                   {/* Sci-Mi Card */}
                   <div
                     className={`p-4 sm:p-5 rounded-lg border flex flex-col justify-between space-y-3 ${isDarkMode
-                        ? "bg-zinc-900/50 border-zinc-800"
-                        : "bg-white border-slate-200 shadow-sm"
+                      ? "bg-zinc-900/50 border-zinc-800"
+                      : "bg-white border-slate-200 shadow-sm"
                       }`}
                   >
                     <div className="space-y-2">
@@ -1026,9 +1027,8 @@ export default function Portfolio() {
               {/* Section Header */}
               <div>
                 <h2
-                  className={`text-2xl sm:text-3xl font-extrabold tracking-tight mb-2 flex items-center gap-3 ${
-                    isDarkMode ? "text-white" : "text-slate-950"
-                  }`}
+                  className={`text-2xl sm:text-3xl font-extrabold tracking-tight mb-2 flex items-center gap-3 ${isDarkMode ? "text-white" : "text-slate-950"
+                    }`}
                 >
                   <Briefcase className="text-[#41a100] w-6 h-6 sm:w-7 sm:h-7" /> Leadership & Experience
                 </h2>
@@ -1110,17 +1110,15 @@ export default function Portfolio() {
 
                     {/* Experience Card */}
                     <div
-                      className={`p-5 sm:p-6 rounded-xl border transition-all duration-300 group-hover:border-[#41a100]/40 ${
-                        isDarkMode
-                          ? "bg-zinc-900/40 border-zinc-800"
-                          : "bg-white border-slate-200 shadow-sm"
-                      }`}
+                      className={`p-5 sm:p-6 rounded-xl border transition-all duration-300 group-hover:border-[#41a100]/40 ${isDarkMode
+                        ? "bg-zinc-900/40 border-zinc-800"
+                        : "bg-white border-slate-200 shadow-sm"
+                        }`}
                     >
                       <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-2 gap-1">
                         <h3
-                          className={`font-bold text-base sm:text-lg ${
-                            isDarkMode ? "text-white" : "text-slate-950"
-                          }`}
+                          className={`font-bold text-base sm:text-lg ${isDarkMode ? "text-white" : "text-slate-950"
+                            }`}
                         >
                           {exp.role}
                         </h3>
@@ -1141,11 +1139,10 @@ export default function Portfolio() {
                           {exp.highlights.map((item, hIdx) => (
                             <div
                               key={hIdx}
-                              className={`flex items-center justify-between px-3 py-2 rounded-lg border text-xs font-mono ${
-                                isDarkMode
-                                  ? "bg-zinc-950/60 border-zinc-800/80 text-zinc-300"
-                                  : "bg-slate-50 border-slate-200 text-slate-700"
-                              }`}
+                              className={`flex items-center justify-between px-3 py-2 rounded-lg border text-xs font-mono ${isDarkMode
+                                ? "bg-zinc-950/60 border-zinc-800/80 text-zinc-300"
+                                : "bg-slate-50 border-slate-200 text-slate-700"
+                                }`}
                             >
                               <span className="font-medium flex items-center gap-2">
                                 <span className="w-1.5 h-1.5 rounded-full bg-[#41a100]" />
@@ -1515,8 +1512,8 @@ export default function Portfolio() {
                     <a
                       href="mailto:weldamlak.a.endalew@gmail.com"
                       className={`flex items-center justify-between p-2.5 rounded-lg border text-xs font-mono transition-all hover:border-[#41a100]/50 ${isDarkMode
-                          ? "bg-zinc-800/40 border-zinc-700/60 text-zinc-300 hover:text-white hover:bg-zinc-800"
-                          : "bg-slate-50 border-slate-200 text-slate-700 hover:text-slate-900 hover:bg-slate-100"
+                        ? "bg-zinc-800/40 border-zinc-700/60 text-zinc-300 hover:text-white hover:bg-zinc-800"
+                        : "bg-slate-50 border-slate-200 text-slate-700 hover:text-slate-900 hover:bg-slate-100"
                         }`}
                     >
                       <div className="flex items-center gap-2.5 truncate">
@@ -1531,8 +1528,8 @@ export default function Portfolio() {
                       target="_blank"
                       rel="noreferrer"
                       className={`flex items-center justify-between p-2.5 rounded-lg border text-xs font-mono transition-all hover:border-[#41a100]/50 ${isDarkMode
-                          ? "bg-zinc-800/40 border-zinc-700/60 text-zinc-300 hover:text-white hover:bg-zinc-800"
-                          : "bg-slate-50 border-slate-200 text-slate-700 hover:text-slate-900 hover:bg-slate-100"
+                        ? "bg-zinc-800/40 border-zinc-700/60 text-zinc-300 hover:text-white hover:bg-zinc-800"
+                        : "bg-slate-50 border-slate-200 text-slate-700 hover:text-slate-900 hover:bg-slate-100"
                         }`}
                     >
                       <div className="flex items-center gap-2.5">
@@ -1588,8 +1585,8 @@ export default function Portfolio() {
                           rel="noreferrer"
                           title={social.name}
                           className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-xs font-mono transition-all hover:border-[#41a100] hover:text-[#41a100] ${isDarkMode
-                              ? "bg-zinc-800/40 border-zinc-700/60 text-zinc-300 hover:bg-zinc-800"
-                              : "bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100"
+                            ? "bg-zinc-800/40 border-zinc-700/60 text-zinc-300 hover:bg-zinc-800"
+                            : "bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100"
                             }`}
                         >
                           {social.icon}
@@ -1615,8 +1612,8 @@ export default function Portfolio() {
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                         className={`w-full text-sm px-3.5 py-2.5 rounded-lg border focus:outline-none focus:ring-2 focus:ring-[#41a100] transition-colors ${isDarkMode
-                            ? "bg-zinc-800/60 border-zinc-700 text-white placeholder-zinc-500"
-                            : "bg-slate-50 border-slate-300 text-slate-900 placeholder-slate-400"
+                          ? "bg-zinc-800/60 border-zinc-700 text-white placeholder-zinc-500"
+                          : "bg-slate-50 border-slate-300 text-slate-900 placeholder-slate-400"
                           }`}
                         placeholder="Your full name"
                       />
@@ -1630,8 +1627,8 @@ export default function Portfolio() {
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                         className={`w-full text-sm px-3.5 py-2.5 rounded-lg border focus:outline-none focus:ring-2 focus:ring-[#41a100] transition-colors ${isDarkMode
-                            ? "bg-zinc-800/60 border-zinc-700 text-white placeholder-zinc-500"
-                            : "bg-slate-50 border-slate-300 text-slate-900 placeholder-slate-400"
+                          ? "bg-zinc-800/60 border-zinc-700 text-white placeholder-zinc-500"
+                          : "bg-slate-50 border-slate-300 text-slate-900 placeholder-slate-400"
                           }`}
                         placeholder="your.email@example.com"
                       />
@@ -1645,8 +1642,8 @@ export default function Portfolio() {
                         value={formData.message}
                         onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                         className={`w-full text-sm px-3.5 py-2.5 rounded-lg border focus:outline-none focus:ring-2 focus:ring-[#41a100] transition-colors ${isDarkMode
-                            ? "bg-zinc-800/60 border-zinc-700 text-white placeholder-zinc-500"
-                            : "bg-slate-50 border-slate-300 text-slate-900 placeholder-slate-400"
+                          ? "bg-zinc-800/60 border-zinc-700 text-white placeholder-zinc-500"
+                          : "bg-slate-50 border-slate-300 text-slate-900 placeholder-slate-400"
                           }`}
                         placeholder="Type your message here..."
                       />
@@ -1738,6 +1735,7 @@ export default function Portfolio() {
           </motion.div>
         )}
       </AnimatePresence>
+      <Footer />
     </div>
   );
 }
