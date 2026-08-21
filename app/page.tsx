@@ -1186,7 +1186,7 @@ export default function Portfolio() {
                   What I Believe!
                 </h2>
                 <p className={`text-base leading-relaxed ${isDarkMode ? "text-zinc-300" : "text-slate-700"}`}>
-                  Technology without purpose is just complexity. My goal isn&apos;t simply to make projects or train AI models. It is to solve human problems and pave paths for future generations in Ethiopia and beyond.
+                  Technology without purpose is just complexity. My goal isn&apos;t simply to make projects. It is to solve human problems and pave paths for future generations in Ethiopia.
                 </p>
               </div>
 
