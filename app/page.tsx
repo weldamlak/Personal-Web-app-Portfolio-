@@ -1031,7 +1031,7 @@ export default function Portfolio() {
                     organization: "Wegani Foundation",
                     period: "July 2026",
                     image: "/R3.jpg",
-                    desc: "Taught mathematics, science, and English to high school students, mentoring young minds and creating structured learning materials.",
+                    desc: "Teach high school mathematics, science, and English by transforming complex study materials into highly organized, step-by-step guides and delivering engaging, interactive lessons.",
                   },
                   {
                     role: "STEM Leader & Tech Educator",
