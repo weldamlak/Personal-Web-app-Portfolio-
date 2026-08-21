@@ -1,74 +1,183 @@
-import React from "react";
+"use client";
+
+import React, { memo } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { Rocket, Globe, ExternalLink, Sparkles, ArrowRight } from "lucide-react";
+import {
+  Rocket,
+  Globe,
+  ExternalLink,
+  Sparkles,
+  ArrowRight,
+} from "lucide-react";
 
-export default function ProjectsSection({ isDarkMode, handleTabClick, tabTransition }) {
-  const projects = [
-    {
-      title: "PULSE Ethiopia",
-      category: "Full-Stack & Security",
-      tech: ["React", "JavaScript", "Tailwind", "Node.js", "Axion Tech"],
-      image: "/P6.jpg", // Add P6.jpg to your /public folder
-      desc: "Digital Academic Records & Tracking System providing role-based security, real-time performance analytics, and transparent record management across Ethiopian educational institutions.",
-      links: [
-        { label: "Live System", url: "https://etdarts.netlify.app/" },
-        { label: "GitHub Repo", url: "https://github.com/weldamlak/PULSE-Ethiopia-Digital-Academic-Records-Tracking-System" },
-      ],
-    },
-    {
-      title: "Focus 2018 Platform",
-      category: "EdTech & Exams",
-      tech: ["React", "JavaScript", "Tailwind", "Amharic i18n", "ESSLE Prep"],
-      image: "/P5.jpg",
-      desc: "Comprehensive Ethiopian University Entrance Exam (ESSLE) platform featuring timed exam simulations, study modules, interactive reader, and curated subject libraries.",
-      links: [
-        { label: "Focus App", url: "https://focus2018.netlify.app/" },
-      ],
-    },
-    {
-      title: "AXION Smart Wheelchair",
-      category: "Robotics & C++",
-      tech: ["C++", "Arduino", "Next.js", "IoT", "Solar"],
-      image: "/P1.jpg",
-      desc: "Intelligent mobility wheelchair featuring obstacle avoidance, solar power management, camera tracking, and a web control interface.",
-      links: [
-        { label: "AXION Web", url: "https://axionet.netlify.app/" },
-        { label: "Details", url: "https://project-axion.vercel.app/" },
-      ],
-    },
-    {
-      title: "Winger Academy",
-      category: "Full-Stack Web",
-      tech: ["Next.js", "React", "Tailwind", "Supabase", "TS"],
-      image: "/P2.jpg",
-      desc: "Educational hub empowering Ethiopian students with study guides, coursework tracking, and academic mentor connections.",
-      links: [
-        { label: "Platform", url: "https://wingeracademy.netlify.app/" },
-      ],
-    },
-    {
-      title: "ML Analytics Suite",
-      category: "Data Science",
-      tech: ["Python", "Pandas", "NumPy", "Plotly", "Scikit-Learn"],
-      image: "/P3.jpg",
-      desc: "Interactive economic and data visualization models designed to analyze structural trends and predict growth metrics.",
-      links: [
-        { label: "Data Suite", url: "https://weld-data.vercel.app/" },
-      ],
-    },
-    {
-      title: "2D Arcade Engine",
-      category: "Game Dev",
-      tech: ["Python", "Pygame", "OOP", "Physics"],
-      image: "/P4.jpg",
-      desc: "Custom 2D endless runner built with physics mechanics, dynamic obstacle generation, custom sprites, and score tracking.",
-      links: [
-        { label: "GitHub Repo", url: "https://github.com/weldamlak/python-game.git" },
-      ],
-    },
-  ];
+interface LinkItem {
+  label: string;
+  url: string;
+}
 
+interface Project {
+  title: string;
+  category: string;
+  tech: string[];
+  image: string;
+  desc: string;
+  links: LinkItem[];
+}
+
+interface ProjectsSectionProps {
+  isDarkMode: boolean;
+  handleTabClick: (tab: string) => void;
+  tabTransition: any;
+}
+
+const PROJECTS_DATA: Project[] = [
+  {
+    title: "PULSE Ethiopia",
+    category: "Full-Stack & Security",
+    tech: ["React", "JavaScript", "Tailwind", "Node.js", "Axion Tech"],
+    image: "/P6.jpg",
+    desc: "Digital Academic Records & Tracking System providing role-based security, real-time performance analytics, and transparent record management across Ethiopian educational institutions.",
+    links: [
+      { label: "Live System", url: "https://etdarts.netlify.app/" },
+      {
+        label: "GitHub Repo",
+        url: "https://github.com/weldamlak/PULSE-Ethiopia-Digital-Academic-Records-Tracking-System",
+      },
+    ],
+  },
+  {
+    title: "Focus 2018 Platform",
+    category: "EdTech & Exams",
+    tech: ["React", "JavaScript", "Tailwind", "Amharic i18n", "ESSLE Prep"],
+    image: "/P5.jpg",
+    desc: "Comprehensive Ethiopian University Entrance Exam (ESSLE) platform featuring timed exam simulations, study modules, interactive reader, and curated subject libraries.",
+    links: [{ label: "Focus App", url: "https://focus2018.netlify.app/" }],
+  },
+  {
+    title: "AXION Smart Wheelchair",
+    category: "Robotics & C++",
+    tech: ["C++", "Arduino", "Next.js", "IoT", "Solar"],
+    image: "/P1.jpg",
+    desc: "Intelligent mobility wheelchair featuring obstacle avoidance, solar power management, camera tracking, and a web control interface.",
+    links: [
+      { label: "AXION Web", url: "https://axionet.netlify.app/" },
+      { label: "Details", url: "https://project-axion.vercel.app/" },
+    ],
+  },
+  {
+    title: "Winger Academy",
+    category: "Full-Stack Web",
+    tech: ["Next.js", "React", "Tailwind", "Supabase", "TS"],
+    image: "/P2.jpg",
+    desc: "Educational hub empowering Ethiopian students with study guides, coursework tracking, and academic mentor connections.",
+    links: [{ label: "Platform", url: "https://wingeracademy.netlify.app/" }],
+  },
+  {
+    title: "ML Analytics Suite",
+    category: "Data Science",
+    tech: ["Python", "Pandas", "NumPy", "Plotly", "Scikit-Learn"],
+    image: "/P3.jpg",
+    desc: "Interactive economic and data visualization models designed to analyze structural trends and predict growth metrics.",
+    links: [{ label: "Data Suite", url: "https://weld-data.vercel.app/" }],
+  },
+  {
+    title: "2D Arcade Engine",
+    category: "Game Dev",
+    tech: ["Python", "Pygame", "OOP", "Physics"],
+    image: "/P4.jpg",
+    desc: "Custom 2D endless runner built with physics mechanics, dynamic obstacle generation, custom sprites, and score tracking.",
+    links: [
+      {
+        label: "GitHub Repo",
+        url: "https://github.com/weldamlak/python-game.git",
+      },
+    ],
+  },
+];
+
+const ProjectCard = memo(
+  ({ project, isDarkMode }: { project: Project; isDarkMode: boolean }) => (
+    <article
+      className={`group flex flex-col rounded-xl border overflow-hidden transition-all duration-300 hover:border-[#41a100]/60 hover:shadow-lg ${
+        isDarkMode
+          ? "bg-zinc-900/50 border-zinc-800/80 shadow-md hover:shadow-[#41a100]/10"
+          : "bg-white border-slate-200 shadow-sm hover:shadow-slate-200"
+      }`}
+    >
+      <div className="relative w-full aspect-[16/9] sm:aspect-[16/10] overflow-hidden bg-zinc-950 shrink-0">
+        <Image
+          src={project.image}
+          alt={`${project.title} screenshot preview`}
+          fill
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+          loading="lazy"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60" />
+        <span className="absolute top-2.5 left-2.5 text-[10px] sm:text-xs font-mono font-semibold text-white bg-[#41a100] px-2.5 py-1 rounded-full uppercase tracking-wider shadow-md backdrop-blur-md">
+          {project.category}
+        </span>
+      </div>
+
+      <div className="p-4 sm:p-5 flex flex-col flex-1 justify-between gap-4">
+        <div className="space-y-1.5">
+          <h3 className="text-base sm:text-lg font-bold tracking-tight">
+            {project.title}
+          </h3>
+          <p
+            className={`text-xs sm:text-sm leading-relaxed ${
+              isDarkMode ? "text-zinc-400" : "text-slate-600"
+            }`}
+          >
+            {project.desc}
+          </p>
+        </div>
+
+        <div className="space-y-3.5 pt-2 border-t border-zinc-800/30">
+          <div className="flex flex-wrap gap-1.5">
+            {project.tech.map((t) => (
+              <span
+                key={t}
+                className={`text-[10px] sm:text-[11px] font-mono px-2 py-0.5 rounded font-medium ${
+                  isDarkMode
+                    ? "bg-zinc-800/80 text-zinc-300 border border-zinc-700/50"
+                    : "bg-slate-100 text-slate-700 border border-slate-200"
+                }`}
+              >
+                {t}
+              </span>
+            ))}
+          </div>
+
+          <div className="flex flex-wrap items-center gap-2 pt-1">
+            {project.links.map((link) => (
+              <a
+                key={link.url}
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 text-xs font-mono font-semibold text-[#41a100] hover:text-white bg-[#41a100]/10 hover:bg-[#41a100] active:scale-95 border border-[#41a100]/30 px-3 py-2 rounded-lg transition-all duration-200 touch-manipulation"
+              >
+                <Globe className="w-3.5 h-3.5 shrink-0" />
+                <span>{link.label}</span>
+                <ExternalLink className="w-3 h-3 opacity-80 shrink-0" />
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+    </article>
+  )
+);
+
+ProjectCard.displayName = "ProjectCard";
+
+function ProjectsSection({
+  isDarkMode,
+  handleTabClick,
+  tabTransition,
+}: ProjectsSectionProps) {
   return (
     <motion.div
       key="projects"
@@ -76,99 +185,48 @@ export default function ProjectsSection({ isDarkMode, handleTabClick, tabTransit
       animate="visible"
       exit="exit"
       variants={tabTransition}
-      className="space-y-6"
+      className="space-y-6 sm:space-y-8"
     >
-      {/* Section Header */}
       <div>
         <h2 className="text-xl sm:text-2xl font-bold tracking-tight mb-1 flex items-center gap-2">
-          <Rocket className="text-[#41a100] w-5 h-5 sm:w-6 sm:h-6" /> Featured Works
+          <Rocket className="text-[#41a100] w-5 h-5 sm:w-6 sm:h-6 shrink-0" />
+          <span>Featured Works</span>
         </h2>
-        <p className={`text-xs sm:text-sm font-mono ${isDarkMode ? "text-zinc-400" : "text-slate-600"}`}>
-          A showcase of hardware, full-stack web platforms, data models, and interactive software.
+        <p
+          className={`text-xs sm:text-sm font-mono ${
+            isDarkMode ? "text-zinc-400" : "text-slate-600"
+          }`}
+        >
+          A showcase of hardware, full-stack web platforms, data models, and
+          interactive software.
         </p>
       </div>
 
-      {/* Responsive Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
-        {projects.map((project, idx) => (
-          <div
-            key={idx}
-            className={`group flex flex-col rounded-xl border overflow-hidden transition-all duration-300 hover:border-[#41a100]/50 ${
-              isDarkMode
-                ? "bg-zinc-900/40 border-zinc-800 shadow-md"
-                : "bg-white border-slate-200 shadow-sm"
-            }`}
-          >
-            {/* Card Image Banner */}
-            <div className="relative w-full h-40 sm:h-44 overflow-hidden bg-zinc-950 shrink-0">
-              <Image
-                src={project.image}
-                alt={`${project.title} preview`}
-                fill
-                className="object-cover transition-transform duration-500 group-hover:scale-105"
-              />
-              <span className="absolute top-2.5 left-2.5 text-[10px] font-mono font-semibold text-white bg-[#41a100] px-2.5 py-0.5 rounded-full uppercase tracking-wider shadow">
-                {project.category}
-              </span>
-            </div>
-
-            {/* Card Body */}
-            <div className="p-4 sm:p-5 flex flex-col flex-1 justify-between gap-3">
-              <div>
-                <h3 className="text-base sm:text-lg font-bold mb-1">{project.title}</h3>
-                <p className={`text-xs sm:text-sm leading-relaxed ${isDarkMode ? "text-zinc-400" : "text-slate-600"}`}>
-                  {project.desc}
-                </p>
-              </div>
-
-              <div className="space-y-3 pt-1">
-                {/* Tech Badges */}
-                <div className="flex flex-wrap gap-1.5">
-                  {project.tech.map((t) => (
-                    <span
-                      key={t}
-                      className={`text-[10px] sm:text-[11px] font-mono px-2 py-0.5 rounded font-medium ${
-                        isDarkMode
-                          ? "bg-zinc-800 text-zinc-300 border border-zinc-700/50"
-                          : "bg-slate-100 text-slate-700 border border-slate-200"
-                      }`}
-                    >
-                      {t}
-                    </span>
-                  ))}
-                </div>
-
-                {/* Action Links */}
-                <div className="flex flex-wrap gap-2 pt-2 border-t border-zinc-800/40">
-                  {project.links.map((link, lIdx) => (
-                    <a
-                      key={lIdx}
-                      href={link.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-xs font-mono font-semibold text-[#41a100] hover:text-[#4cc000] bg-[#41a100]/10 hover:bg-[#41a100]/20 border border-[#41a100]/30 px-3 py-1.5 rounded-lg transition-all"
-                    >
-                      <Globe className="w-3.5 h-3.5" />
-                      <span>{link.label}</span>
-                      <ExternalLink className="w-3 h-3 opacity-80" />
-                    </a>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+        {PROJECTS_DATA.map((project) => (
+          <ProjectCard
+            key={project.title}
+            project={project}
+            isDarkMode={isDarkMode}
+          />
         ))}
       </div>
 
-      {/* GitHub Callout Banner */}
+      {/* GitHub Callout Banner with Inline SVG */}
       <div
-        className={`w-full p-4 sm:p-5 rounded-xl border flex flex-col sm:flex-row items-center justify-between gap-4 ${
-          isDarkMode ? "bg-zinc-950/80 border-zinc-800" : "bg-slate-900 text-white border-slate-800 shadow-md"
+        className={`w-full p-4 sm:p-5 rounded-xl sm:rounded-2xl border flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 ${
+          isDarkMode
+            ? "bg-zinc-900/60 border-zinc-800"
+            : "bg-slate-900 text-white border-slate-800 shadow-md"
         }`}
       >
         <div className="flex items-center gap-3">
-          <div className="p-2.5 rounded-lg bg-[#41a100]/10 text-[#41a100] border border-[#41a100]/20 shrink-0">
-            <svg className="w-7 h-7 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+          <div className="p-2.5 rounded-xl bg-[#41a100]/10 text-[#41a100] border border-[#41a100]/20 shrink-0">
+            <svg
+              className="w-6 h-6 sm:w-7 sm:h-7 fill-current"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
               <path
                 fillRule="evenodd"
                 clipRule="evenodd"
@@ -177,8 +235,12 @@ export default function ProjectsSection({ isDarkMode, handleTabClick, tabTransit
             </svg>
           </div>
           <div>
-            <h4 className="text-sm font-bold text-white mb-0.5">Explore More on GitHub</h4>
-            <p className="text-xs text-zinc-400 font-mono">Check out open-source repos and active codebases.</p>
+            <h4 className="text-sm sm:text-base font-bold text-white mb-0.5">
+              Explore More on GitHub
+            </h4>
+            <p className="text-xs text-zinc-400 font-mono">
+              Check out open-source repos and active codebases.
+            </p>
           </div>
         </div>
 
@@ -186,18 +248,18 @@ export default function ProjectsSection({ isDarkMode, handleTabClick, tabTransit
           href="https://github.com/weldamlak"
           target="_blank"
           rel="noopener noreferrer"
-          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-[#41a100] hover:bg-[#4cc000] text-white font-mono text-xs font-semibold shadow transition-all hover:scale-105 shrink-0"
+          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-[#41a100] hover:bg-[#4cc000] text-white font-mono text-xs font-semibold shadow transition-all duration-200 active:scale-95 shrink-0 touch-manipulation"
         >
           <span>github.com/weldamlak</span>
           <ExternalLink className="w-3.5 h-3.5" />
         </a>
       </div>
 
-      {/* CTA Button */}
       <div className="pt-2 flex justify-center">
         <button
+          type="button"
           onClick={() => handleTabClick("saying-more")}
-          className="group inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-[#41a100] hover:bg-[#4cc000] text-white font-mono text-sm font-semibold shadow-md transition-all hover:scale-105"
+          className="group inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-[#41a100] hover:bg-[#4cc000] text-white font-mono text-sm font-semibold shadow-md transition-all duration-200 active:scale-95 touch-manipulation"
         >
           <Sparkles className="w-4 h-4" />
           <span>Next</span>
@@ -207,3 +269,5 @@ export default function ProjectsSection({ isDarkMode, handleTabClick, tabTransit
     </motion.div>
   );
 }
+
+export default memo(ProjectsSection);
