@@ -1028,7 +1028,7 @@ export default function Portfolio() {
                   },
                   {
                     role: "Volunteer Teacher & Mentor",
-                    organization: "Wegani Foundation",
+                    organization: "Wegene Foundation",
                     period: "July 2026",
                     image: "/R3.jpg",
                     desc: "Teach high school mathematics, science, and English by transforming complex study materials into highly organized, step-by-step guides and delivering engaging, interactive lessons.",
