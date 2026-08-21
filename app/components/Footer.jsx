@@ -42,7 +42,7 @@ export default function Footer() {
             <FaGithub />
           </a>
           <a
-            href="https://linkedin.com/in/weldamlak"
+            href="https://www.linkedin.com/in/weldamlak-ayenew"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="LinkedIn Profile"
@@ -51,7 +51,7 @@ export default function Footer() {
             <FaLinkedin />
           </a>
           <a
-            href="https://x.com/weldamlak"
+            href="https://x.com/WeldamlakAyenew"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="X/Twitter Profile"
