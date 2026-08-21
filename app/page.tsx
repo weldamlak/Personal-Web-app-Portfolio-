@@ -1027,7 +1027,7 @@ export default function Portfolio() {
                     desc: "Established an academic outreach platform designed to provide instruction, peer mentorship, and STEM resources to high school students across Ethiopia.",
                   },
                   {
-                    role: "Volunteer Teacher & Mentor",
+                    role: "Volunteer Teacher",
                     organization: "Wegene Foundation",
                     period: "July 2026",
                     image: "/R3.jpg",
