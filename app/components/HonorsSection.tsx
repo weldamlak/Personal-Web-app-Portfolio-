@@ -220,9 +220,7 @@ export default function HonorsSection({ isDarkMode = false }: HonorsSectionProps
               className="w-full text-center pb-safe z-20"
               onClick={(e) => e.stopPropagation()}
             >
-              <p className="text-[11px] font-mono text-zinc-400">
-                Tap anywhere outside or press back to exit view
-              </p>
+             
             </div>
           </div>,
           document.body
