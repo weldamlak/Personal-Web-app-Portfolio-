@@ -9,6 +9,7 @@ import {
   ExternalLink,
   Sparkles,
   ArrowRight,
+  Code2,
 } from "lucide-react";
 
 interface LinkItem {
@@ -23,6 +24,7 @@ interface Project {
   image: string;
   desc: string;
   links: LinkItem[];
+  githubUrl?: string;
 }
 
 interface ProjectsSectionProps {
@@ -38,13 +40,8 @@ const PROJECTS_DATA: Project[] = [
     tech: ["React", "JavaScript", "Tailwind", "Node.js", "Axion Tech"],
     image: "/P6.jpg",
     desc: "Digital Academic Records & Tracking System providing role-based security, real-time performance analytics, and transparent record management across Ethiopian educational institutions.",
-    links: [
-      { label: "Live System", url: "https://etdarts.netlify.app/" },
-      {
-        label: "GitHub Repo",
-        url: "https://github.com/weldamlak/PULSE-Ethiopia-Digital-Academic-Records-Tracking-System",
-      },
-    ],
+    links: [{ label: "Live System", url: "https://etdarts.netlify.app/" }],
+    githubUrl: "https://github.com/weldamlak/PULSE-Ethiopia-Digital-Academic-Records-Tracking-System",
   },
   {
     title: "Focus 2018 Platform",
@@ -53,6 +50,7 @@ const PROJECTS_DATA: Project[] = [
     image: "/P5.jpg",
     desc: "Comprehensive Ethiopian University Entrance Exam (ESSLE) platform featuring timed exam simulations, study modules, interactive reader, and curated subject libraries.",
     links: [{ label: "Focus App", url: "https://focus2018.netlify.app/" }],
+    githubUrl: "https://github.com/weldamlak",
   },
   {
     title: "AXION Smart Wheelchair",
@@ -64,6 +62,52 @@ const PROJECTS_DATA: Project[] = [
       { label: "AXION Web", url: "https://axionet.netlify.app/" },
       { label: "Details", url: "https://project-axion.vercel.app/" },
     ],
+    githubUrl: "https://github.com/weldamlak",
+  },
+  {
+    title: "St. Joseph Summer Camp Portal",
+    category: "EdTech & Web",
+    tech: ["React", "Tailwind CSS", "JavaScript", "Google Forms API"],
+    image: "/A1.jpg",
+    desc: "Official registration and portal platform for SJS Summer Camp 2026. Manages student registration, schedule overviews, fee tiers, and activity streams.",
+    links: [{ label: "Live Portal", url: "https://sjs2026summer.netlify.app/" }],
+    githubUrl: "https://github.com/weldamlak",
+  },
+  {
+    title: "Axion Tech & Vision AI Platform",
+    category: "AI & Embedded Systems",
+    tech: ["TensorFlow", "Vision AI", "ESP32-CAM", "IoT", "Next.js"],
+    image: "/A2.jpg",
+    desc: "Official startup platform for Axion Tech. Features TensorFlow object detection, ESP32-CAM live stream integration, edge inference, and hardware telemetry.",
+    links: [{ label: "Axion Tech", url: "https://axionet.netlify.app/" }],
+    githubUrl: "https://github.com/weldamlak",
+  },
+  {
+    title: "SJS STEM & Innovation Hub",
+    category: "Full-Stack & Education",
+    tech: ["React", "Tailwind CSS", "JavaScript", "PDF Engine"],
+    image: "/A3.jpg",
+    desc: "Centralized digital hub for Saint Joseph School's 6 specialized STEM clubs. Features member tracking, award showcases, and digital annual report generation.",
+    links: [{ label: "STEM Hub", url: "https://stemsjs.netlify.app/" }],
+    githubUrl: "https://github.com/weldamlak",
+  },
+  {
+    title: "Custom Developer Portfolio Client",
+    category: "Web Development",
+    tech: ["Next.js", "React", "Tailwind CSS", "Framer Motion"],
+    image: "/A4.jpg",
+    desc: "Tailored portfolio application engineered for a software engineering student. Showcases skills, certification viewboards, project archives, and contact workflows.",
+    links: [{ label: "Live Portfolio", url: "https://zewdu.vercel.app/" }],
+    githubUrl: "https://github.com/weldamlak",
+  },
+  {
+    title: "Saint Joseph School Official Web",
+    category: "Institutional Platform",
+    tech: ["Next.js", "TypeScript", "Tailwind CSS", "Archive API"],
+    image: "/A5.jpg",
+    desc: "Modern web architecture for Saint Joseph School Addis Ababa. Features historic footage archives, admissions workflows, hall of fame, and global Lasallian networks.",
+    links: [{ label: "Web Platform", url: "https://sjstestweb.vercel.app/" }],
+    githubUrl: "https://github.com/weldamlak",
   },
   {
     title: "Winger Academy",
@@ -72,6 +116,7 @@ const PROJECTS_DATA: Project[] = [
     image: "/P2.jpg",
     desc: "Educational hub empowering Ethiopian students with study guides, coursework tracking, and academic mentor connections.",
     links: [{ label: "Platform", url: "https://wingeracademy.netlify.app/" }],
+    githubUrl: "https://github.com/weldamlak",
   },
   {
     title: "ML Analytics Suite",
@@ -80,6 +125,7 @@ const PROJECTS_DATA: Project[] = [
     image: "/P3.jpg",
     desc: "Interactive economic and data visualization models designed to analyze structural trends and predict growth metrics.",
     links: [{ label: "Data Suite", url: "https://weld-data.vercel.app/" }],
+    githubUrl: "https://github.com/weldamlak",
   },
   {
     title: "2D Arcade Engine",
@@ -87,12 +133,8 @@ const PROJECTS_DATA: Project[] = [
     tech: ["Python", "Pygame", "OOP", "Physics"],
     image: "/P4.jpg",
     desc: "Custom 2D endless runner built with physics mechanics, dynamic obstacle generation, custom sprites, and score tracking.",
-    links: [
-      {
-        label: "GitHub Repo",
-        url: "https://github.com/weldamlak/python-game.git",
-      },
-    ],
+    links: [],
+    githubUrl: "https://github.com/weldamlak/python-game.git",
   },
 ];
 
@@ -164,6 +206,23 @@ const ProjectCard = memo(
                 <ExternalLink className="w-3 h-3 opacity-80 shrink-0" />
               </a>
             ))}
+
+            {project.githubUrl && (
+              <a
+                href={project.githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`inline-flex items-center gap-1.5 text-xs font-mono font-semibold active:scale-95 px-3 py-2 rounded-lg border transition-all duration-200 touch-manipulation ${
+                  isDarkMode
+                    ? "bg-zinc-800/80 hover:bg-zinc-700 text-zinc-200 border-zinc-700"
+                    : "bg-slate-100 hover:bg-slate-200 text-slate-800 border-slate-300"
+                }`}
+              >
+                <Code2 className="w-3.5 h-3.5 shrink-0 text-[#41a100]" />
+                <span>Code Repo</span>
+                <ExternalLink className="w-3 h-3 opacity-80 shrink-0" />
+              </a>
+            )}
           </div>
         </div>
       </div>
@@ -197,7 +256,7 @@ function ProjectsSection({
             isDarkMode ? "text-zinc-400" : "text-slate-600"
           }`}
         >
-          A showcase of hardware, full-stack web platforms, data models, and
+          A showcase of hardware, full-stack web platforms, computer vision, and
           interactive software.
         </p>
       </div>
@@ -212,7 +271,7 @@ function ProjectsSection({
         ))}
       </div>
 
-      {/* GitHub Callout Banner with Inline SVG */}
+      {/* GitHub Callout Banner */}
       <div
         className={`w-full p-4 sm:p-5 rounded-xl sm:rounded-2xl border flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 ${
           isDarkMode
