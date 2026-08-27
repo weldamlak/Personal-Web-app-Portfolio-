@@ -11,6 +11,7 @@ import PhotoGallery from "./components/PhotoGallery";
 import ProjectsSection from "./components/ProjectsSection";
 import CertificationsSection from "./components/CertificationsSection";
 import SayingMoreSection from "./components/SayingMoreSection";
+import HonorsSection from "./components/HonorsSection";
 
 
 const tabTransition: Variants = {
