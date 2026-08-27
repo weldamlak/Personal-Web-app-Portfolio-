@@ -343,7 +343,8 @@ interface CertificationsSectionProps {
 }
 
 const CertificationsSection: React.FC<CertificationsSectionProps> = ({ isDarkMode = false }) => {
-  const [activeTab, setActiveTab] = useState<string>("all");
+  // Defaults to "academic" (Academic & School category) on initial load/refresh
+  const [activeTab, setActiveTab] = useState<string>("academic");
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [mounted, setMounted] = useState<boolean>(false);
   const [touchStart, setTouchStart] = useState<number | null>(null);
@@ -432,7 +433,7 @@ const CertificationsSection: React.FC<CertificationsSectionProps> = ({ isDarkMod
           </p>
         </div>
 
-        {/* Optimized Mobile Filter Bar - Touch-friendly pills & CSS Snap Scrolling */}
+        {/* Mobile Filter Bar */}
         <div className="block lg:hidden w-full mb-5 -mx-4 px-4 overflow-x-auto pb-2 scrollbar-none snap-x snap-mandatory touch-pan-x">
           <div className="flex items-center gap-2 min-w-max">
             <button
@@ -572,7 +573,7 @@ const CertificationsSection: React.FC<CertificationsSectionProps> = ({ isDarkMod
             })}
           </div>
 
-          {/* Grid View - Optimized for mobile tap targets and performance */}
+          {/* Grid View */}
           <div className="lg:col-span-3 w-full">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
               {allCertificates.map((cert, index) => (
@@ -709,7 +710,7 @@ const CertificationsSection: React.FC<CertificationsSectionProps> = ({ isDarkMod
                   </div>
                 </div>
 
-                {/* Desktop Arrow Buttons (Hidden on Mobile) */}
+                {/* Desktop Arrow Buttons */}
                 <button
                   type="button"
                   onClick={(e) => {
