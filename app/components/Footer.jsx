@@ -1,13 +1,13 @@
 import React from "react";
 import Link from "next/link";
-import { 
-  FaGithub, 
-  FaLinkedin, 
-  FaXTwitter, 
-  FaInstagram, 
-  FaDiscord, 
-  FaWhatsapp, 
-  FaEnvelope 
+import {
+  FaGithub,
+  FaLinkedin,
+  FaXTwitter,
+  FaInstagram,
+  FaDiscord,
+  FaWhatsapp,
+  FaEnvelope
 } from "react-icons/fa6";
 
 export default function Footer() {
@@ -16,11 +16,11 @@ export default function Footer() {
   return (
     <footer className="w-full border-t border-slate-200 dark:border-zinc-800/80 bg-slate-50/80 dark:bg-zinc-950/80 backdrop-blur-md transition-colors">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-8 flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-6">
-        
+
         {/* Left: Branding & Copyright */}
         <div className="flex flex-col items-center sm:items-start text-center sm:text-left gap-0.5">
-          <Link 
-            href="/" 
+          <Link
+            href="/"
             className="text-base sm:text-lg font-semibold tracking-tight text-slate-900 dark:text-zinc-100 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
           >
             Weldamlak Ayenew Endalew
@@ -30,6 +30,8 @@ export default function Footer() {
           </p>
         </div>
 
+
+        {/* Icons */}
         {/* Right: Social Media Icons (Touch-friendly for Mobile) */}
         <div className="flex items-center justify-center flex-wrap gap-1.5 sm:gap-2">
           <a
