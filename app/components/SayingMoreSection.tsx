@@ -433,12 +433,7 @@ const SayingMoreSection = ({
               <span className="text-[10px] font-mono uppercase tracking-wider text-[#41a100] font-bold">
                 TikTok Video Highlight
               </span>
-              <h4 className="text-sm sm:text-base font-bold text-white">
-                Check Out My Tech & Project Demos on TikTok
-              </h4>
-              <p className="text-xs text-zinc-400 font-mono">
-                Short-form clips featuring live hardware tests, coding buildouts, and project showcases.
-              </p>
+              
             </div>
 
             <a
