@@ -34,15 +34,17 @@ interface ProjectsSectionProps {
 }
 
 const PROJECTS_DATA: Project[] = [
-  {
-    title: "PULSE Ethiopia",
-    category: "Full-Stack & Security",
-    tech: ["HTML", "JavaScript", "Tailwind", "Axion Tech"],
-    image: "/P6.jpg",
-    desc: "Digital Academic Records & Tracking System providing role-based security, real-time performance analytics, and transparent record management across Ethiopian educational institutions.",
-    links: [{ label: "Live System", url: "https://etdarts.netlify.app/" }],
-    githubUrl: "https://github.com/weldamlak/PULSE-Ethiopia-Digital-Academic-Records-Tracking-System",
+
+   {
+    title: "Saint Joseph School Official Web",
+    category: "Institutional Platform",
+    tech: ["Next.js", "TypeScript", "Tailwind CSS", "Archive API"],
+    image: "/A5.jpg",
+    desc: "Modern web architecture for Saint Joseph School Addis Ababa. Features historic footage archives, admissions workflows, hall of fame, and global Lasallian networks.",
+    links: [{ label: "Web Platform", url: "https://sjstestweb.vercel.app/" }],
+    githubUrl: "https://github.com/weldamlak",
   },
+ 
   {
     title: "Focus 2018 Platform",
     category: "EdTech & Exams",
@@ -52,6 +54,17 @@ const PROJECTS_DATA: Project[] = [
     links: [{ label: "Focus App", url: "https://focus2018.netlify.app/" }],
     githubUrl: "https://github.com/weldamlak",
   },
+
+   {
+    title: "ML Analytics Suite",
+    category: "Data Science",
+    tech: ["Python", "Pandas", "NumPy", "Plotly", "Scikit-Learn"],
+    image: "/P3.jpg",
+    desc: "Interactive economic and data visualization models designed to analyze structural trends and predict growth metrics.",
+    links: [{ label: "Data Suite", url: "https://weld-data.vercel.app/" }],
+    githubUrl: "https://github.com/weldamlak",
+  },
+  
   {
     title: "AXION Smart Wheelchair",
     category: "Robotics & C++",
@@ -100,15 +113,18 @@ const PROJECTS_DATA: Project[] = [
     links: [{ label: "Live Portfolio", url: "https://zewdu.vercel.app/" }],
     githubUrl: "https://github.com/weldamlak",
   },
-  {
-    title: "Saint Joseph School Official Web",
-    category: "Institutional Platform",
-    tech: ["Next.js", "TypeScript", "Tailwind CSS", "Archive API"],
-    image: "/A5.jpg",
-    desc: "Modern web architecture for Saint Joseph School Addis Ababa. Features historic footage archives, admissions workflows, hall of fame, and global Lasallian networks.",
-    links: [{ label: "Web Platform", url: "https://sjstestweb.vercel.app/" }],
-    githubUrl: "https://github.com/weldamlak",
+
+   {
+    title: "PULSE Ethiopia",
+    category: "Full-Stack & Security",
+    tech: ["HTML", "JavaScript", "Tailwind", "Axion Tech"],
+    image: "/P6.jpg",
+    desc: "Digital Academic Records & Tracking System providing role-based security, real-time performance analytics, and transparent record management across Ethiopian educational institutions.",
+    links: [{ label: "Live System", url: "https://etdarts.netlify.app/" }],
+    githubUrl: "https://github.com/weldamlak/PULSE-Ethiopia-Digital-Academic-Records-Tracking-System",
   },
+
+ 
   {
     title: "Winger Academy",
     category: "Full-Stack Web",
@@ -118,15 +134,7 @@ const PROJECTS_DATA: Project[] = [
     links: [{ label: "Platform", url: "https://wingeracademy.netlify.app/" }],
     githubUrl: "https://github.com/weldamlak",
   },
-  {
-    title: "ML Analytics Suite",
-    category: "Data Science",
-    tech: ["Python", "Pandas", "NumPy", "Plotly", "Scikit-Learn"],
-    image: "/P3.jpg",
-    desc: "Interactive economic and data visualization models designed to analyze structural trends and predict growth metrics.",
-    links: [{ label: "Data Suite", url: "https://weld-data.vercel.app/" }],
-    githubUrl: "https://github.com/weldamlak",
-  },
+ 
   {
     title: "2D Arcade Engine",
     category: "Game Dev",
