@@ -10,7 +10,7 @@ import Footer from "./components/Footer";
 import PhotoGallery from "./components/PhotoGallery";
 import ProjectsSection from "./components/ProjectsSection";
 import CertificationsSection from "./components/CertificationsSection";
-import HonorsSection from "./components/HonorsSection";
+import SayingMoreSection from "./components/SayingMoreSection";
 
 
 const tabTransition: Variants = {
@@ -785,7 +785,7 @@ export default function Portfolio() {
               </div>
 
 
-        <HonorsSection isDarkMode={isDarkMode} />
+              <HonorsSection isDarkMode={isDarkMode} />
 
 
 
@@ -1020,7 +1020,7 @@ export default function Portfolio() {
 
 
 
-<CertificationsSection isDarkMode={isDarkMode} />
+              <CertificationsSection isDarkMode={isDarkMode} />
 
 
 
@@ -1049,112 +1049,17 @@ export default function Portfolio() {
             />
           )}
 
-          {/* SAYING MORE TAB / PAGE */}
+
+
           {activeTab === "saying-more" && (
-            <motion.div
-              key="saying-more"
-              initial="hidden"
-              animate="visible"
-              exit="exit"
-              variants={tabTransition}
-              className="space-y-10"
-            >
-              <div>
-                <div className="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full font-mono text-xs text-[#41a100] border mb-3 bg-emerald-50/10 border-emerald-500/20">
-                  <BookOpen className="w-4 h-4" />
-                  <span>Personal Philosophy & Vision</span>
-                </div>
-                <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
-                  What I Believe!
-                </h2>
-                <p className={`text-base leading-relaxed ${isDarkMode ? "text-zinc-300" : "text-slate-700"}`}>
-                  Technology without purpose is just complexity. My goal isn&apos;t simply to make projects. It is to solve human problems and pave paths for future generations in Ethiopia.
-                </p>
-              </div>
-
-              {/* Deep Dive Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div
-                  className={`p-6 rounded-xl border space-y-3 ${isDarkMode ? "bg-zinc-900/50 border-zinc-800" : "bg-white border-slate-200 shadow-sm"
-                    }`}
-                >
-                  <HeartHandshake className="w-8 h-8 text-[#41a100]" />
-                  <h3 className="font-bold text-lg">Knowledge</h3>
-                  <p className={`text-xs sm:text-sm leading-relaxed ${isDarkMode ? "text-zinc-400" : "text-slate-600"}`}>
-                    Through Winger Academy and local mentorship programs, I am dedicated to breaking down barriers to quality education, ensuring aspiring developers get guidance regardless of their background.
-                  </p>
-                </div>
-
-                <div
-                  className={`p-6 rounded-xl border space-y-3 ${isDarkMode ? "bg-zinc-900/50 border-zinc-800" : "bg-white border-slate-200 shadow-sm"
-                    }`}
-                >
-                  <Cpu className="w-8 h-8 text-[#41a100]" />
-                  <h3 className="font-bold text-lg">Embedded System</h3>
-                  <p className={`text-xs sm:text-sm leading-relaxed ${isDarkMode ? "text-zinc-400" : "text-slate-600"}`}>
-                    Projects like AXION reflect my core passion: fusing embedded systems (Arduino, C++) with modern web frontends and AI models to build tactile, physical devices that change lives.
-                  </p>
-                </div>
-
-                <div
-                  className={`p-6 rounded-xl border space-y-3 ${isDarkMode ? "bg-zinc-900/50 border-zinc-800" : "bg-white border-slate-200 shadow-sm"
-                    }`}
-                >
-                  <Globe className="w-8 h-8 text-[#41a100]" />
-                  <h3 className="font-bold text-lg">Global Ambition</h3>
-                  <p className={`text-xs sm:text-sm leading-relaxed ${isDarkMode ? "text-zinc-400" : "text-slate-600"}`}>
-                    Preparing for top-tier computer science and data science higher education to collaborate with global researchers and push the frontiers of Artificial Intelligence.
-                  </p>
-                </div>
-              </div>
-
-              {/* BLOG SECTION */}
-              <div className="space-y-4">
-                <div className="flex items-center gap-2">
-                  <FileText className="w-5 h-5 text-[#41a100]" />
-                  <h3 className="text-xl font-bold tracking-tight">Recent Quick Read</h3>
-                </div>
-
-                <article
-                  className={`p-6 rounded-xl border transition-all ${isDarkMode ? "bg-zinc-900/50 border-zinc-800" : "bg-white border-slate-200 shadow-sm"
-                    }`}
-                >
-                  <div className="flex items-center justify-between gap-4 mb-3">
-                    <span className="inline-flex items-center gap-1.5 text-xs font-mono font-medium px-2.5 py-0.5 rounded-full bg-[#41a100]/10 text-[#41a100] border border-[#41a100]/20">
-                      <Sparkles className="w-3 h-3" />
-                    </span>
-                    <span className={`text-xs font-mono ${isDarkMode ? "text-zinc-500" : "text-slate-400"}`}>
-                      1 min read
-                    </span>
-                  </div>
-
-                  <h4 className="text-lg font-bold mb-2">Did You Know? Goldfish Can See Ultraviolet Light</h4>
-
-                  <p className={`text-sm leading-relaxed ${isDarkMode ? "text-zinc-300" : "text-slate-600"}`}>
-                    Unlike human eyes, which rely on three visual pigments to detect light (red, green, and blue), goldfish possess tetrachromatic vision. They have four specialized cone receptors that allow them to perceive Ultraviolet (UV) light in addition to the visible spectrum. This unique evolutionary adaptation enables goldfish to navigate murky waters, detect prey invisible to human sight, and perceive polarized light underwater.
-                  </p>
-                </article>
-              </div>
-
-              {/* LET'S BUILD TOGETHER */}
-              <div
-                className={`p-6 sm:p-8 rounded-2xl border ${isDarkMode ? "bg-zinc-900/30 border-zinc-800" : "bg-emerald-50/50 border-emerald-100"
-                  }`}
-              >
-                <h3 className="text-xl font-bold mb-3">Let&apos;s Build Together</h3>
-                <p className={`text-sm leading-relaxed mb-6 ${isDarkMode ? "text-zinc-300" : "text-slate-700"}`}>
-                  Whether you are an engineer, a researcher, a university admissions director, or an innovator looking to collaborate on high-impact technological solutions, I am always excited to connect.
-                </p>
-                <button
-                  onClick={() => handleTabClick("contact")}
-                  className="bg-[#41a100] hover:bg-[#4cc000] text-white font-mono text-sm px-6 py-3 rounded-lg font-semibold inline-flex items-center gap-2 transition-all shadow-md"
-                >
-                  <Send className="w-4 h-4" />
-                  <span>Get In Touch With Me</span>
-                </button>
-              </div>
-            </motion.div>
+            <SayingMoreSection
+              isDarkMode={isDarkMode}
+              handleTabClick={(tabId) => setActiveTab(tabId)}
+              tabTransition={tabTransition}
+            />
           )}
+
+
           {/* GET IN TOUCH TAB */}
           {activeTab === "contact" && (
             <motion.div
