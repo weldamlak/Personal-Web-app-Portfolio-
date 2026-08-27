@@ -15,6 +15,7 @@ import {
   HeartHandshake,
   Cpu,
   Globe,
+  GraduationCap,
 } from "lucide-react";
 
 interface BlogSectionProps {
@@ -346,8 +347,49 @@ const SayingMoreSection = ({
               isDarkMode ? "text-zinc-400" : "text-slate-600"
             }`}
           >
-            Direct embeds from LinkedIn & TikTok updates:
+            Direct embeds & research profiles:
           </p>
+
+          {/* ACADEMIA.EDU FEATURED BANNER */}
+          <div
+            className={`p-5 sm:p-6 rounded-2xl border flex flex-col sm:flex-row items-center justify-between gap-4 transition-all ${
+              isDarkMode
+                ? "bg-zinc-900/70 border-zinc-800 hover:border-[#41a100]/40"
+                : "bg-white border-slate-200 shadow-sm hover:shadow-md hover:border-[#41a100]/40"
+            }`}
+          >
+            <div className="flex items-center gap-4 text-center sm:text-left">
+              <div className="p-3 rounded-xl bg-[#41a100]/10 text-[#41a100] border border-[#41a100]/20 shrink-0 hidden sm:block">
+                <GraduationCap className="w-6 h-6" />
+              </div>
+              <div className="space-y-1">
+                <span className="text-[10px] font-mono uppercase tracking-wider text-[#41a100] font-bold">
+                  Academic Research Profile
+                </span>
+                <h3 className="font-bold text-base sm:text-lg">
+                  Academia.edu Publications
+                </h3>
+                <p
+                  className={`text-xs leading-relaxed ${
+                    isDarkMode ? "text-zinc-400" : "text-slate-600"
+                  }`}
+                >
+                  Explore published papers, algorithms, and computational research preprints.
+                </p>
+              </div>
+            </div>
+
+            <a
+              href="https://independent.academia.edu/WeldamlakEndalew"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-[#41a100] hover:bg-[#4cc000] text-white font-mono text-xs font-semibold shadow transition-all duration-200 active:scale-95 shrink-0"
+            >
+              <GraduationCap className="w-4 h-4 sm:hidden" />
+              <span>Visit Profile</span>
+              <ExternalLink className="w-3.5 h-3.5" />
+            </a>
+          </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
             {/* LinkedIn Embed 1 */}
@@ -433,7 +475,6 @@ const SayingMoreSection = ({
               <span className="text-[10px] font-mono uppercase tracking-wider text-[#41a100] font-bold">
                 TikTok Video Highlight
               </span>
-              
             </div>
 
             <a
