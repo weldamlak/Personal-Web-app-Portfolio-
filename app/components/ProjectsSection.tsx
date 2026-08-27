@@ -37,7 +37,7 @@ const PROJECTS_DATA: Project[] = [
   {
     title: "PULSE Ethiopia",
     category: "Full-Stack & Security",
-    tech: ["React", "JavaScript", "Tailwind", "Node.js", "Axion Tech"],
+    tech: ["HTML", "JavaScript", "Tailwind", "Axion Tech"],
     image: "/P6.jpg",
     desc: "Digital Academic Records & Tracking System providing role-based security, real-time performance analytics, and transparent record management across Ethiopian educational institutions.",
     links: [{ label: "Live System", url: "https://etdarts.netlify.app/" }],
@@ -46,7 +46,7 @@ const PROJECTS_DATA: Project[] = [
   {
     title: "Focus 2018 Platform",
     category: "EdTech & Exams",
-    tech: ["React", "JavaScript", "Tailwind", "Amharic i18n", "ESSLE Prep"],
+    tech: ["HTML", "JavaScript", "Tailwind"],
     image: "/P5.jpg",
     desc: "Comprehensive Ethiopian University Entrance Exam (ESSLE) platform featuring timed exam simulations, study modules, interactive reader, and curated subject libraries.",
     links: [{ label: "Focus App", url: "https://focus2018.netlify.app/" }],
@@ -56,7 +56,7 @@ const PROJECTS_DATA: Project[] = [
     title: "AXION Smart Wheelchair",
     category: "Robotics & C++",
     tech: ["C++", "Arduino", "Next.js", "IoT", "Solar"],
-    image: "/P1.jpg",
+    image: "/AXION.jpg",
     desc: "Intelligent mobility wheelchair featuring obstacle avoidance, solar power management, camera tracking, and a web control interface.",
     links: [
       { label: "AXION Web", url: "https://axionet.netlify.app/" },
@@ -67,7 +67,7 @@ const PROJECTS_DATA: Project[] = [
   {
     title: "St. Joseph Summer Camp Portal",
     category: "EdTech & Web",
-    tech: ["React", "Tailwind CSS", "JavaScript", "Google Forms API"],
+    tech: ["HTML", "Tailwind CSS", "JavaScript", "Google Forms API"],
     image: "/A1.jpg",
     desc: "Official registration and portal platform for SJS Summer Camp 2026. Manages student registration, schedule overviews, fee tiers, and activity streams.",
     links: [{ label: "Live Portal", url: "https://sjs2026summer.netlify.app/" }],
@@ -76,7 +76,7 @@ const PROJECTS_DATA: Project[] = [
   {
     title: "Axion Tech & Vision AI Platform",
     category: "AI & Embedded Systems",
-    tech: ["TensorFlow", "Vision AI", "ESP32-CAM", "IoT", "Next.js"],
+    tech: ["TensorFlow", "Vision AI", "ESP32-CAM", "IoT"],
     image: "/A2.jpg",
     desc: "Official startup platform for Axion Tech. Features TensorFlow object detection, ESP32-CAM live stream integration, edge inference, and hardware telemetry.",
     links: [{ label: "Axion Tech", url: "https://axionet.netlify.app/" }],
@@ -85,7 +85,7 @@ const PROJECTS_DATA: Project[] = [
   {
     title: "SJS STEM & Innovation Hub",
     category: "Full-Stack & Education",
-    tech: ["React", "Tailwind CSS", "JavaScript", "PDF Engine"],
+    tech: ["HTML", "Tailwind CSS", "JavaScript", "PDF Engine"],
     image: "/A3.jpg",
     desc: "Centralized digital hub for Saint Joseph School's 6 specialized STEM clubs. Features member tracking, award showcases, and digital annual report generation.",
     links: [{ label: "STEM Hub", url: "https://stemsjs.netlify.app/" }],
@@ -112,7 +112,7 @@ const PROJECTS_DATA: Project[] = [
   {
     title: "Winger Academy",
     category: "Full-Stack Web",
-    tech: ["Next.js", "React", "Tailwind", "Supabase", "TS"],
+    tech: ["HTML", "Tailwind"],
     image: "/P2.jpg",
     desc: "Educational hub empowering Ethiopian students with study guides, coursework tracking, and academic mentor connections.",
     links: [{ label: "Platform", url: "https://wingeracademy.netlify.app/" }],

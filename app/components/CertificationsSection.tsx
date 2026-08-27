@@ -332,7 +332,7 @@ const CERTIFICATE_CATEGORIES: CategoryGroup[] = [
         issuer: "Vote Le Ethiopiaye Charitable Organization",
         date: "April 20, 2021",
         description: "Election Coordinator for 'New Student, New Africa, New World' project.",
-        image: "/CER/Other.jpg",
+        image: "/CER/Other3.jpg",
         badge: "Coordinator",
       },
     ],
