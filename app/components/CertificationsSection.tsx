@@ -18,6 +18,7 @@ import {
   ExternalLink,
   Sparkles,
   Layers,
+  ArrowRight,
 } from "lucide-react";
 
 interface Certificate {
@@ -664,6 +665,44 @@ const CertificationsSection: React.FC<CertificationsSectionProps> = ({ isDarkMod
                   </div>
                 </div>
               ))}
+
+              {/* View All Certificates CTA Card for Academic Category */}
+              {activeTab === "academic" && (
+                <div
+                  onClick={() => setActiveTab("all")}
+                  className={`group relative flex flex-col justify-between p-6 rounded-2xl sm:rounded-xl border border-dashed transition-all cursor-pointer touch-manipulation min-h-[320px] ${
+                    isDarkMode
+                      ? "border-[#41a100]/40 bg-zinc-900/30 hover:bg-zinc-900/80 hover:border-[#41a100]"
+                      : "border-[#41a100]/50 bg-[#41a100]/5 hover:bg-[#41a100]/10 hover:border-[#41a100]"
+                  }`}
+                >
+                  <div className="flex flex-col gap-3">
+                    <div className="p-3 w-fit rounded-xl bg-[#41a100]/10 text-[#41a100]">
+                      <Layers className="w-6 h-6" />
+                    </div>
+                    <div>
+                      <span className="text-[10px] font-mono text-[#41a100] uppercase tracking-wider font-semibold">
+                        Explore Full Gallery
+                      </span>
+                      <h3 className={`text-base font-bold tracking-tight mt-1 ${
+                        isDarkMode ? "text-white" : "text-slate-900"
+                      }`}>
+                        View All Certificates
+                      </h3>
+                      <p className={`text-xs mt-1.5 leading-relaxed ${
+                        isDarkMode ? "text-zinc-400" : "text-slate-600"
+                      }`}>
+                        Browse all {totalCertificatesCount} distinctions across Startups, Science & Tech Competitions, Udacity Nanodegrees, and Space Science.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="pt-4 flex items-center justify-between text-xs font-semibold text-[#41a100] group-hover:translate-x-1 transition-transform">
+                    <span>Switch to All Certificates</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </div>
+                </div>
+              )}
             </div>
           </div>
 
