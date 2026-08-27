@@ -343,7 +343,6 @@ interface CertificationsSectionProps {
 }
 
 const CertificationsSection: React.FC<CertificationsSectionProps> = ({ isDarkMode = false }) => {
-  // Defaults to "academic" (Academic & School category) on initial load/refresh
   const [activeTab, setActiveTab] = useState<string>("academic");
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [mounted, setMounted] = useState<boolean>(false);
@@ -598,13 +597,19 @@ const CertificationsSection: React.FC<CertificationsSectionProps> = ({ isDarkMod
                       loading="lazy"
                     />
 
-                    <div className="absolute inset-0 bg-black/50 sm:bg-black/60 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity flex items-end justify-between p-3">
+                    {/* Desktop-only Hover Overlay */}
+                    <div className="hidden md:flex absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity items-end justify-between p-3">
                       <span className="text-[10px] font-mono text-emerald-400 backdrop-blur-md bg-black/70 px-2 py-1 rounded border border-emerald-500/30">
                         Tap to View
                       </span>
                       <div className="p-2 rounded-full bg-[#41a100] text-white shadow-lg">
                         <Maximize2 className="w-3.5 h-3.5" />
                       </div>
+                    </div>
+
+                    {/* Mobile minimal icon (Non-blocking visual cue) */}
+                    <div className="md:hidden absolute top-2.5 left-2.5 p-1.5 rounded-full bg-black/50 backdrop-blur-md text-white/90">
+                      <Maximize2 className="w-3 h-3" />
                     </div>
 
                     {cert.badge && (

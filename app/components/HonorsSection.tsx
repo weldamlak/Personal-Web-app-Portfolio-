@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
-import { Award, CheckCircle2, ExternalLink, ArrowLeft, X } from "lucide-react";
+import { Award, CheckCircle2, ExternalLink, ArrowLeft, X, Maximize2 } from "lucide-react";
 
 interface HonorItem {
   title: string;
@@ -137,10 +137,17 @@ export default function HonorsSection({ isDarkMode = false }: HonorsSectionProps
                       className="object-cover transition-transform duration-300 group-hover/img:scale-105"
                       loading="lazy"
                     />
-                    <div className="absolute inset-0 bg-black/40 sm:opacity-0 sm:group-hover/img:opacity-100 transition-opacity duration-200 flex items-center justify-center p-2">
+
+                    {/* Desktop-only Hover Overlay */}
+                    <div className="hidden md:flex absolute inset-0 bg-black/50 opacity-0 group-hover/img:opacity-100 transition-opacity duration-200 items-center justify-center p-2">
                       <span className="text-white text-[10px] sm:text-[11px] font-mono bg-black/75 px-2.5 py-1 rounded border border-white/20 shadow-md">
                         View Image
                       </span>
+                    </div>
+
+                    {/* Mobile Minimal Visual Indicator */}
+                    <div className="md:hidden absolute top-2 left-2 p-1.5 rounded-full bg-black/50 backdrop-blur-md text-white/90">
+                      <Maximize2 className="w-3 h-3" />
                     </div>
                   </button>
 
