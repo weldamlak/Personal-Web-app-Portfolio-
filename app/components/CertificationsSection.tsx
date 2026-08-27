@@ -57,7 +57,7 @@ const CERTIFICATE_CATEGORIES: CategoryGroup[] = [
         issuer: "Saint Joseph School",
         date: "August 2026",
         description: "Recognized for outstanding dedication as a volunteer at St. Joseph's Summer Camp.",
-        image: "/CER/SCHOOL2.JPG",
+        image: "/CER/SCHOOL2.jpg",
         badge: "Volunteer",
       },
       {
@@ -84,7 +84,7 @@ const CERTIFICATE_CATEGORIES: CategoryGroup[] = [
         issuer: "Saint Joseph School Language Department",
         date: "2025",
         description: "Outstanding performance in Grade 11 research project selected among top five projects.",
-        image: "/CER/SCHOOL5.JPG",
+        image: "/CER/SCHOOL5.jpg",
         badge: "Top 5 Project",
       },
       {
