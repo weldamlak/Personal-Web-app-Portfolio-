@@ -51,7 +51,7 @@ const PROJECTS_DATA: Project[] = [
     tech: ["HTML", "JavaScript", "Tailwind"],
     image: "/P5.jpg",
     desc: "Comprehensive Ethiopian University Entrance Exam (ESSLE) platform featuring timed exam simulations, study modules, interactive reader, and curated subject libraries.",
-    links: [{ label: "Focus App", url: "https://focus2018.netlify.app/" }],
+    links: [{ label: "Focus App", url: "https://fokuset.vercel.app/" }],
     githubUrl: "https://github.com/weldamlak",
   },
 
