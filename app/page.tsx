@@ -505,7 +505,7 @@ export default function Portfolio() {
                     className={`font-semibold mb-1 ${isDarkMode ? "text-white" : "text-slate-900"
                       }`}
                   >
-                    Full-Stack AI
+                    Full-Stack
                   </h3>
                   <p
                     className={`text-xs ${isDarkMode ? "text-zinc-400" : "text-slate-600"
@@ -528,7 +528,7 @@ export default function Portfolio() {
                     className={`font-semibold mb-1 ${isDarkMode ? "text-white" : "text-slate-900"
                       }`}
                   >
-                    Founder
+                    Initiatives
                   </h3>
                   <p
                     className={`text-xs ${isDarkMode ? "text-zinc-400" : "text-slate-600"
