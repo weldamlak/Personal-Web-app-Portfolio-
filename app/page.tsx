@@ -703,46 +703,6 @@ export default function Portfolio() {
                     </div>
                   </div>
 
-                  {/* CodeAlpha Card */}
-                  <div
-                    className={`p-4 sm:p-5 rounded-lg border flex flex-col justify-between space-y-3 ${isDarkMode
-                      ? "bg-zinc-900/50 border-zinc-800"
-                      : "bg-white border-slate-200 shadow-sm"
-                      }`}
-                  >
-                    <div className="space-y-2">
-                      <div className="flex items-center justify-between">
-                        <span className="text-xs font-mono text-[#41a100]">Internship</span>
-                        <a
-                          href="https://www.codealpha.tech/"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          title="Visit CodeAlpha website"
-                          className="relative w-12 h-12 rounded-lg overflow-hidden bg-white/10 p-1 border border-zinc-700/50 shrink-0 shadow-sm transition-all duration-200 hover:scale-105 hover:border-[#41a100]/60"
-                        >
-                          <Image
-                            src="/CODEALPHA.jpg"
-                            alt="CodeAlpha Logo"
-                            fill
-                            className="object-contain rounded-md"
-                          />
-                        </a>
-                      </div>
-                      <h4
-                        className={`font-medium text-sm sm:text-base ${isDarkMode ? "text-white" : "text-slate-900"
-                          }`}
-                      >
-                        CodeAlpha
-                      </h4>
-                      <p
-                        className={`text-xs ${isDarkMode ? "text-zinc-400" : "text-slate-600"
-                          }`}
-                      >
-                        Machine Learning Intern building applied AI and Python projects.
-                      </p>
-                    </div>
-                  </div>
-
                   {/* Sci-Mi Card */}
                   <div
                     className={`p-4 sm:p-5 rounded-lg border flex flex-col justify-between space-y-3 ${isDarkMode
