@@ -408,7 +408,7 @@ export default function Portfolio() {
                     className={`font-mono text-xs sm:text-sm leading-relaxed max-w-xl mx-auto md:mx-0 ${isDarkMode ? "text-zinc-400" : "text-slate-600"
                       }`}
                   >
-                    Full-Stack Machine Learning.  & Machine Learning. Founder of
+                    Full-Stack & Machine Learning.  & Machine Learning. Founder of
                     AXION Tech & Winger Academy. High school graduate from Saint
                     Joseph School (Addis Ababa). Building modern web applications
                     with Next.js & Tailwind, integrated with Python ML models to solve real-world problems.
