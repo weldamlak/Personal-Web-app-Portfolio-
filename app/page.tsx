@@ -391,7 +391,7 @@ export default function Portfolio() {
                         }`}
                     >
                       <MapPin className="w-3.5 h-3.5" />
-                      <span>Addis Ababa, Ethiopia</span>
+                     
                     </div>
                   </motion.div>
 
