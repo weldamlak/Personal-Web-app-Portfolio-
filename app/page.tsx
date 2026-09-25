@@ -576,30 +576,13 @@ export default function Portfolio() {
 
               {/* Bottom Call to Action: Next Page - Saying More */}
               <div className="pt-8 flex justify-center">
-                <button
+              <button
+  type="button"
   onClick={() => handleTabClick("about")}
-  className="group relative inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl 
-    bg-gradient-to-br from-[#4ade80] via-[#41a100] to-emerald-700 
-    text-white font-mono text-sm font-bold tracking-wide uppercase
-    border border-emerald-400/40
-    shadow-[0_8px_0_0_#2d7a00,0_12px_24px_-4px_rgba(65,161,0,0.5)]
-    hover:shadow-[0_4px_0_0_#2d7a00,0_16px_32px_-4px_rgba(65,161,0,0.7)]
-    hover:translate-y-1
-    active:translate-y-2 active:shadow-[0_2px_0_0_#2d7a00,0_8px_16px_-4px_rgba(65,161,0,0.5)]
-    transition-all duration-200 ease-out
-    overflow-hidden"
+  className="inline-flex items-center justify-center gap-2.5 px-6 py-3 rounded-lg bg-[#41a100] text-white font-mono text-sm font-semibold tracking-wide border border-[#41a100] transition-colors duration-150 hover:bg-[#358300] hover:border-[#358300] active:scale-[0.98] cursor-pointer shadow-none"
 >
-  {/* Shine sweep effect */}
-  <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full 
-    transition-transform duration-700 ease-out
-    bg-gradient-to-r from-transparent via-white/30 to-transparent" />
-  
-  {/* Inner glow border */}
-  <span className="absolute inset-0 rounded-xl bg-gradient-to-b from-white/25 to-transparent opacity-60 pointer-events-none" />
-
-  <Sparkles className="relative w-5 h-5 drop-shadow-md" />
-  <span className="relative drop-shadow-sm">Read More About Me</span>
-  <ArrowRight className="relative w-5 h-5 transition-transform duration-300 group-hover:translate-x-1.5 drop-shadow-md" />
+  <span>Read More About Me</span>
+  <ArrowRight className="w-4 h-4 transition-transform duration-150 group-hover:translate-x-0.5" />
 </button>
             </motion.div>
           )}
