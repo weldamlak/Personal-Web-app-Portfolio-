@@ -86,24 +86,7 @@ const PROJECTS_DATA: Project[] = [
     links: [{ label: "Live Portal", url: "https://sjs2026summer.netlify.app/" }],
     githubUrl: "https://github.com/weldamlak",
   },
-  {
-    title: "Axion Tech & Vision AI Platform",
-    category: "AI & Embedded Systems",
-    tech: ["TensorFlow", "Vision AI", "ESP32-CAM", "IoT"],
-    image: "/A2.jpg",
-    desc: "Official startup platform for Axion Tech. Features TensorFlow object detection, ESP32-CAM live stream integration, edge inference, and hardware telemetry.",
-    links: [{ label: "Axion Tech", url: "https://axionet.netlify.app/" }],
-    githubUrl: "https://github.com/weldamlak",
-  },
-  {
-    title: "SJS STEM & Innovation Hub",
-    category: "Full-Stack & Education",
-    tech: ["HTML", "Tailwind CSS", "JavaScript", "PDF Engine"],
-    image: "/A3.jpg",
-    desc: "Centralized digital hub for Saint Joseph School's 6 specialized STEM clubs. Features member tracking, award showcases, and digital annual report generation.",
-    links: [{ label: "STEM Hub", url: "https://stemsjs.netlify.app/" }],
-    githubUrl: "https://github.com/weldamlak",
-  },
+ 
   {
     title: "Custom Developer Portfolio Client",
     category: "Web Development",
