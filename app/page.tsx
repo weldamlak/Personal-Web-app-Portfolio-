@@ -576,14 +576,14 @@ export default function Portfolio() {
 
               {/* Bottom Call to Action: Next Page - Saying More */}
               <div className="pt-8 flex justify-center">
-              <button
-  type="button"
-  onClick={() => handleTabClick("about")}
-  className="inline-flex items-center justify-center gap-2.5 px-6 py-3 rounded-lg bg-[#41a100] text-white font-mono text-sm font-semibold tracking-wide border border-[#41a100] transition-colors duration-150 hover:bg-[#358300] hover:border-[#358300] active:scale-[0.98] cursor-pointer shadow-none"
->
-  <span>Read More About Me</span>
-  <ArrowRight className="w-4 h-4 transition-transform duration-150 group-hover:translate-x-0.5" />
-</button>
+             <button
+                  onClick={() => handleTabClick("about")}
+                  className="group relative inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl bg-gradient-to-r from-[#41a100] to-emerald-600 text-white font-mono text-sm font-semibold shadow-lg hover:shadow-emerald-500/25 transition-all duration-300 hover:scale-105"
+                >
+                  <Sparkles className="w-5 h-5" />
+                  <span>Read More About Me </span>
+                  <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+                </button>
             </motion.div>
           )}
 
