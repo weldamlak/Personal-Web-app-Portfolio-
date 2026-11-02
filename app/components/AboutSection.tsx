@@ -37,13 +37,14 @@ export default function AboutSection({
           I am Weldamlak Ayenew, a high school graduate from Saint Joseph School in Addis Ababa.
           I am a Full-Stack AI Developer and Machine Learning Specialist. My technical focus involves building modern
           web applications using Next.js and combining them with Python-driven ML models for smart, real-world functionalities.
+          As an aspiring computer engineer, I also work in hardware, designing circuits and PCBs and programming microcontrollers like the ESP32 to bring software and electronics together.
         </p>
         <p
           className={`leading-relaxed text-xs sm:text-sm mt-3 ${
             isDarkMode ? "text-zinc-400" : "text-slate-600"
           }`}
         >
-          Beyond software engineering, my core passion is teaching and mentorship. I believe in leveraging education and
+          Beyond software and hardware engineering, my core passion is teaching and mentorship. I believe in leveraging education and
           technology to empower underserved students and nurture bright minds in Ethiopia.
         </p>
       </div>
