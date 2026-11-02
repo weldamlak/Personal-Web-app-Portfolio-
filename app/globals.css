@@ -1,0 +1,113 @@
+@import "tailwindcss";
+
+:root {
+  --accent: #41a100;
+  --accent-hover: #4cc000;
+  --accent-dark: #358300;
+  --accent-glow: rgb(65 161 0 / 0.35);
+  --accent-glow-strong: rgb(65 161 0 / 0.8);
+}
+:root[data-theme="dark"] {
+  --accent: #41a100;
+  --accent-hover: #4cc000;
+  --accent-dark: #358300;
+  --accent-glow: rgb(65 161 0 / 0.35);
+  --accent-glow-strong: rgb(65 161 0 / 0.8);
+}
+
+@theme inline {
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-dark: var(--accent-dark);
+}
+
+html { overscroll-behavior-y: none; }
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* =====================================================================
+   SCROLL ANIMATION LAYER (no gradients)
+   useScrollAnimations() tags cards with data-sr="<variant>".
+   Browsers with scroll-driven animations (Chrome, Edge, Safari 26+) get a
+   true scroll-linked scrub: cards fly in on entry and lean away on exit,
+   and everything rewinds when you scroll back. Others get a one-shot reveal.
+   ===================================================================== */
+
+@keyframes sr-up    { from { opacity: 0; transform: perspective(900px) translate3d(0, 80px, 0) rotateX(14deg); } }
+@keyframes sr-left  { from { opacity: 0; transform: perspective(900px) translate3d(-110px, 0, 0) rotateY(-16deg); } }
+@keyframes sr-right { from { opacity: 0; transform: perspective(900px) translate3d(110px, 0, 0) rotateY(16deg); } }
+@keyframes sr-zoom  { from { opacity: 0; transform: perspective(900px) translateZ(-140px) scale(0.86); } }
+@keyframes sr-flip  { from { opacity: 0; transform: perspective(900px) translate3d(0, 50px, 0) rotateX(-55deg); } }
+@keyframes sr-heading { from { opacity: 0; transform: translate3d(-60px, 0, 0); } }
+@keyframes sr-exit  { to   { opacity: 0.35; transform: perspective(900px) translate3d(0, -40px, 0) rotateX(10deg) scale(0.96); } }
+
+/* Phones: bigger, more dramatic movement */
+@media (max-width: 768px) {
+  @keyframes sr-up    { from { opacity: 0; transform: perspective(700px) translate3d(0, 120px, 0) rotateX(26deg); } }
+  @keyframes sr-left  { from { opacity: 0; transform: perspective(700px) translate3d(-90px, 40px, 0) rotateY(-30deg) rotate(-4deg); } }
+  @keyframes sr-right { from { opacity: 0; transform: perspective(700px) translate3d(90px, 40px, 0) rotateY(30deg) rotate(4deg); } }
+  @keyframes sr-zoom  { from { opacity: 0; transform: perspective(700px) translateZ(-220px) scale(0.78) rotate(-3deg); } }
+  @keyframes sr-flip  { from { opacity: 0; transform: perspective(700px) translate3d(0, 70px, 0) rotateX(-75deg); } }
+  @keyframes sr-heading { from { opacity: 0; transform: translate3d(-40px, 0, 0); } }
+  @keyframes sr-exit  { to { opacity: 0.25; transform: perspective(700px) translate3d(0, -70px, 0) rotateX(20deg) scale(0.93); } }
+}
+
+@supports (animation-timeline: view()) {
+  [data-sr] {
+    animation-timing-function: ease-out, linear;
+    animation-fill-mode: backwards, forwards;
+    animation-timeline: view(), view();
+    animation-range: entry 0% entry 85%, exit 25% exit 100%;
+  }
+  [data-sr="up"]      { animation-name: sr-up, sr-exit; }
+  [data-sr="left"]    { animation-name: sr-left, sr-exit; }
+  [data-sr="right"]   { animation-name: sr-right, sr-exit; }
+  [data-sr="zoom"]    { animation-name: sr-zoom, sr-exit; }
+  [data-sr="flip"]    { animation-name: sr-flip, sr-exit; }
+  [data-sr="heading"] { animation-name: sr-heading; }
+}
+
+/* JS fallback: hidden until the IntersectionObserver reveals it */
+[data-sr][data-sr-pending] {
+  opacity: 0 !important;
+  animation: none !important;
+}
+
+/* Resting depth for every card (Tailwind shadow utilities still win) */
+@layer base {
+  [data-sr-card] {
+    box-shadow:
+      0 1px 2px rgba(0, 0, 0, 0.08),
+      0 14px 32px -16px rgba(0, 0, 0, 0.35);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-sr] {
+    animation: none !important;
+    opacity: 1 !important;
+  }
+}
