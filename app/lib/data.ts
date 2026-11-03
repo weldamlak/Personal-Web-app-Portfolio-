@@ -84,7 +84,7 @@ export const TRAINING_ITEMS = [
     logo: "/INSA.jpg",
     logoAlt: "INSA Logo",
     title: "INSA Summer Camp (Embedded Systems)",
-    desc: "One of 40 students accepted into Robotics & Electrical Engineering. Selected as 1 of 4 students to present a final project directly to the head of the institute.",
+    desc: "One of 40 students accepted into Robotics & Electrical Engineering. Selected as 1 of 3 students to present a final project directly to the head of the institute.",
   },
   {
     label: "Mentorship",

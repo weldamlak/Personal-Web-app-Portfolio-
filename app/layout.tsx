@@ -13,13 +13,14 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Weldamlak Ayenew | Software Developer & STEM Leader",
+  title: "Weldamlak Ayenew | Software and Hardware Developer & STEM Leader",
   description:
     "Official portfolio of Weldamlak Ayenew — Software developer, founder of Winger Academy, and space science advocate based in Addis Ababa, Ethiopia.",
   keywords: [
     "Weldamlak Ayenew",
     "Weldamlak A.",
     "Software Developer",
+    "Hardware Developer",
     "Ethiopia",
     "Web Development",
     "Winger Academy",
@@ -27,7 +28,7 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Weldamlak Ayenew" }],
   openGraph: {
-    title: "Weldamlak Ayenew | Software Developer & STEM Leader",
+    title: "Weldamlak Ayenew | Software and Hardware Developer & STEM Leader",
     description:
       "Official portfolio showcasing web development, hardware projects, and educational initiatives.",
     url: "https://weldamlak.vercel.app",
@@ -37,9 +38,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Weldamlak Ayenew | Software Developer",
+    title: "Weldamlak Ayenew | Software and Hardware Developer",
     description:
-      "Software developer, founder of Winger Academy, and space science advocate.",
+      "Software and hardware developer, founder of Winger Academy, and space science advocate.",
   },
   verification: {
     google: "YseQJRzMUqD_sljbDqRsPiG1IJYaaXiwe5G5huPK194",
