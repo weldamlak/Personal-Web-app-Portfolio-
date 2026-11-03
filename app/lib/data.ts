@@ -151,8 +151,8 @@ export const EXPERIENCES: Experience[] = [
       { title: "Web Developer & Summer Camp Robotics Teacher", period: "July 2026" },
     ],
     link: {
-      url: "https://stemsjs.netlify.app/",
-      label: "Visit SJS STEAM Club Website",
+      url: "https://sjs,edu,et/",
+      label: "Visit Website",
     },
   },
 
