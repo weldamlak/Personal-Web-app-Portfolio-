@@ -49,7 +49,7 @@ const PROJECTS_DATA: Project[] = [
     image: "/P5.jpg",
     desc: "Comprehensive Ethiopian University Entrance Exam (ESSLE) platform featuring timed exam simulations, study modules, interactive reader, and curated subject libraries.",
     links: [{ label: "Focus App", url: "https://focus2018-mvp.vercel.app/" },
-       { label: "Details", url: "https://weldamlak-projects.vercel.app/focus2018" },
+       { label: "Details", url: "https://weldamlak-projects.vercel.app/focus" },
     ],
     githubUrl: "https://github.com/weldamlak/focus2018-mvp",
   },
@@ -71,7 +71,6 @@ const PROJECTS_DATA: Project[] = [
     image: "/AXION.jpg",
     desc: "Intelligent mobility wheelchair featuring obstacle avoidance, solar power management, camera tracking, and a web control interface.",
     links: [
-      { label: "AXION Web", url: "https://axionet.netlify.app/" },
       { label: "Details", url: "https://weldamlak-projects.vercel.app/axion" },
     ],
     githubUrl: "https://github.com/weldamlak",
@@ -83,7 +82,7 @@ const PROJECTS_DATA: Project[] = [
   tech: ["ESP32", "7-in-1 Soil Sensor", "Embedded C/C++", "Proteus 8", "PCB Design", "3D Printing", "Solar Power"],
   image: "/B101.png",
   desc: "Solar-powered IoT device that tracks soil moisture, temperature, EC and pH in real time, with a built-in LCD, a live phone/PC dashboard, and automatic pump control. Built from breadboard prototype to custom PCB and 3D-printed enclosure, and tested on a real farm.",
-  links: [{ label: "Live Project", url: "https://weldamlak-projects.vercel.app/agricola" }],
+  links: [{ label: "Details", url: "https://weldamlak-projects.vercel.app/agricola" }],
   githubUrl: "https://github.com/weldamlak",
 },
 
