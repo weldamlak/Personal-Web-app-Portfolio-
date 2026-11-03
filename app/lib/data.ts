@@ -151,7 +151,7 @@ export const EXPERIENCES: Experience[] = [
       { title: "Web Developer & Summer Camp Robotics Teacher", period: "July 2026" },
     ],
     link: {
-      url: "https://sjs,edu,et/",
+      url: "https://sjs.edu.et/",
       label: "Visit Website",
     },
   },
