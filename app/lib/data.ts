@@ -27,7 +27,7 @@ export const NAV_SOCIALS: { label: string; href: string; Icon: IconType }[] = [
     href: "https://www.linkedin.com/in/weldamlak-ayenew",
     Icon: FaLinkedin,
   },
-  { label: "GitHub Profile", href: "https://github.com", Icon: FaGithub },
+  { label: "GitHub Profile", href: "https://github.com/weldamlak", Icon: FaGithub },
   {
     label: "Twitter/X Profile",
     href: "https://x.com/WeldamlakAyenew",
